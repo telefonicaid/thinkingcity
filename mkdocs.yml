@@ -1,6 +1,6 @@
-site_name: Thinking Cities
-site_url: https://github.com/telefonicaid/thinking-cities/
-repo_url: https://github.com/telefonicaid/thinking-cities
+site_name: Thinking City
+site_url: https://github.com/telefonicaid/thinkingcity/
+repo_url: https://github.com/telefonicaid/thinkingcity
 site_description: IoT Platform document site
 docs_dir: docs/
 site_dir: html
