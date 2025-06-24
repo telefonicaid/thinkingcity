@@ -216,16 +216,8 @@ All the functions in [java.lang.Math](https://docs.oracle.com/javase/7/docs/api/
 
 ## Statistical calculations based on historic values
 
-For those cases when the data values that want to be calculated are statistical information based on historic values,
-the [Short Term Historic](../sth.md) can be used. This component stores historical information of Context Entities and can be used
-to retrieve statistical calculations over the stored data.
-
-The STH component is able to calculate statistics about the evolution in time of certain entity attributes. To do it, there are 2 ways to notify this evolution in time to the component:
-
-1. Via the [Cygnus](https://github.com/telefonicaid/fiware-cygnus) component and subscribing it to the Context Broker instance.
-2. Via the [STH](https://github.com/telefonicaid/fiware-sth-comet) component itself and directly subscribing it to the Context Broker instance.
-
-Once the STH receives the notifications of entity attribute value changes, it is able to calculate and provide information about:
+For cases where statistical information based on historical values needs to be calculated, this can be done through the  [Cygnus](https://github.com/telefonicaid/fiware-cygnus) component, by subscribing to the Context Broker instance regarding the temporal evolution of certain entity attributes.
+Once notifications of attribute value changes are received, it can calculate and provide information about:
 
 * Numeric attribute values:
     * Mean
@@ -243,22 +235,3 @@ All this, for distinct resolutions or time frames, such as:
 * Hours
 * Minutes
 * Seconds
-
-Regarding the previous example, the STH is able to provide statistical information such as:
-
-1. Which has been the maximum `weight` (attribute) values of the `WasteTank8` (entity) last year with a resolution of months?, sending a GET request to the STH component such as the next one:
-```
-http://<sth-component>:<sth-port>/STH/v2/entities/WasteTank8/attrs/weight?type=Entity&aggrMethod=max&aggrPeriod=month&dateFrom=2015-01-01T00:00:00&dateTo=2015-12-31T23:59:59
-```
-
-2. Which has been the mean `level` (attribute) values of the `WasteTank8` (entity) last week with a resolution of hours?, sending a GET request to the STH component such as the next one:
-```
-http://<sth-component>:<sth-port>/STH/v2/entities/WasteTank8/attrs/level?type=Entity&aggrMethod=sum&aggrPeriod=hour&dateFrom=2016-11-07T00:00:00&dateTo=2016-11-13T23:59:59
-```
-
-3. Which has been the standard deviation of the `density` (attribute) values of the `WasteTank8` the last 3 days with a resolution of hours or even minutes?, sending a GET request to the STH component such as the next one:
-```
-http://<sth-component>:<sth-port>/STH/v2/entities/WasteTank8/attrs/density?type=Entity&aggrMethod=sum2&aggrPeriod=minute&dateFrom=2016-11-14T00:00:00&dateTo=2016-11-16T23:59:59
-```
-
-For futher information about the STH component and all the capabilities it provides, please visit the [STH documentation at ReadTheDocs](http://fiware-sth-comet.readthedocs.io/en/master/index.html).
