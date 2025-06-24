@@ -10,7 +10,6 @@ Current stable release is able to persist the following sources of data in the f
     * [MySQL](https://www.mysql.com/), the well-known relational database manager.
     * [CKAN](http://ckan.org/), an Open Data platform.
     * [MongoDB](https://www.mongodb.org/), the NoSQL document-oriented database.
-    * [STH Comet](https://github.com/telefonicaid/IoT-STH), a Short-Term Historic database built on top of MongoDB.
     * [Kafka](http://kafka.apache.org/), the publish-subscribe messaging broker.
     * [DynamoDB](https://aws.amazon.com/dynamodb/), a cloud-based NoSQL database by [Amazon Web Services](https://aws.amazon.com/).
     * [PostgreSQL](http://www.postgresql.org/), the well-known relational database manager.
