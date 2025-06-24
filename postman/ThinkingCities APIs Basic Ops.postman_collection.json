@@ -2,7 +2,7 @@
 	"info": {
 		"_postman_id": "39ea19a8-fa1b-4853-8a4c-81b0488ae467",
 		"name": "ThinkingCities APIs Basic Ops",
-		"description": "A set with the basic API operations used by ThikingCities platform, covering:\n\n* IDM & Auth\n* Orion Context Broker\n* STH\n* Perseo CEP\n* CKAN\n",
+		"description": "A set with the basic API operations used by ThikingCities platform, covering:\n\n* IDM & Auth\n* Orion Context Broker\n* Perseo CEP\n* CKAN\n",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -3422,125 +3422,6 @@
 								{
 									"key": "protocol",
 									"value": "IoTA-JSON"
-								}
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "STH",
-			"item": [
-				{
-					"name": "Get attribute history",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Fiware-Service",
-								"value": "{{SERVICE}}"
-							},
-							{
-								"key": "Fiware-ServicePath",
-								"value": "{{SUBSERVICE}}"
-							},
-							{
-								"key": "X-Auth-Token",
-								"value": "{{TOKEN}}"
-							}
-						],
-						"url": {
-							"raw": "{{PROTOCOL}}://{{ENDPOINT_STH}}/STH/v1/contextEntities/type/myType/id/myEntity/attributes/temperature?hLimit=3&hOffset=0&dateFrom=2017-10-16T00:00:00.000Z&dateTo=2017-10-26T23:59:59.999Z\n",
-							"protocol": "{{PROTOCOL}}",
-							"host": [
-								"{{ENDPOINT_STH}}"
-							],
-							"path": [
-								"STH",
-								"v1",
-								"contextEntities",
-								"type",
-								"myType",
-								"id",
-								"myEntity",
-								"attributes",
-								"temperature"
-							],
-							"query": [
-								{
-									"key": "hLimit",
-									"value": "3"
-								},
-								{
-									"key": "hOffset",
-									"value": "0"
-								},
-								{
-									"key": "dateFrom",
-									"value": "2017-10-16T00:00:00.000Z"
-								},
-								{
-									"key": "dateTo",
-									"value": "2017-10-26T23:59:59.999Z\n"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get attribute aggregation",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Fiware-Service",
-								"value": "{{SERVICE}}"
-							},
-							{
-								"key": "Fiware-ServicePath",
-								"value": "{{SUBSERVICE}}"
-							},
-							{
-								"key": "X-Auth-Token",
-								"value": "{{TOKEN}}"
-							}
-						],
-						"url": {
-							"raw": "{{PROTOCOL}}://{{ENDPOINT_STH}}/STH/v1/contextEntities/type/myType/id/myEntity/attributes/temperature?aggrMethod=sum&aggrPeriod=hour&dateFrom=2017-10-16T00:00:00.000Z&dateTo=2017-10-26T23:59:59.999Z\n",
-							"protocol": "{{PROTOCOL}}",
-							"host": [
-								"{{ENDPOINT_STH}}"
-							],
-							"path": [
-								"STH",
-								"v1",
-								"contextEntities",
-								"type",
-								"myType",
-								"id",
-								"myEntity",
-								"attributes",
-								"temperature"
-							],
-							"query": [
-								{
-									"key": "aggrMethod",
-									"value": "sum"
-								},
-								{
-									"key": "aggrPeriod",
-									"value": "hour"
-								},
-								{
-									"key": "dateFrom",
-									"value": "2017-10-16T00:00:00.000Z"
-								},
-								{
-									"key": "dateTo",
-									"value": "2017-10-26T23:59:59.999Z\n"
 								}
 							]
 						}
