@@ -7,7 +7,6 @@ Cygnus is designed to run a specific Flume agent per source of data.
 Current stable release is able to persist the following sources of data in the following third-party storages:
 
 * NGSI-like context data in:
-    * [HDFS](http://hadoop.apache.org/docs/current/hadoop-project-dist/hadoop-hdfs/HdfsUserGuide.html), the [Hadoop](http://hadoop.apache.org/) distributed file system.
     * [MySQL](https://www.mysql.com/), the well-known relational database manager.
     * [CKAN](http://ckan.org/), an Open Data platform.
     * [MongoDB](https://www.mongodb.org/), the NoSQL document-oriented database.
@@ -17,8 +16,8 @@ Current stable release is able to persist the following sources of data in the f
     * [PostgreSQL](http://www.postgresql.org/), the well-known relational database manager.
     * [Carto](https://carto.com/), the database specialized in geolocated data.
 * Twitter data in:
-    * [HDFS](http://hadoop.apache.org/docs/current/hadoop-project-dist/hadoop-hdfs/HdfsUserGuide.html), the [Hadoop](http://hadoop.apache.org/) distributed file system.    
-
+    * [MongoDB](https://www.mongodb.org/), the NoSQL document-oriented database.
+ 
 ## Documentation and API
 
 FIWARE Cygnus:
