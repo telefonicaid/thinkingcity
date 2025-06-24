@@ -21,7 +21,6 @@ Thinking Cities provides the following APIs:
 - [Authorization with grants API](authorization_api.md): manages grants.
 - [Device API](device_api.md): allows managing devices, sending data from the device to the cloud and receiving commands.
 - [Data API](data_api.md): allows querying and subscribing to data stored at the cloud.
-- [Historical Data API](historicdata_api.md): allows querying historic data series and statistics stored at the cloud.
 - [CEP API](cep_api.md): allows analyzing data from your IoT device and triggering actions.
 - [Management API](management_api.md): allows creating new services and users to provide a multi-tenant environment.
 
