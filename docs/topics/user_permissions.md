@@ -40,7 +40,7 @@ In deep details, each Role in a Service is defined by a Policy for each IoTP com
 - [Orion component actions](https://github.com/telefonicaid/fiware-pep-steelskin/tree/master#-rules-to-determine-the-context-broker-action-from-the-request)
 - [Perseo component actions](https://github.com/telefonicaid/fiware-pep-steelskin/tree/master#-rules-to-determine-the-perseo-cep-action-from-the-request)
 - [Keypass component actions](https://github.com/telefonicaid/fiware-pep-steelskin/tree/master#rulesKeypass)
-- [Rest API based components (STH, IOTA) actions](https://github.com/telefonicaid/fiware-pep-steelskin/tree/master#generic-rest-middleware)
+- [Rest API based components (IOTA) actions](https://github.com/telefonicaid/fiware-pep-steelskin/tree/master#generic-rest-middleware)
 
 Since [Identity Management](../authentication_api.md) of IoT Platform is based on [OpenStack Keystone](http://docs.openstack.org/developer/keystone) the following table represents relations between involved concepts:
 
