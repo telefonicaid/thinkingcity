@@ -29,7 +29,7 @@ nav:
     - 'Complex Event Processing (Perseo)': 'cep.md'
     - 'Security Components (IDM, PEP, AC)': 'security.md'
   - 'Topics':
-    - 'Big Data streaming with mongoDB': 'topics/bigdata_streaming_mongodb.md'
+    - 'Big Data streaming with MongoDB': 'topics/bigdata_streaming_mongodb.md'
     - 'Character set limitations': 'topics/character_set_limitations.md'
     - 'How to send notifications': 'topics/how_notifications_work.md'
     - 'Geolocalized entities': 'topics/geolocalized_entities.md'
