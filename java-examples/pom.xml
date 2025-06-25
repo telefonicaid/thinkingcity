@@ -89,12 +89,6 @@
                             <mainClass>com.telefonica.iot.examples.ExampleIOTAInsertData</mainClass>
                         </configuration>
                     </execution>
-                    <execution>
-                        <id>sth-consume</id>
-                        <configuration>
-                            <mainClass>com.telefonica.iot.examples.ExampleSTHConsumeData</mainClass>
-                        </configuration>
-                    </execution>
                 </executions>
             </plugin>
         </plugins>
