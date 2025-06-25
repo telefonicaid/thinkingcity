@@ -5,7 +5,7 @@ MongoDB allows developers and integrators to perform powerful data analysis usin
 This document presents a step-by-step guide to creating Python-based data analysis tasks in MongoDB, simulating a word count example previously implemented with Hadoop Streaming.
 
 # Setup
-**IMPORTANT NOTE**: As an integrator, remember replacing the `admin` user appearing in the tutorial by your own user.
+**IMPORTANT NOTE**: As an integrator, remember replacing the `admin` user appearing in the tutorial by your own user. Also replace `mongodb://localhost:27017` by the actual MongoDB connection string corresponding to your environment.
 
 ## Python code
 You will need two Python scripts: one to insert sample data into MongoDB, and another to perform word count analysis using the aggregation pipeline.
@@ -61,7 +61,7 @@ Documents inserted.
 The inserted documents will follow this structure:
 {"text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."}
 ```
-You can inspect the collection using MongoDB Compass or your preferred tool.
+You can inspect the collection using [MongoDB Compass](https://www.mongodb.com/es/products/tools/compass) or your preferred tool.
 
 # Data Analysis with MongoDB Aggregation
 Instead of defining a streaming MapReduce job in Hue, now you can run your analysis script locally or integrate it into modern orchestration tools.
