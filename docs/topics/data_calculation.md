@@ -212,26 +212,3 @@ would generate an update action:
 that woud set the field `velocity` to `2` (10/5) in whatever magnitudes we were using.
 
 All the functions in [java.lang.Math](https://docs.oracle.com/javase/7/docs/api/java/lang/Math.html) can be used in the EPL expression.
-
-
-## Statistical calculations based on historic values
-
-For cases where statistical information based on historical values needs to be calculated, this can be done through the  [Cygnus](https://github.com/telefonicaid/fiware-cygnus) component, by subscribing to the Context Broker instance regarding the temporal evolution of certain entity attributes.
-Once notifications of attribute value changes are received, it can calculate and provide information about:
-
-* Numeric attribute values:
-    * Mean
-    * Standard deviation
-    * Variance
-    * Maximum
-    * Minimum
-* Textual attribute values:
-    * Number of occurrences
-
-All this, for distinct resolutions or time frames, such as:
-
-* Months
-* Days
-* Hours
-* Minutes
-* Seconds
