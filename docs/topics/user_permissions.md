@@ -9,7 +9,7 @@ Tipically a Service represents a smartcity and all of the SubServices represents
 Users are created into Services. The same user name could be used across different Services to represent different Users.
 i.e. "adm1" user could exists in "smartcity" Service and "adm1" could be another user for "smartgondor" Service.
 
-Roles are created into Services. By default all Services created into IoT Platform are created with the following Roles:
+Roles are created into Services. By default all Services created into ThinkingCity Platform are created with the following Roles:
 
 - ServiceCustomer: Role for a normal user of the Service, with standard read/write permissions over all the objects in the Service, but not in SubService
 - SubServiceCustomer: Role for a normal user in a SubService, with standard read/write permissions over all the objects in the SubService, but not in Service.
@@ -42,10 +42,10 @@ In deep details, each Role in a Service is defined by a Policy for each IoTP com
 - [Keypass component actions](https://github.com/telefonicaid/fiware-pep-steelskin/tree/master#rulesKeypass)
 - [Rest API based components (IOTA) actions](https://github.com/telefonicaid/fiware-pep-steelskin/tree/master#generic-rest-middleware)
 
-Since [Identity Management](../authentication_api.md) of IoT Platform is based on [OpenStack Keystone](http://docs.openstack.org/developer/keystone) the following table represents relations between involved concepts:
+Since [Identity Management](../authentication_api.md) of ThinkingCity Platform is based on [OpenStack Keystone](http://docs.openstack.org/developer/keystone) the following table represents relations between involved concepts:
 
 
-| IoT Platform | Keystone    |
+| ThinkingCity Platform | Keystone    |
 |--------------|-------------|
 | Service      |  Domain     |
 | SubService   |  Project    |

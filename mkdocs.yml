@@ -1,7 +1,7 @@
 site_name: Thinking City
 site_url: https://github.com/telefonicaid/thinkingcity/
 repo_url: https://github.com/telefonicaid/thinkingcity
-site_description: IoT Platform document site
+site_description: ThinkingCity Platform document site
 docs_dir: docs/
 site_dir: html
 edit_uri: edit/master/docs/
