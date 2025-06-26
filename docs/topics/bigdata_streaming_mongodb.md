@@ -1,4 +1,4 @@
-Big data within [MongoDB](https://www.mongodb.com) clusters is mainly analyzed by means of the aggregation pipeline paradigm. Big Data analysis within the IoT Platform was previously handled using Hadoop clusters, primarily through the MapReduce paradigm and its integration with tools like Hue and Oozie. However, the platform has transitioned to a more agile and scalable architecture using MongoDB, eliminating the need for Hadoop and its ecosystem.
+Big data within [MongoDB](https://www.mongodb.com) clusters is mainly analyzed by means of the aggregation pipeline paradigm. Big Data analysis within the ThinkingCity Platform was previously handled using Hadoop clusters, primarily through the MapReduce paradigm and its integration with tools like Hue and Oozie. However, the platform has transitioned to a more agile and scalable architecture using MongoDB, eliminating the need for Hadoop and its ecosystem.
 
 MongoDB allows developers and integrators to perform powerful data analysis using Python, leveraging libraries like pymongo and its native aggregation pipeline, which serves a similar purpose to MapReduce.
 
@@ -99,4 +99,4 @@ These tools provide flexibility and modularity without the need for Hadoop compo
 
 # Conclusion
 The transition from Hadoop to MongoDB streamlines Big Data processing and reduces infrastructure complexity. MongoDB’s aggregation pipeline, together with Python integrations, allows for real-time analysis, simpler deployments, and faster development cycles.
-By replacing Hadoop and Hue with MongoDB and modern Python-based workflows, the IoT platform achieves greater scalability, maintainability, and performance in its Big Data module.
+By replacing Hadoop and Hue with MongoDB and modern Python-based workflows, the ThinkingCity Platform achieves greater scalability, maintainability, and performance in its Big Data module.
