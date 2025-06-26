@@ -9,7 +9,7 @@ The Device API allows you to:
 - Send data from the device to Thinking Cities
 - Send commands from your application to the device
 
-The following documents show how to manage device connectivity through the IoT Agent Manager of the IoT Platform. These
+The following documents show how to manage device connectivity through the IoT Agent Manager of the ThinkingCity Platform. These
 APIs have some differences with the standard IoT Agent Device Provisioning APIs as defined in the [IoT Agent Library](https://github.com/telefonicaid/iotagent-node-lib)
 but it should be transparent for the users of the Platform.
 
@@ -72,7 +72,7 @@ along with the information for its mapping to the NGSI entity.
 
 Provisioning of JSON Configuration group is exactly the same just replacing `?protocol=IoTA-UL` by `?protocol=IoTA-JSON`. 
 
-Currently, the IoT Platform only allows for the existence of a configuration group per subservice for each protocol and apikey, i.e. one for "IoTA-UL" with apikey "XXYYZZ", "IoTA-UL", other with apikey "AABBBCC" and other for "IoTA-JSON".
+Currently, the ThinkingCity Platform only allows for the existence of a configuration group per subservice for each protocol and apikey, i.e. one for "IoTA-UL" with apikey "XXYYZZ", "IoTA-UL", other with apikey "AABBBCC" and other for "IoTA-JSON".
 
 # Register your IoT device 
 
