@@ -25,8 +25,6 @@ ETL stands for Extract, Transform, and Load. It refers to processes responsible 
 
 The ThinkingCity Platform provides access to a processing environment where **integrators** can deploy ETL jobs written in **Python** (or other languages), typically using the `pymongo` library to interface with MongoDB.
 
-These scripts can be scheduled using **cron**, or orchestrated using tools like **Apache Airflow** or **custom schedulers**.
-
 Here’s a simplified example in Python:
 
 ```python
