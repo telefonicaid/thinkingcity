@@ -174,7 +174,7 @@ the full details and more examples at the [Context Broker documentation](https:/
 
 ## The `TimeInstant` metadata
 
-As in IoT Platform version v4.1, the default behavior for Context Broker is to send notifications only
+As in current version of ThinkinCity Platform,, the default behavior for Context Broker is to send notifications only
 when the attribute has actually changed. Thus, if the Car `speed` is 67 and Context Broker receives
 an update with the value 67 then it *doesn't* send a notification.
 
