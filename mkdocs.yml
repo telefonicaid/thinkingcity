@@ -1,7 +1,7 @@
 site_name: Thinking City
 site_url: https://github.com/telefonicaid/thinkingcity/
 repo_url: https://github.com/telefonicaid/thinkingcity
-site_description: IoT Platform document site
+site_description: ThinkingCity Platform document site
 docs_dir: docs/
 site_dir: html
 edit_uri: edit/master/docs/
@@ -16,7 +16,6 @@ nav:
     - 'Authorization with grants API': 'authorization_api.md'
     - 'Device API': 'device_api.md'
     - 'Data API': 'data_api.md'
-    - 'Historical Data API': 'historicdata_api.md'
     - 'Complex Event Processing API': 'cep_api.md'
     - 'Management API': 'management_api.md'
   - 'Multitenancy: Service and Subservice': 'multitenancy.md'
@@ -26,12 +25,11 @@ nav:
     - 'FIWARE Components': 'walkthrough.md'
     - 'IoT Agents (IoTA)': 'device_gateway.md'
     - 'Context Broker (Orion)': 'context_broker.md'
-    - 'Short Term Historic (STH)': 'sth.md'
     - 'Connector Framework (Cygnus)': 'cygnus.md'
     - 'Complex Event Processing (Perseo)': 'cep.md'
     - 'Security Components (IDM, PEP, AC)': 'security.md'
   - 'Topics':
-    - 'Hadoop streaming with Hue': 'topics/hadoop_streaming_hue.md'
+    - 'Big Data streaming with MongoDB': 'topics/bigdata_streaming_mongodb.md'
     - 'Character set limitations': 'topics/character_set_limitations.md'
     - 'How to send notifications': 'topics/how_notifications_work.md'
     - 'Geolocalized entities': 'topics/geolocalized_entities.md'

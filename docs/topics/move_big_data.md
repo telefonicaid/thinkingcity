@@ -1,39 +1,47 @@
 # <a name="top"></a>How to massively move data from/to the Platform (Big Data)
-Moving massive data from or to the IoT Platform means interacting with [Hadoop](http://hadoop.apache.org/)'s HDFS.
+Moving massive data from or to the ThinkingCity Platform now means interacting with [**MongoDB**](https://www.mongodb.com), replacing the previous use of [Hadoop](http://hadoop.apache.org/)'s HDFS.
 
-HDFS stands for Hadoop Distributed File System. It is, in fact, a file system, since the data is organized as large data files following a Unix file system design. And it is distributed, since the large data files are not hosted by a single server but by a cluster of servers, having the files split into many pieces (blocks) all along the cluster.
+MongoDB is a document-oriented NoSQL database that stores data in flexible, JSON-like documents. It provides native support for bulk insertions, querying, and aggregation, making it suitable for scalable Big Data processing within the ThinkingCity Platform.
 
-A special daemon, the NameNode, is in charge of managing HDFS, handling a table with file splits and their location within the data servers. This daemon talks with a set of DataNode's, i.e. the NameNode counterpart daemons running in the data servers.
+In this updated architecture, data is no longer split into blocks across HDFS nodes. Instead, it is stored as collections in MongoDB databases. For high-throughput data ingestion and export, MongoDB supports various tools and APIs, such as the native `mongoimport/mongoexport`, `mongodump/mongorestore`, and Python-based pipelines using `pymongo`.
 
-Doing I/O with HDFS is as <i>easy</i> as talking with the NameNode and asking for read and write operations, and file management in terms of ownership, permissions, etc. as well.
+There are several ways to interact with the MongoDB-based storage. Below are the methods supported by the ThinkingCity Platform.
 
-There are several ways of interacting with a HDFS's Namenode. Let's see the ones supported by IoT Platform.
 
 ## Methods
-### Using Hue
-This method is mainly oriented to **non automated integrators** (i.e. human beings) since [Hue](http://gethue.com/) is a web-based UI for Hadoop. 
+### Using MongoDB Compass
+This method is mainly oriented to **non-automated integrators** (i.e. human operators), since [MongoDB Compass](https://www.mongodb.com/products/compass) is a GUI client for MongoDB.
 
-Hue exposes a dashboard where several plugins are available for different purposes. These plugins are just an interface wrapping both conventional Hadoop APIs and authentication mechanisms.
+Compass provides a visual interface to browse, query, and modify documents. It is particularly useful for quickly uploading or downloading datasets, inspecting collection structures, and managing indexes.
 
-Among the plugins we can find available for Hue, and especifically for IoT Platform, there is the **File Browser**. Such a browser performs in a graphical way all the typical Linux-like operations, including I/O of data. Behind the scenes, Hue uses [WebHDFS](https://hadoop.apache.org/docs/current/hadoop-project-dist/hadoop-hdfs/HdfsUserGuide.html), Hadoop's REST API.
+Typical I/O operations—such as inserting new records, exporting query results, or deleting collections—can be done via Compass with no need to write manual queries.
 
-File Browser UI is quite straightforward:
-
-![](./images/hue_file_browser.png)
-
-Accessing Hue requires certain user credentials (user and password) that must be given by IoT Platform administrators. These users typically will match your Unix/Hadoop users and permissions, thus, a Hue user will belong to a single tenant/client (while a tenant/client may have several users) and will have limited access to HDFS (only to those HDFS account or accounts related to its tenant/client).
+Accessing Compass requires valid credentials, typically provided by the ThinkingCity Platform administrators. These user accounts are tenant-specific and have restricted access to the collections relevant to each client.
 
 [Top](#top)
 
 ### Using a ETL process
-ETL stands for Extract, Transform and Load. It is a term applied to processes in charge of moving data with some optional transformation in between.
+ETL stands for Extract, Transform, and Load. It refers to processes responsible for moving and transforming data before it is stored or after it is extracted.
 
-The IoT Platform exposes a server intended for ETL purposes related to HDFS. It is a machine where an **integrator** may upload a Java program and schedule its execution through the Crontab.
+The ThinkingCity Platform provides access to a processing environment where **integrators** can deploy ETL jobs written in **Python** (or other languages), typically using the `pymongo` library to interface with MongoDB.
 
-Such ETL processes are allowed to obtain the original data from external sources, e.g. databases, and from private networks connected to clients.
+Here’s a simplified example in Python:
 
-Connection to HDFS is done by means Hadoop API for Java, i.e. executing Remote Procedure Calls (RPC) which execute through the TCP/8020 port.
+```python
+from pymongo import MongoClient
 
-Please ask the IoT Platform team for further details.
+client = MongoClient("mongodb://user:pass@host:27017/")
+db = client["iot_data"]
+collection = db["measurements"]
+
+# Insert sample data
+collection.insert_many([
+    {"device_id": "sensor01", "timestamp": 1721820200, "value": 42},
+    {"device_id": "sensor02", "timestamp": 1721820260, "value": 38}
+])
+```
+Data can also be loaded from external sources (e.g., CSV, SQL databases, APIs) and pushed to MongoDB using similar patterns.
+
+Please contact the ThinkingCity Platform team to request access to the ETL server, including necessary authentication details and configuration files.
 
 [Top](#top)

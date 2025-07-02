@@ -1,11 +1,11 @@
-# Tips on how to model your project entities with the IoT Platform
+# Tips on how to model your project entities with the ThinkingCity Platform
 
 There are some considerations to make when designing how to model a project in the platform. This document will give you
 some hints to avoid most common mistakes (use them as hints to guide your modelling, not as strict rules).
 
-## The IoT Platform is centered in context
+## The ThinkingCity Platform is centered in context
 
-The central piece of the IoT Platform is the Context Broker: a component that lets you store and query information
+The central piece of the ThinkingCity Platform is the Context Broker: a component that lets you store and query information
 about context entities. But, what is a Context Entity? Context Entities are logical abstractions that represent the elements
 of your system. Some examples are:
 
@@ -15,7 +15,7 @@ of your system. Some examples are:
 
 What does it mean that those objects are Context Entities (instead of classes, objects, tables, or documents). The
 difference lays in how it is treated around the platform: modifications of the CEs can be observed by subscriptions,
-the history of those changes stored at [persistence backends](../cygnus.md) (HDFS, CKAN, MySQL) and [STH](../sth.md),
+the history of those changes stored at [persistence backends](../cygnus.md) (CKAN, MySQL),
 rules can be defined to modify the global Context based on CEs changes with [CEP](../cep.md)...
 
 All the given examples have several things in common:

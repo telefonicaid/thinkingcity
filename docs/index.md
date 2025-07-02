@@ -21,7 +21,6 @@ Thinking Cities provides the following APIs:
 - [Authorization with grants API](authorization_api.md): manages grants.
 - [Device API](device_api.md): allows managing devices, sending data from the device to the cloud and receiving commands.
 - [Data API](data_api.md): allows querying and subscribing to data stored at the cloud.
-- [Historical Data API](historicdata_api.md): allows querying historic data series and statistics stored at the cloud.
 - [CEP API](cep_api.md): allows analyzing data from your IoT device and triggering actions.
 - [Management API](management_api.md): allows creating new services and users to provide a multi-tenant environment.
 
@@ -33,7 +32,6 @@ Thinking Cities multitenancy model is described [in this section](multitenancy.m
 
 FIWARE IoT Data capabilities go far beyond querying the current context data or the short-term history. Thinking Cities provides means for storing hitorical data for the mid and long-term in third-party components; the following ones:
 
-- [HDFS](http://hadoop.apache.org/docs/current/hadoop-project-dist/hadoop-hdfs/HdfsUserGuide.html), the [Hadoop](http://hadoop.apache.org/) distributed file system.
 - [MySQL](https://www.mysql.com/), the well-know relational database manager.
 - [CKAN](http://ckan.org/), an Open Data platform.
 - [MongoDB](https://www.mongodb.org/), the NoSQL document-oriented database.
@@ -46,7 +44,6 @@ The following components used by Thinking Cities have been contributed as open s
 
 - IoTAgents (IoTA)
 - Context Broker (Orion)
-- Short Term Historic (STH)
 - Connector Framework (Cygnus)
 - Complex Event Processing (Perseo)
 

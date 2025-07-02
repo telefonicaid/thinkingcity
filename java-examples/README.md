@@ -25,9 +25,7 @@ Donde `<test_name>` es alguno de los siguientes:
 * `cb-insert`: inserción de datos mediante API de ContextBroker
 * `ckan-consume`: consumo de datos de CKAN
 * `ckan-insert`: inserción de datos en CKAN
-* `hive-consume`: consumo de datos del BigData vía Hive
 * `iota-insert`: inserción de datos mediante IoT Gateway
-* `sth-consume`: consumo de datos mediante API de STH
 
 Ejemplo:
 

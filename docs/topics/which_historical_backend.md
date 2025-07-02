@@ -1,104 +1,75 @@
-#<a name="top"></a>Which historical backend must I use?
-IoT Platform provides several backends where creating and maintaining historical datasets regarding the context information handled in real time. Among these backends we can find:
+# <a name="top"></a>Which historical backend should I use?
 
-* [HDFS](http://hadoop.apache.org/docs/current/hadoop-project-dist/hadoop-hdfs/HdfsUserGuide.html), the [Hadoop](http://hadoop.apache.org/) distributed file system.
-* [MicroStrategy](https://www.microstrategy.com), the BI component of the platform.
+The ThinkingCity Platform provides several backends where historical datasets related to real-time context information can be created and maintained. Among these backends we can find:
+
+* [MongoDB](https://www.mongodb.com), a highly scalable NoSQL database used for large-scale historical storage.
+* [MicroStrategy](https://www.microstrategy.com), the platform’s Business Intelligence component.
 * [CKAN](http://ckan.org/), our Open Data platform.
-* [STH Comet](https://github.com/telefonicaid/IoT-STH), a Short-Term Historic database built on top of [MongoDB](https://www.mongodb.org/).
 
-Given such a wide variety of backends, the next question is: which one suites better to my use case? This will usually depend on these variables:
+Given this variety of backends, the key question is: which one best suits my use case? This usually depends on the following variables:
 
-* **Amount of data**. If you could estimate the amount of data in the short and the mid/long term, that would be one of the most important decission factors.
-* **Privacy concerns**. Maybe your data can be made public as Open Data; or not.
-* **Desired analytics**. The main final purpose for storing data is to analyze it in order to get value-added insights.
-* **Visualization tools**. Very related to the above, graphical tools are always welcome when dealing with large amounts of data.
+* **Amount of data**. If you can estimate the volume of data in the short, medium, and long term, this will be one of the most relevant decisions.
+* **Privacy considerations**. Maybe your data can be made public as Open Data; or not.
+* **Desired analysis**. The main goal of storing data is to analyze it to obtain valuable information.
+* **Visualization tools**. Closely related to the above, graphical tools are useful when handling large volumes of information.
 
-Additionally, a fifth variable could be wether the persistence backend allows for **static data loading**. This means the backend is not only used for dynamically creating real context datasets, but other sources of static data of your own can be uploaded as well.
+A fifth variable could be whether the backend allows **static data loading**, meaning uploading other datasets independent from the real-time contextual data.
 
-Thus, let's analyze all the possibilities from the above variables point of view.
+Let’s look at each option from these perspectives.
 
-##HDFS
-This is the best choice if you don't want to care about the amount of data, since HDFS is the standar *the facto* when dealing with real Big Data. Based on a distributed cluster of machines, the HDFS storage capacity is the aggregation of all the cluster machines' capacity. Therefore, such a backend usually handles data volumnes in the range of the Terabyte; even more.
+## MongoDB
 
-Nevertheless, HDFS is just a file system in charge of managing folders and (very large) files. So, don't expect for analysis or visualization tools. This is something that other tools in the Hadoop ecosystem must provide; in the case of the IoT Platofom, we can find the following ones:
+MongoDB is currently the preferred solution for large-scale historical persistence, replacing the old systems based on Hadoop/HDFS. As a document-oriented NoSQL database, it allows managing massive volumes of data with high efficiency and horizontal scalability.
 
-* **MapReduce**. The native analysis paradigm in Hadoop. Based on spliting the original problem into many smaller problems (map phase) and then aggregating all the partial results (reduce phase).
-* **Querying tools: Apache Hive and Apache Pig**. Querying tools specifically addressed for structured data (CSV or Json, for instance) within HDFS.
-* **Apache Hue**. A web-based user interface where to run MapReduce jobs, query for data using Hive or Pig, or even displaying the raw data within HDFS using the FileBrowser.
+This backend is ideal if you handle large amounts of historical data. Moreover, MongoDB is flexible in terms of data schema, which makes it easier to adapt to changes in input formats without redesigning structures.
 
-With regards to privacy, HDFS is a user-oriented tool, where data is protected based on Unix-like permissions. This means the data is at least only available to the user, while members in the same group than the user could have restricted the access, the same than the rest of the world. This is the case of the IoT Platform.
+Regarding analysis, although MongoDB does not provide visual analytics tools by itself, it allows executing complex aggregate queries through its aggregation framework, or easily integrating with external tools such as [Grafana](https://grafana.com/), [Metabase](https://www.metabase.com/), among others.
 
-Finally, it must be said you can upload any static dataset of your own to HDFS. Then, this data can be analyzed independently of the context datasets created by the platform, or can be used together with them, for instance, for correlation purposes.
+In terms of privacy, MongoDB manages access through roles and authentication at the collection and database level, allowing fine-grained control over permissions.
+
+MongoDB also supports **static data loading**, so you can integrate your own datasets (e.g., historical records, catalogs, etc.) and analyze them along with the data generated by the ThinkingCity Platform.
 
 [Top](#top)
 
-##MicroStrategy
-This is the Business Intelligence system for the IoT Platform. You should use it if your aim is to get business-oriented visualizations and analytics, since MicroStrategy comes with a wide variety of features:
+## MicroStrategy
+
+This is the ThinkingCity Platform’s Business Intelligence system. It is ideal if your goal is to generate business-oriented visualizations and analyses, since MicroStrategy offers a wide range of functionalities:
 
 * General data visualization.
 * New data discovery.
 * Geospatial visualizations.
-* Advanced native analytical functions.
-* Enterprise reports.
+* Advanced analytical functions.
+* Business reports.
 * Dashboards.
 
-All the data must be stored in the Analytical Database (MySQL), which handles a private database per FIWARE service (i.e. a tenant of the platform).
+All data must be stored in the Analytical Database (MySQL), which manages a private database for each FIWARE service (tenant).
 
 [Top](#top)
 
-##CKAN
-If you want to make public your data, there is no doubt: CKAN is the persistence backend where to create your historical datasets since it is one of the most used Open Data platforms in the world. According to the [Open Knowledge Foundation](https://okfn.org/opendata/), making *open* your data means anyone is free to use, reuse and redestribute it. However, using CKAN does not mean all the publised data has to be public, being configurable in a per dataset basis.
+## CKAN
 
-Regarding storage capabilities, the data can be uploaded to the FileStore, a simple file manager, or to the DataStore, which is based on [PostgreSQL](http://www.postgresql.org).
+If you want to make your data public, CKAN is the ideal backend. It is one of the most recognized Open Data platforms worldwide. According to the [Open Knowledge Foundation](https://okfn.org/opendata/), making your data *open* means that anyone can use, reuse, and redistribute it freely.
 
-Apart from the open data capabilities of CKAN, it must be highlighted the visualization tools it provides in the form of viewers (other [viewers](http://docs.ckan.org/en/latest/maintaining/data-viewer.html) could be added upon request):
+With CKAN, data can be stored in the FileStore (a simple file manager) or in the DataStore (based on [PostgreSQL](http://www.postgresql.org)).
 
-* **Text View** and **Image View**. It simply displays the content of text and image files, respectively, within the FileStore. Special formats such as XML or Json have syntax highlighted.
-* **Recline View**. This is the visualization extension used for context datasets created by the platform in the DataStore. The data can be displayed as a grid, as a 2-axis graph or as a geolocation map (if the data contains some geolocation data).
+Moreover, CKAN offers visualization tools through integrated viewers:
 
-CKAN does not provide any analytical tool. And in the same way than HDFS, CKAN allows for uploading you own datasets (open or not).
+* **Text view** and **image view**, which allow exploring files directly in the browser.
+* **Recline View**, which allows visualizing data as a table, chart, or map if it contains geographic information.
 
-[Top](#top)
-
-##STH Comet
-As its name denotes, this MongoDB-based backend is used for short-term historical persistence. By short-term must be understood months, days or even days.
-
-It exposes a REST API for data querying. FIWARE service and FIWARE service path must be given in the form of Http headers, together with a authentication token. This means this is a tool for private consumption of data.
-
-An interesting detail regarding STH Comet API that may lead you for choosing it is not only raw records can be retrieved; but aggregated ones as well, which can be considered analytics into some extent:
-
-* Sum of a subset of samples.
-* Square sum of a subset of samples.
-* Maximum sample in a subset of samples.
-* Minimum sample in a subset of samples.
-* Number of samples 
-
-Subsets are parameterized by certain range of time and a resolution.
-
-No visualization tools are given with STH Comet. Nevertheless, its REST API could be integrated by a skilled developer with some tools such as [Grafana](http://grafana.org/).
-
-No other data different than the one stored by the platform in MongoDB can be queried.
+CKAN does not include analysis tools, but it does allow **uploading static datasets**, public or private, and provides access control at the organization or dataset level.
 
 [Top](#top)
 
-##Summary
-|Backend|Capacity|Privacy|Analytics|Visualization|Static upload|
-|---|---|---|---|---|---|
-|HDFS|High (1)|Per Unix user and group (2)|Apache MapReduce (3)<br>Apache Hive (3)<br>Apache Pig (3)|Apache Hue's FileBrowser (3)|Yes|
-|MicroStrategy|Medium|Per database (4)|Many algorithms|Many dashboards|No|
-|CKAN|Medium|Per dataset (5)|-|CKAN text view<br>CKAN image view<br>CKAN recline view|Yes|
-|STH Comet|Medium|Per FIWARE service and FIWARE service path|Raw and aggregated querying API|Grafana (6)|No|
+## Summary
 
-(1) Having an initial capacity, our commitment is to scale upon client needs.
-<br>
-(2) For each FIWARE service and FIWARE service path, there may be one or more Unix users.
-<br>
-(3) Not natively given by HDFS, but by Hadoop stack.
-<br>
-(4) A database is handled per each FIWARE service.
-<br>
-(5) A dataset belongs to a CKAN organization, whose name is equels to the FIWARE service the data belongs to. Someting similar occurs with the dataset name, whose name is the concatenation of the FIWARE service and FIWARE service path.
-<br>
-(6) Not natively given by STH Comet, but could be integrated.
+| Backend        | Capacity | Privacy                               | Analysis                                                              | Visualization                          | Static Load     |
+|----------------|----------|---------------------------------------|-----------------------------------------------------------------------|----------------------------------------|-----------------|
+| MongoDB        | High     | Per MongoDB roles and users           | Complex aggregations<br>BI integration                                | Integration with Grafana/Metabase      | Yes             |
+| MicroStrategy  | Medium   | Per database (1)                      | Many business algorithms                                              | Business dashboards                    | No              |
+| CKAN           | Medium   | Per dataset (2)                       | -                                                                     | CKAN views: text, image, table, map    | Yes             |
+
+(1) One database is managed per FIWARE service.  
+(2) A dataset belongs to a CKAN organization, which corresponds to the FIWARE service. The dataset name concatenates the service and its path.
 
 [Top](#top)
