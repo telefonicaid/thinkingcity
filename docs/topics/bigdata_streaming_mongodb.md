@@ -1,8 +1,8 @@
-Big data within [MongoDB](https://www.mongodb.com) clusters is mainly analyzed by means of the aggregation pipeline paradigm. Big Data analysis within the ThinkingCity Platform was previously handled using Hadoop clusters, primarily through the MapReduce paradigm and its integration with tools like Hue and Oozie. However, the platform has transitioned to a more agile and scalable architecture using MongoDB, eliminating the need for Hadoop and its ecosystem.
+Big data within [MongoDB](https://www.mongodb.com) is efficiently managed and analyzed through its powerful aggregation pipeline paradigm. This approach allows for advanced data processing without the need for complex infrastructure, making MongoDB an agile and scalable platform for large-scale data analytics.
 
-MongoDB allows developers and integrators to perform powerful data analysis using Python, leveraging libraries like pymongo and its native aggregation pipeline, which serves a similar purpose to MapReduce.
+MongoDB allows developers and integrators to perform powerful data analysis using Python, leveraging libraries like pymongo along with the database's native aggregation capabilities.
 
-This document presents a step-by-step guide to creating Python-based data analysis tasks in MongoDB, simulating a word count example previously implemented with Hadoop Streaming.
+This document presents a step-by-step guide to creating data analysis tasks in MongoDB using Python, with a simple word count example based on plain text.
 
 # Setup
 **IMPORTANT NOTE**: As an integrator, remember replacing the `admin` user appearing in the tutorial by your own user. Also replace `mongodb://localhost:27017` by the actual MongoDB connection string corresponding to your environment.
@@ -50,7 +50,7 @@ pipeline = [
 for doc in collection.aggregate(pipeline):
     print(f"{doc['_id']}: {doc['count']}")
 ```
-These files should be executed from your Python environment. They replicate the logic of the classic WordCount MapReduce example, now using MongoDB’s aggregation pipeline.
+These files should be executed from your Python environment. They replicate the classic word count example using MongoDB’s aggregation capabilities.
 
 ## Data
 You can insert any plain text into the text_data collection. Here’s how to run the data insertion script:
@@ -63,15 +63,12 @@ The inserted documents will follow this structure:
 ```
 You can inspect the collection using [MongoDB Compass](https://www.mongodb.com/es/products/tools/compass) or your preferred tool.
 
-# Data Analysis with MongoDB Aggregation
-Instead of defining a streaming MapReduce job in Hue, now you can run your analysis script locally or integrate it into modern orchestration tools.
-
-Run the wordcount.py script:
+# Data Analysis with MongoDB Aggregation Pipeline
+Run the analysis script locally or as part of automated workflows:
 
 ```Python
 $ python wordcount.py
 ```
-
 Expected output:
 
 ```Python
@@ -83,20 +80,19 @@ Lorem: 1
 sit: 1
 ...
 ```
-This output demonstrates how MongoDB can replicate MapReduce-like behavior more simply and efficiently.
+This output demonstrates how MongoDB’s aggregation pipeline allows for simple, efficient data analysis directly within the database.
 
 # Advanced Workflows
-More complex workflows—previously handled through Oozie or chained MapReduce jobs—can now be implemented using tools that better integrate with MongoDB:
+MongoDB adapts to more complex workflows, enabling:
 
-* Python scripts orchestrated with tools like Airflow, Luigi, or custom schedulers to manage data ingestion, transformation, and export tasks
+* Orchestration with tools like Airflow or Luigi, for managing data ingestion, transformation, and export tasks via Python scripts
 
-* MongoDB triggers and change streams to create event-driven workflows that react in real time to database changes
+* Reactive tasks using MongoDB change streams and triggers, enabling event-driven workflows that respond to changes in the database in real time
 
-* Scheduled cron jobs to automate routine operations such as backups, aggregation rollups, or data archival
+* Automation with cron jobs, useful for scheduled operations such as backups, aggregation rollups, or data archiving
 
-These tools provide flexibility and modularity without the need for Hadoop components.
+These capabilities enable the development of modular, scalable solutions tailored to various enterprise environments—without relying on complex external systems.
 
 
 # Conclusion
-The transition from Hadoop to MongoDB streamlines Big Data processing and reduces infrastructure complexity. MongoDB’s aggregation pipeline, together with Python integrations, allows for real-time analysis, simpler deployments, and faster development cycles.
-By replacing Hadoop and Hue with MongoDB and modern Python-based workflows, the ThinkingCity Platform achieves greater scalability, maintainability, and performance in its Big Data module.
+MongoDB offers a robust and flexible platform for Big Data analysis. Its aggregation pipeline, combined with Python scripting, provides a modern and efficient solution for processing large volumes of data. This architecture enables real-time analysis, reduces deployment complexity, and accelerates development cycles.
