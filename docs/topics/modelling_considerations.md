@@ -15,7 +15,7 @@ of your system. Some examples are:
 
 What does it mean that those objects are Context Entities (instead of classes, objects, tables, or documents). The
 difference lays in how it is treated around the platform: modifications of the CEs can be observed by subscriptions,
-the history of those changes stored at [persistence backends](../cygnus.md) (CKAN, MySQL),
+the history of those changes stored at [persistence backends](../cygnus.md), like MySQL,
 rules can be defined to modify the global Context based on CEs changes with [CEP](../cep.md)...
 
 All the given examples have several things in common:
