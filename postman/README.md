@@ -9,8 +9,6 @@ In order to use the Postman collection included in this directory (https://githu
 * **ENDPOINT_IOTA_UL_HTTP**: the host:port for sending UL mesaures
 * **ENDPOINT_IOTA_JSON_HTTP**: the host:port for sending JSON measures
 * **ENDPOINT_CEP**: the host:port for CEP requests
-* **ENDPOINT_CKAN**: the host:port for CKAN requests
-* **CKAN_APIKEY**: apikey used for CKAN authetication
 * **SERVICE**: service to use in `Fiware-Service` header
 * **SUBSERVICE**: subservice to use in the `Fiware-ServicePath` header
 * **USER**: user (used by the "Get auth token" operation)

@@ -33,7 +33,6 @@ Thinking Cities multitenancy model is described [in this section](multitenancy.m
 FIWARE IoT Data capabilities go far beyond querying the current context data or the short-term history. Thinking Cities provides means for storing hitorical data for the mid and long-term in third-party components; the following ones:
 
 - [MySQL](https://www.mysql.com/), the well-know relational database manager.
-- [CKAN](http://ckan.org/), an Open Data platform.
 - [MongoDB](https://www.mongodb.org/), the NoSQL document-oriented database.
 
 ## FIWARE Components
