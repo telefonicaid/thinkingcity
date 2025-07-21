@@ -108,9 +108,9 @@ the [specification](https://github.com/telefonicaid/iotagent-node-lib/blob/maste
 For those data values that doesn't come from devices, but from external systems, and for those cases when the sources of
 context information to calculate those values are multiple, the [CEP](../cep.md) can be used to make some of those calculations.
 
-The CEP gets a notification cointaining a configurable set of attributes (as set in the subscription) and that allows using more fields than the ones sent by device. The notification mechanism allows to send the previous value of an attribute as metadata `previousValue` (see [metadata in notifications](http://fiware-orion.readthedocs.io/en/master/user/metadata/index.html#metadata-in-notifications)). So, as an example, we can think of an entity that periodically sends its coordinates and the time of the measure. We could calculate its average velocity by means of a rule that updates its field `velocity`.
+The CEP gets a notification cointaining a configurable set of attributes (as set in the subscription) and that allows using more fields than the ones sent by device. The notification mechanism allows to send the previous value of an attribute as metadata `previousValue` (see [metadata in notifications](https://github.com/telefonicaid/fiware-orion/blob/master/doc/manuals/orion-api.md#builtin-metadata)). So, as an example, we can think of an entity that periodically sends its coordinates and the time of the measure. We could calculate its average velocity by means of a rule that updates its field `velocity`.
 
-For simplicity, the previous values are taken as values in the incomming notification, but they could be taken as `ev.x__metadata__previousValue` instead of `x0`, and the same for `y0` and `t0` (see [Metadata and object values](https://github.com/telefonicaid/perseo-fe/blob/master/documentation/plain_rules.md#metadata-and-object-values))
+For simplicity, the previous values are taken as values in the incomming notification, but they could be taken as `ev.x__metadata__previousValue` instead of `x0`, and the same for `y0` and `t0` (see [Metadata and object values](https://github.com/telefonicaid/perseo-fe/blob/master/docs/API/plain_rules.md#metadata-values))
 
 The rule could be:
 

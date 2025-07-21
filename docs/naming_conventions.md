@@ -1,15 +1,15 @@
 The platform impose several constraints with regards to the naming of the persistence elements (files, databases, tables and collections). Such constraints, and the way the different storages solve them, must be had into account when designing the data model of the solution running on top of the platform.
 
 # Global character set and size limitations
-Globally, the platform impose certain rules when defining the data model. These rules directly come from Orion Context Broker [constraints](https://fiware-orion.readthedocs.io/en/2.4.0/user/forbidden_characters/index.html) regarding the character set used for entity and attribute names and their types:
+Globally, the platform impose certain rules when defining the data model. These rules directly come from Orion Context Broker [constraints](https://github.com/telefonicaid/fiware-orion/blob/master/doc/manuals/orion-api.md#general-syntax-restrictions) regarding the character set used for entity and attribute names and their types:
 
 * The following charaters are forbidden: `<`, `>`, `"`, `'`, `=`, `;`, `(` and `)`.
 * The following ones should also be avoided: white space, `?`, `/`, `%` and `&`.
 
 Additionally, Orion Context Broker imposes the following restrictions:
 
-* The [FIWARE-service](https://fiware-orion.readthedocs.io/en/2.4.0/user/multitenancy/index.html) must be a string of alphanumeric characters including the underscore, whose maximum length is 50 characters.
-* The [FIWARE-servicePath](https://fiware-orion.readthedocs.io/en/2.4.0/user/service_path/index.html) must be a string defining a Unix-like path starting with slash and having maximum 10 levels; being each level a string of alphanumeric characters including the underscore, whose maximum lenght is 50 characters. Nevertheless, the platform currently only allows a single level.
+* The [FIWARE-service](https://github.com/telefonicaid/fiware-orion/blob/master/doc/manuals/orion-api.md#multi-tenancy) must be a string of alphanumeric characters including the underscore, whose maximum length is 50 characters.
+* The [FIWARE-servicePath](https://github.com/telefonicaid/fiware-orion/blob/master/doc/manuals/orion-api.md#service-path) must be a string defining a Unix-like path starting with slash and having maximum 10 levels; being each level a string of alphanumeric characters including the underscore, whose maximum lenght is 50 characters. Nevertheless, the platform currently only allows a single level.
 
 All these limitations imposed by Orion Context Broker are propagated to the storages via Cygnus connectors with PostgreSQL and MongoDB.
 
