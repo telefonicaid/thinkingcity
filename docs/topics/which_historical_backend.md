@@ -1,6 +1,6 @@
 # <a name="top"></a>Which historical backend should I use?
 
-The ThinkingCity Platform provides several backends where historical datasets related to real-time context information can be created and perssted. Among these backends we can find:
+The ThinkingCity Platform provides several backends where historical datasets related to real-time context information can be created and persisted. Among these backends we can find:
 
 * [PostgreSQL](http://www.postgresql.org/), the well-known relational database manager.
 * [MongoDB](https://www.mongodb.com), a highly scalable NoSQL database used for large-scale historical storage.

@@ -9,7 +9,7 @@ There are several charset and naming limitations to take into account when using
   at the [NGSIv2 specification](http://telefonicaid.github.io/fiware-orion/api/v2/stable/).
 * Service and subservices (also named *service path* in some cases) restrictions, which are described in
   [this document](../multitenancy.md).
-* The usage of persistence backends like MySQL, could impose additional  limitations.
+* The usage of persistence backends like PostgreSQL, could impose additional  limitations.
 
 Please, have a look to [the data model persistence naming conventions](../naming_conventions.md) for more detail.
 
