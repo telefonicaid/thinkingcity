@@ -25,6 +25,6 @@ One of the most important features of the Context Broker is that it allows to mo
 ## Orion Context Broker references
 
 - [Introduction to Context Management and Orion Context Broker](http://bit.ly/fiware-orion) (slideshare)
-- [User Manual](https://github.com/telefonicaid/fiware-orion/tree/master/doc/manuals/user)
-- [Administrator Manual](https://github.com/telefonicaid/fiware-orion/tree/master/doc/manuals/admin)
+- [User Manual](https://github.com/telefonicaid/fiware-orion/tree/master/doc/manuals/user/README.md)
+- [Administrator Manual](https://github.com/telefonicaid/fiware-orion/tree/master/doc/manuals/admin/README.md)
 - [Source code repository](https://github.com/telefonicaid/fiware-orion)
