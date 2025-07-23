@@ -1,9 +1,9 @@
 # <a name="top"></a>How to massively move data from/to the Platform (Big Data)
-Moving massive data from or to the ThinkingCity Platform now means interacting with [**MongoDB**](https://www.mongodb.com), replacing the previous use of [Hadoop](http://hadoop.apache.org/)'s HDFS.
+Moving massive data from or to the ThinkingCity Platform involves interacting with [**MongoDB**](https://www.mongodb.com).
 
 MongoDB is a document-oriented NoSQL database that stores data in flexible, JSON-like documents. It provides native support for bulk insertions, querying, and aggregation, making it suitable for scalable Big Data processing within the ThinkingCity Platform.
 
-In this updated architecture, data is no longer split into blocks across HDFS nodes. Instead, it is stored as collections in MongoDB databases. For high-throughput data ingestion and export, MongoDB supports various tools and APIs, such as the native `mongoimport/mongoexport`, `mongodump/mongorestore`, and Python-based pipelines using `pymongo`.
+In this architecture, data is stored as collections in MongoDB databases. For high-throughput data ingestion and export, MongoDB supports various tools and APIs, such as the native `mongoimport/mongoexport`, `mongodump/mongorestore`, and Python-based pipelines using `pymongo`.
 
 There are several ways to interact with the MongoDB-based storage. Below are the methods supported by the ThinkingCity Platform.
 
@@ -40,7 +40,7 @@ collection.insert_many([
     {"device_id": "sensor02", "timestamp": 1721820260, "value": 38}
 ])
 ```
-Data can also be loaded from external sources (e.g., CSV, SQL databases, APIs) and pushed to MongoDB using similar patterns.
+Data can also be loaded from external sources (e.g., CSV files, SQL databases, APIs) and pushed to MongoDB using similar patterns.
 
 Please contact the ThinkingCity Platform team to request access to the ETL server, including necessary authentication details and configuration files.
 
