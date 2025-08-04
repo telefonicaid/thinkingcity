@@ -21,7 +21,7 @@ import java.io.IOException;
  * existencia de entidades de tipo WasteContainer (que son las recuperarán) según el
  * modelo semántico descrito con detalle como modelo armonizado FIWARE en:
  *
- * http://fiware-datamodels.readthedocs.io/en/latest/WasteManagement/WasteContainer/doc/spec/index.html
+ * https://github.com/smart-data-models/dataModel.WasteManagement/blob/master/WasteContainer/doc/spec.md
  *
  * Así mismo, el ejemplo asume simplificaciones con respecto a un caso real, a fin de
  * hacerlo más claro e ilustrativo, pe. certificados sin autofirmar, no se realiza

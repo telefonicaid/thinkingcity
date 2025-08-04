@@ -1,8 +1,8 @@
 {
 	"info": {
 		"_postman_id": "39ea19a8-fa1b-4853-8a4c-81b0488ae467",
-		"name": "ThinkingCities APIs Basic Ops",
-		"description": "A set with the basic API operations used by ThikingCities platform, covering:\n\n* IDM & Auth\n* Orion Context Broker\n* Perseo CEP\n* CKAN\n",
+		"name": "ThinkingCity APIs Basic Ops",
+		"description": "A set with the basic API operations used by ThinkingCity platform, covering:\n\n* IDM & Auth\n* Orion Context Broker\n* Perseo CEP\n* CKAN\n",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [

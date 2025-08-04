@@ -1,5 +1,5 @@
-# Thinking Cities
-Repository to store and manage end user documentation related to the Telefónica's Thinking Cities platform powered by FIWARE.
+# ThinkingCity
+Repository to store and manage end user documentation related to the Telefónica's ThinkingCity platform powered by FIWARE.
 
 ## How to generate documentation for a specific release
 
@@ -49,7 +49,7 @@ git commit
 git push origin release/v4.2
 ```
 
-* Check at http://thinking-cities.readthedocs.io/en/master/ that the new release is there (otherwise review the
+* Check at https://thinkingcity.readthedocs.io/ that the new release is there (otherwise review the
   RTD configuration)
 
 ## Configuration file syntax

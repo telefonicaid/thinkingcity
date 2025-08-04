@@ -1,4 +1,4 @@
-Authorization API allows you to create, assign and retrieve grants for users of Thinking Cities platform.
+Authorization API allows you to create, assign and retrieve grants for users of ThinkingCity platform.
 
 # Grants
 
@@ -14,16 +14,16 @@ There is a complete description about grants for [Urbo2](https://github.com/tele
 
 # Create Grants
 
-Grants, like other subservices (keystone project), can be created using [Management API for create subservice](https://thinking-cities.readthedocs.io/en/latest/management_api/index.html#create-subservice)
+Grants, like other subservices (keystone project), can be created using [Management API for create subservice](https://github.com/telefonicaid/thinkingcity/blob/master/docs/management_api.md#create-subservice)
 
-Morever, like others subservices, can be created using Administration Portal of ThinkingCities Platform.
+Morever, like others subservices, can be created using Administration Portal of ThinkingCity Platform.
 
 
 # Assign Grants
 
 To assign a grant to a user, a role should be assigned to a user in that grant (keystone project) using [Management API for assign role to user](https://orchestrator2.docs.apiary.io/#reference/orchestrator/user-role-assigment/assign-role-to-user)
 
-Morever, like others role assigments, can be performed using Administration Portal of ThinkingCities Platform.
+Morever, like others role assigments, can be performed using Administration Portal of ThinkingCity Platform.
 
 
 # Get Grants
