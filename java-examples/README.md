@@ -1,6 +1,6 @@
 # java-examples
 
-Ejemplos escritos en Java que hacen uso de la plataforma ThinkingCities.
+Ejemplos escritos en Java que hacen uso de la plataforma ThinkingCity.
 
 Requisitos:
 
@@ -41,7 +41,7 @@ mvn exec:java@cb-consume exec:java@cb-insert
 
 Consideraciones adicionales:
 
-* Los ejemplos se sitúan dentro del ámbito de un vertical de gestión de residuos (limpieza) en base al modelo semántico establecido por FIWARE para el mismo. En concreto, se utiliza el modelo armonizado de WasteContainer (contenedor de basura) cuya especificación se encuentra en: http://fiware-datamodels.readthedocs.io/en/latest/WasteManagement/WasteContainer/doc/spec/index.html 
+* Los ejemplos se sitúan dentro del ámbito de un vertical de gestión de residuos (limpieza) en base al modelo semántico establecido por FIWARE para el mismo. En concreto, se utiliza el modelo armonizado de WasteContainer (contenedor de basura) cuya especificación se encuentra en: https://github.com/smart-data-models/dataModel.WasteManagement/blob/master/WasteContainer/doc/spec.md 
 * Cada ejemplo es autocontenido (con la salvedad del uso que se hace de la librería ExampleCommons, ver más abajo) y es directamente ejecutable, si bien el servicio y subservicio utilizado ("smartgordon" y "/gardens" respectivamente) se muestran a modo de ejemplo y no están realmente provisionados. También es preciso utilizar una nombre de host o IP valido ("platformhost" en los ejemplos).
 * Los ejemplos asumen simplificaciones con respecto al caso real, a fin de hacerlos más claros e ilustrativos. Por ejemplo, no se utiliza un fichero de configuraciones y todos los parámetros van sobre el propio código fuente, la password va en claro, se aceptan certificados autofirmados, programación realizada íntegramente en base a clases estáticas, no se realiza control de errores de I/O, etc.
 *	A fin de hacer más simples los ejemplos y focalizarlos en los casos de uso objetivo, se hace uso de una clase estática con métodos de utilidad, denominada ExampleCommons.

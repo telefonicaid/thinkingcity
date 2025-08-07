@@ -6,7 +6,7 @@ mapping your device data to an NGSI Entity and attributes.
 The Device API allows you to:
 
 - Register your device to reduce the message footprint and use commands.
-- Send data from the device to Thinking Cities
+- Send data from the device to ThinkingCity
 - Send commands from your application to the device
 
 The following documents show how to manage device connectivity through the IoT Agent Manager of the ThinkingCity Platform. These

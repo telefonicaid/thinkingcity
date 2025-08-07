@@ -68,7 +68,7 @@ public class ExampleCommons {
 
   /**
    * Esta función encapsula la petición de token, mediante una llamada al componente IDM
-   * de la plataforma ThinkingCities. Dado un servicio, subservicio, usuario y password,
+   * de la plataforma ThinkingCity. Dado un servicio, subservicio, usuario y password,
    * devolverá un token válido para realizar el acceso.
    *
    * @param service

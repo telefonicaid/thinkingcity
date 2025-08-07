@@ -14,7 +14,7 @@ Additionally, Orion Context Broker imposes the following restrictions:
 All these limitations imposed by Orion Context Broker are propagated to the storages via Cygnus connectors with PostgreSQL and MongoDB.
 
 # PostgreSQL character set and size limitations
-Persisting context data in [PostgreSQL](https://fiware-cygnus.readthedocs.io/en/master/cygnus-ngsi/flume_extensions_catalogue/ngsi_postgresql_sink.html) implies creating databases and tables, whose names are constrained to 63 character strings of alphanumerics and underscore:
+Persisting context data in [PostgreSQL](https://github.com/telefonicaid/fiware-cygnus/blob/master/doc/cygnus-ngsi/flume_extensions_catalogue/ngsi_postgresql_sink.md) implies creating databases and tables, whose names are constrained to 63 character strings of alphanumerics and underscore:
 
 * Databases: `<FIWARE-service>`
 * Tables: `<FIWARE-servicePath>_<entityID>_<entityType>`.
@@ -22,7 +22,7 @@ Persisting context data in [PostgreSQL](https://fiware-cygnus.readthedocs.io/en/
 Any other character within the FIWARE-service, FIWARE-servicePath, entity ID and type different than alphanumerics and underscore is replaced by underscore.
 
 # MongoDB character set and size limitations
-Persisting context data in [MongoDB](https://fiware-cygnus.readthedocs.io/en/master/cygnus-ngsi/flume_extensions_catalogue/ngsi_mongo_sink.html) implies creating databases and collections:
+Persisting context data in [MongoDB](https://github.com/telefonicaid/fiware-cygnus/blob/master/doc/cygnus-ngsi/flume_extensions_catalogue/ngsi_mongo_sink.md) implies creating databases and collections:
 
 * Databases: `<FIWARE-service>`.
 * Collections: `<FIWARE-servicePath>`.
