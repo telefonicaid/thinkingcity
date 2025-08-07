@@ -15,7 +15,7 @@ These rules are expressed as an EPL sentence. [EPL](http://www.espertech.com/esp
 
 # Send Context to CEP to Activate Rules
 
-In order CEP to assess events and execute rules it is needed to send to CEP the notifications from Context Broker with the context data. In order to send notifications to CEP it is needed to create the relevant subscripcions. It can be done using the [Context Broker API](https://github.com/telefonicaid/thinkingcity/blob/master/docs/data_api.md#subscribe-to-data-updates)
+In order CEP to assess events and execute rules it is needed to send to CEP the notifications from Context Broker with the context data. In order to send notifications to CEP it is needed to create the relevant subscripcions. It can be done using the [Context Broker API](https://thinkingcity.readthedocs.io/en/latest/data_api.html#subscribe-to-data-updates)
 
 Find below an example of subscription creation, where the attribute temperature is sent to CEP.
 
@@ -151,7 +151,7 @@ X-Auth-Token: {{user-token}}
 
 # Create rule to issue a command to a device
 
-It is possible to send a command to a device using FIWARE CEP by updating the relevant Context Broker attribute. First of all, you have to register you IoT device setting the command you want to issue as stated in [Register your IoT device](https://github.com/telefonicaid/thinkingcity/blob/master/docs/device_api.md#register-your-iot-device). The rule will update the command attribute in the Context Broker and then the Context Broker acts in the same way as in a manually issued command.
+It is possible to send a command to a device using FIWARE CEP by updating the relevant Context Broker attribute. First of all, you have to register you IoT device setting the command you want to issue as stated in [Register your IoT device](https://thinkingcity.readthedocs.io/en/latest/device_api.html#register-your-iot-device). The rule will update the command attribute in the Context Broker and then the Context Broker acts in the same way as in a manually issued command.
 
 ```
 POST /rules HTTP/1.1
