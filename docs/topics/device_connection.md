@@ -9,7 +9,7 @@ available protocols.
 The current version of the platform supports two protocols: Ultralight 2.0 and JSON. This document will show how to
 connect a single device to the platform to send a piece of data, and to receive some data from the platform.
 
-Connecting a device to the Platform will make a single Context Entity with all the information about the device available
+Connecting a device to the platform will make a single Context Entity with all the information about the device available
 in the [Context Broker](../context_broker.md). Interactions with the devices are always channeled through operations over this entity.
 
 More informacion about the device APIs can be found in the [Device API section](../device_api.md). You can find links
@@ -20,7 +20,7 @@ for its Gardening services. To this extent, we will assume that a service called
 `/gardens` have been created. All the requests to the platform will include the appropriate ´Fiware-service´ and
 `Fiware-servicepath` headers, as explained [here](../multitenancy.md).
 
-## Sending a measure to the Platform
+## Sending a measure to the platform
 
 ### Configuring the APIKey and protocol
 
@@ -111,11 +111,11 @@ This will provision our `ws1956672` workstation in the system, making it ready t
 
 In order to send measures to the platform, the device has to fulfill the following requirements:
 
-* Connectivity to the South Bound of the platform (i.e.: the ports used to communicate physical devices with the Platform).
+* Connectivity to the South Bound of the platform (i.e.: the ports used to communicate physical devices with the platform).
 * Either an MQTT or an HTTP client (as those are the transport protocols currently supported).
 
 Being the most common, we will assume that your constraint device have an HTTP client, that can send requests to the
-platform. This interaction with the Platform can be implemented with whichever programming language your device supports.
+platform. This interaction with the platform can be implemented with whichever programming language your device supports.
 At the present moment, no SDKs are provided for south bound interactions.
 
 In this case, a typical measure report from our Weather Station will consist on a request like the following
@@ -196,7 +196,7 @@ or the same entity in NGSIv2 format:
 
 ### Sending a command
 
-The Platform gives also the opportunity for the devices to receive commands or information from the platform. To illustrate
+The platform gives also the opportunity for the devices to receive commands or information from the platform. To illustrate
 this point, we will show how to send some configuration information to a device, using polling commands, i.e.: commands
 that do not require the device to be online to be receieved, but that are retrieved when the device connects to the platform.
 
@@ -243,7 +243,7 @@ include the Device ID provisioned before, for verification purposes.
 
 Take into account that polling commands (as the ones depicted in this document) have an expiration time, and so, if the
 device don't retrieve the available commands in a reasonable amount of time, they will be discarded. Expiration time of
-the commands is defined Platform-wide (and currently set to 1 day).
+the commands is defined platform-wide (and currently set to 1 day).
 
 To keep track of the state of commands sent to a device, the IoTAgents create a set of additional attributes in the device
 entity that let the user check the current status of the command, and the result of the command if there is any. The

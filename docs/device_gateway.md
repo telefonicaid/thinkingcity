@@ -25,7 +25,7 @@ right IoT Agent to use.
 If you are interested in more details about how to connect your devices and sensors to the platform check out the
 [Device API section](device_api.md).
 
-At present, the following IoT Agents and supported IoT protocols in the ThinkingCity Platform are:
+At present, the following IoT Agents and supported IoT protocols in the ThinkingCity platform are:
 
 - [Ultralight 2.0](https://github.com/telefonicaid/iotagent-ul): SensorML based simple text protocol.
 - [JSON](https://github.com/telefonicaid/iotagent-json): a JSON based key-value pair protocol.
@@ -33,7 +33,7 @@ At present, the following IoT Agents and supported IoT protocols in the Thinking
 Both IOTAgents work with either HTTP or MQTT as the transport protocol.
 
 More IoT Agents are available in the comunity, that you can use in your local deployments (but are not yet available in
-the Platform):
+the platform):
 
 - [OMA LWM2M](https://github.com/telefonicaid/lightweightm2m-iotagent)
 - [Thinking Things Open](https://github.com/telefonicaid/iotagent-thinking-things)

@@ -1,11 +1,11 @@
-# Tips on how to model your project entities with the ThinkingCity Platform
+# Tips on how to model your project entities with the ThinkingCity platform
 
 There are some considerations to make when designing how to model a project in the platform. This document will give you
 some hints to avoid most common mistakes (use them as hints to guide your modelling, not as strict rules).
 
-## The ThinkingCity Platform is centered in context
+## The ThinkingCity platform is centered in context
 
-The central piece of the ThinkingCity Platform is the Context Broker: a component that lets you store and query information
+The central piece of the ThinkingCity platform is the Context Broker: a component that lets you store and query information
 about context entities. But, what is a Context Entity? Context Entities are logical abstractions that represent the elements
 of your system. Some examples are:
 
@@ -27,9 +27,9 @@ to their changes, etc. This behavior does not fit well with processes (and thing
 transient information (e.g.: support tickets, mails, log files). This doesn't mean short-lived entities can't be modelled
 in the system, but having those kind of entities in your project will cause several operational issues in the platform.
 
-## The Platform is not a ticketing system
+## The platform is not a ticketing system
 
-Another common mistake involves the use of the Platform for short-lived ticketing, as in the following scenarios:
+Another common mistake involves the use of the platform for short-lived ticketing, as in the following scenarios:
 
 * A system that keeps track of alarms risen by sensors, and whether they have been solved or not. Modelled entities are:
 Sensor and Alarm.
@@ -106,13 +106,13 @@ could be difficult in this situation.
  goes for an alarm that was raised multiple times, if some new information arrives about a past alarm notification.
 
 For all those situations where this kind of model cannot fit your problem, you may consider to manage that part of your
-problem externally, through a ticketing system, or a specialized backend. The IoTPlatform offers multiple ways to
-link your data in external systems with data in the platform, so you can still benefit from the Platform features, while
+problem externally, through a ticketing system, or a specialized backend. ThinkingCity platform offers multiple ways to
+link your data in external systems with data in the platform, so you can still benefit from the platform features, while
 using specialized tools for particular processes (like support or purchases).
 
 ## Attributes are not collections
 
-A commmon mistake when a beginner is modelling a problem in the Platform is: to see the structure of a Context Entity
+A commmon mistake when a beginner is modelling a problem in the platform is: to see the structure of a Context Entity
 (i.e.: objects with an identity that have collections of other objects, the attributes, that have names and values) (NGSIv1):
 
       {
