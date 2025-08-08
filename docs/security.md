@@ -38,7 +38,7 @@ they are not resources per se.
 ## Access restriction: Steelskin PEP
 
 Steelskin is an XACML Policy Enforcement Point (PEP), designed to work along with Keypass to restrict the access to
-the Platform components based on the defined policies. It is a transparent proxy that checks each request for the
+the platform components based on the defined policies. It is a transparent proxy that checks each request for the
 following authentication information:
 
 - Fiware-Service header: containing the Service the request is trying to access (corresponding to a Keystone domain).

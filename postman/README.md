@@ -1,6 +1,6 @@
 You can get Postman here: https://www.getpostman.com/
 
-In order to use the Postman collection included in this directory (https://github.com/telefonicaid/thinkingcity/blob//master/postman/ThinkingCity%20APIs%20Basic%20Ops.postman_collection.json), you need to define the following variables in your environment:
+In order to use the Postman collection included in this directory (https://github.com/telefonicaid/thinkingcity/blob/master/postman/ThinkingCity%20APIs%20Basic%20Ops.postman_collection.json), you need to define the following variables in your environment:
 
 * **PROTOCOL**: protocol used for the APIs (https or http)
 * **ENDPOINT_CB**: the host:port for context broker requests

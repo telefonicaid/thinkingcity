@@ -1,8 +1,8 @@
 # How to add new actions to CEP
 
-The ThinkingCity Platform [CEP](../cep.md) comes with a set of actions, introduced in the [CEP API documentation](../cep_api.md).
+The ThinkingCity platform [CEP](../cep.md) comes with a set of actions, introduced in the [CEP API documentation](../cep_api.md).
 
-This set is enhanced from time to time adding new actions, according to ThinkingCity Platform development roadmap.
+This set is enhanced from time to time adding new actions, according to ThinkingCity platform development roadmap.
 However, it may happen that at a given moment of time, the current actions set is not enough for your use case 
 and you need new actions. In that case you have basically two options:
 
@@ -14,7 +14,7 @@ and you need new actions. In that case you have basically two options:
   flexible. 
 * Request the development of the new action as part of the CEP actions set. In this case, please [fill 
   a new issue](https://github.com/telefonicaid/perseo-fe/issues/new) in the CEP repository using the title 
-  "New Action Request" and providing a detailed description of the action you are proposing. The ThinkingCity Platform 
+  "New Action Request" and providing a detailed description of the action you are proposing. The ThinkingCity platform 
   team will consider your request to be included a next version of the platform. Note that CEP is open source, so 
   if you could provide the code corresponding to the action you are proposing in the form of 
   a [pull request](https://help.github.com/articles/about-pull-requests) to the repository then you could ease 

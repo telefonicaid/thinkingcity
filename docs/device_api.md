@@ -9,13 +9,13 @@ The Device API allows you to:
 - Send data from the device to ThinkingCity
 - Send commands from your application to the device
 
-The following documents show how to manage device connectivity through the IoT Agent Manager of the ThinkingCity Platform. These
+The following documents show how to manage device connectivity through the IoT Agent Manager of the ThinkingCity platform. These
 APIs have some differences with the standard IoT Agent Device Provisioning APIs as defined in the [IoT Agent Library](https://github.com/telefonicaid/iotagent-node-lib)
-but it should be transparent for the users of the Platform.
+but it should be transparent for the users of the platform.
 
 # Configure the South Bound protocol
 
-In order for the South Bound protocols (i.e.: the protocols used to communicate physical devices with the Platform)
+In order for the South Bound protocols (i.e.: the protocols used to communicate physical devices with the platform)
 to work for your service, you must provision the information about your devices, either by provisioning the device itself,
 by provisioning a Configuration Group (for each subservice) or both. Configuration Groups define some default values for the South Bound protocol to NGSI mapping,
 that will be applied to every device associated to the group. Devices will be associated to groups based on the API Key
@@ -72,7 +72,7 @@ along with the information for its mapping to the NGSI entity.
 
 Provisioning of JSON Configuration group is exactly the same just replacing `?protocol=IoTA-UL` by `?protocol=IoTA-JSON`. 
 
-Currently, the ThinkingCity Platform only allows for the existence of a configuration group per subservice for each protocol and apikey, i.e. one for "IoTA-UL" with apikey "XXYYZZ", "IoTA-UL", other with apikey "AABBBCC" and other for "IoTA-JSON".
+Currently, the ThinkingCity platform only allows for the existence of a configuration group per subservice for each protocol and apikey, i.e. one for "IoTA-UL" with apikey "XXYYZZ", "IoTA-UL", other with apikey "AABBBCC" and other for "IoTA-JSON".
 
 # Register your IoT device 
 
@@ -127,7 +127,7 @@ Description of the parameters (mandatory parameters are marked as such, the rest
 - *device_id*: the device identifier (mandatory).
 - *entity_name*: the entity ID to be used at the Context Broker.
 - *entity_type*: type of the entity that will represent the device in the Context Broker.
-- *protocol*: South-Bound protocol the device will be using to communicate with the Platform (mandatory).
+- *protocol*: South-Bound protocol the device will be using to communicate with the platform (mandatory).
 - *timezone*: timezone for the device.
 - *endpoint*: for devices accepting HTTP commands, address of the device where the commands will be sent.
 - *attributes*: Used to map UL2.0 attributes to Context Broker attributes in the entity representing the device.

@@ -1,6 +1,6 @@
 # How to calculate data values
 
-Other topics in this same document have addressed how to insert data in the Platform and how to query and modify that
+Other topics in this same document have addressed how to insert data in the platform and how to query and modify that
 data. But, what is the best way to make automatic calculations based on those data values? There are different ways of
 calculating data based on its origin and on the nature of the calculation.
 
