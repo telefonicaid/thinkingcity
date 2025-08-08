@@ -36,7 +36,7 @@ to do some actions or not.
 
 In deep details, each Role in a Service is defined by a Policy for each ThinkingCity platform component:
 
-- [ThinkingCity platform Policies](https://github.com/telefonicaid/orchestrator/tree/master/src/orchestrator/core/policies)
+- [ThinkingCity platform policies](https://github.com/telefonicaid/orchestrator/tree/master/src/orchestrator/core/policies)
 - [Orion component actions](https://github.com/telefonicaid/fiware-pep-steelskin/tree/master#-rules-to-determine-the-context-broker-action-from-the-request)
 - [Perseo component actions](https://github.com/telefonicaid/fiware-pep-steelskin/tree/master#-rules-to-determine-the-perseo-cep-action-from-the-request)
 - [Keypass component actions](https://github.com/telefonicaid/fiware-pep-steelskin/tree/master#rulesKeypass)
