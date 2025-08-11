@@ -7,13 +7,19 @@ calculating data based on its origin and on the nature of the calculation.
 ## Calculations based on data coming from the devices
 
 For those pieces of data coming from measurement reports from the Devices, the [IoTAgents](../device_gateway.md) offer mechanisms to make calculations
-based on the reported data, through the Expression Language. When a Device is provisioned in the platform, along with the
-definition of the values that are going to be directly reported to the system, expressions can be defined combining those
+based on the reported data, through JEXL expressions (JavaScript Expression Language).
+
+The expression support in the IoTAgent Library is based on the TomFrost/JEXL library. Its most common use is to adapt information coming from South Bound–type APIs to the information reported to the Context Broker, which is particularly useful for changing units of measurement, applying formulas to incoming values, transforming the payload of commands, generating dynamic entity names for automatically provisioned devices, and dynamically defining command endpoints.
+
+In the context of a device, JEXL expressions can evaluate both received measurements and static attributes or metadata, thanks to a set of context data available during evaluation (for example: id, entity_name, type, service, subservice, staticAttributes, measures, metadata).
+
+When a Device is provisioned in the platform, along with the
+definition of the values that are going to be directly reported to the system, JEXL expressions can be defined combining those
 values sent by the device.
 
 The following example shows the provisioning of a Tank entity, representing a liquid waste container. The tank entity
 have sensors in the structure that report the total weight of the tank, another one that measures the filling level and
-the dimensions of the square base of the tank are known, and equal to 2m by 4m. An expression is provisioned to calculate
+the dimensions of the square base of the tank are known, and equal to 2m by 4m. A JEXL expression is provisioned to calculate
 the density of the liquid waste currently stored.
 
     POST /iot/devices
@@ -100,15 +106,15 @@ or the same entity in NGSIv2 format:
          }
       }
 
-To see the complete set of operations and features available for the Expression Language, refer to
-the [specification](https://github.com/telefonicaid/iotagent-node-lib/blob/master/doc/expressionLanguage.md).
+To see the complete set of operations and features available for JEXL, refer to
+the [specification](https://github.com/telefonicaid/iotagent-node-lib/blob/master/doc/api.md#available-functions).
 
 ## Calculations based on data in Context Entities
 
 For those data values that doesn't come from devices, but from external systems, and for those cases when the sources of
 context information to calculate those values are multiple, the [CEP](../cep.md) can be used to make some of those calculations.
 
-The CEP gets a notification cointaining a configurable set of attributes (as set in the subscription) and that allows using more fields than the ones sent by device. The notification mechanism allows to send the previous value of an attribute as metadata `previousValue` (see [metadata in notifications](https://github.com/telefonicaid/fiware-orion/blob/master/doc/manuals/orion-api.md#builtin-metadata)). So, as an example, we can think of an entity that periodically sends its coordinates and the time of the measure. We could calculate its average velocity by means of a rule that updates its field `velocity`.
+The CEP gets a notification cointaining a configurable set of attributes (as set in the subscription) and that allows using more fields than the ones sent by device. The CEP allows applying EPL (Esper Processing Language) rules, which can also include calculations on the received data. The notification mechanism allows to send the previous value of an attribute as metadata `previousValue` (see [metadata in notifications](https://github.com/telefonicaid/fiware-orion/blob/master/doc/manuals/orion-api.md#builtin-metadata)). So, as an example, we can think of an entity that periodically sends its coordinates and the time of the measure. We could calculate its average velocity by means of a rule that updates its field `velocity`.
 
 For simplicity, the previous values are taken as values in the incomming notification, but they could be taken as `ev.x__metadata__previousValue` instead of `x0`, and the same for `y0` and `t0` (see [Metadata and object values](https://github.com/telefonicaid/perseo-fe/blob/master/docs/API/plain_rules.md#metadata-values))
 
