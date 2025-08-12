@@ -9,7 +9,7 @@ calculating data based on its origin and on the nature of the calculation.
 For those pieces of data coming from measurement reports from the Devices, the [IoTAgents](../device_gateway.md) offer mechanisms to make calculations
 based on the reported data, through JEXL expressions (JavaScript Expression Language).
 
-The expression support in the IoTAgent Library is based on the TomFrost/JEXL library. Its most common use is to adapt information coming from South Bound–type APIs to the information reported to the Context Broker, which is particularly useful for changing units of measurement, applying formulas to incoming values, transforming the payload of commands, generating dynamic entity names for automatically provisioned devices, and dynamically defining command endpoints.
+The expression support in the IoTAgent Library is based on the [TomFrost/JEXL library](https://github.com/TomFrost/Jexl). Its most common use is to adapt information coming from South Bound–type APIs to the information reported to the Context Broker, which is particularly useful for changing units of measurement, applying formulas to incoming values, transforming the payload of commands, generating dynamic entity names for automatically provisioned devices, and dynamically defining command endpoints.
 
 In the context of a device, JEXL expressions can evaluate both received measurements and static attributes or metadata, thanks to a set of context data available during evaluation (for example: id, entity_name, type, service, subservice, staticAttributes, measures, metadata).
 
