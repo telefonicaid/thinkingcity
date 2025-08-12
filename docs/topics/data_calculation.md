@@ -107,7 +107,7 @@ or the same entity in NGSIv2 format:
       }
 
 To see the complete set of operations and features available for JEXL, refer to
-the [specification](https://github.com/telefonicaid/iotagent-node-lib/blob/master/doc/api.md#available-functions).
+the [specification](https://github.com/telefonicaid/iotagent-node-lib/blob/master/doc/api.md#expression-language-support).
 
 ## Calculations based on data in Context Entities
 
