@@ -232,7 +232,8 @@
 								"exec": [
 									"postman.setGlobalVariable(\"TOKEN\",postman.getResponseHeader(\"X-Subject-Token\") );"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -245,7 +246,7 @@
 							},
 							{
 								"key": "x-auth-token",
-								"value": "gAAAAABh_QWr4WcWwHcnWubAiHNdOotPjN7kskl-zWFM5Q-3h1SG45BqO1lZZtRpp1eMtBGFwdonWZ_MA7f5E8zoxVJ2mdXpa7Q5ujUawfBVlcl_vr-8dS-GIIXekN7wf09uJI9Oh-suyu3HU-My6Hkt4fKZnAxfdJyZf8sJd7w0uJl5RahQdwsp5Yey0VU8B2ge3OwcIrcV",
+								"value": "{{TOKEN}}",
 								"type": "text"
 							}
 						],
@@ -281,7 +282,8 @@
 								"exec": [
 									"postman.setGlobalVariable(\"TOKEN\",postman.getResponseHeader(\"X-Subject-Token\") );"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -294,7 +296,7 @@
 							},
 							{
 								"key": "x-auth-token",
-								"value": "gAAAAABh_Qd02toa3xiEtyun5xmsmaFrCLzW4HpBRvpbeUkRs6v6rpEDvQCiZgq7rElDY1Glu4rSeEkpjZwXXtHeOgQFF57wkMjr9vDZDIcQM0feRScmpxSadQfkm4IQXoKy2iu91eu9nUx87Gg7lipFq2Y-bTFV8daYdwSSe1Kfhgbkz4Mf_m8onyRzLkQ49ZsVap03qLGn",
+								"value": "{{TOKEN}}",
 								"type": "text"
 							}
 						],
