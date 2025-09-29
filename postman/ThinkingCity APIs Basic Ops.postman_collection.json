@@ -1,9 +1,10 @@
 {
 	"info": {
-		"_postman_id": "39ea19a8-fa1b-4853-8a4c-81b0488ae467",
+		"_postman_id": "01611060-9eec-4e7c-99bc-ea7eb1dbebbc",
 		"name": "ThinkingCity APIs Basic Ops",
-		"description": "A set with the basic API operations used by ThinkingCity platform, covering:\n\n* IDM & Auth\n* Orion Context Broker\n* Perseo CEP\n* CKAN\n",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"description": "A set with the basic API operations used by ThinkingCity platform, covering:\n\n* IDM & Auth\n* Orion Context Broker\n* STH\n* Perseo CEP\n* CKAN\n",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25871624"
 	},
 	"item": [
 		{
@@ -94,6 +95,46 @@
 					"response": []
 				},
 				{
+					"name": "Get auth token (service) admin domain",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"postman.setGlobalVariable(\"TOKEN\",postman.getResponseHeader(\"X-Subject-Token\") );"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"auth\": {\r\n        \"identity\": {\r\n            \"methods\": [\r\n                \"password\"\r\n            ],\r\n            \"password\": {\r\n                \"user\": {\r\n                    \"domain\": {\r\n                        \"name\": \"{{SERVICE}}\"\r\n                    },\r\n                    \"name\": \"{{USER}}\",\r\n                    \"password\": \"{{PASSWORD}}\"\r\n                }\r\n            }\r\n        }\r\n    }\r\n}"
+						},
+						"url": {
+							"raw": "{{PROTOCOL}}://{{ENDPOINT_KEYSTONE}}/v3/auth/tokens",
+							"protocol": "{{PROTOCOL}}",
+							"host": [
+								"{{ENDPOINT_KEYSTONE}}"
+							],
+							"path": [
+								"v3",
+								"auth",
+								"tokens"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Renew token",
 					"request": {
 						"method": "POST",
@@ -166,6 +207,110 @@
 								"users",
 								"a241a19fd3264dcc85d1e50b5f48a3cb",
 								"project_roles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ORC",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Trust token (ORC)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"postman.setGlobalVariable(\"TOKEN\",postman.getResponseHeader(\"X-Subject-Token\") );"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "x-auth-token",
+								"value": "{{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"SERVICE_NAME\": \"{{SERVICE}}\",\r\n    \"SUBSERVICE_ID\": \"{{SUBSERVICE_ID}}\",\r\n    \"TRUSTEE_USER_NAME\": \"pep\",\r\n    \"TRUSTOR_USER_ID\": \"{{TRUSTOR_USER_ID}}\",\r\n    \"ROLE_ID\": \"{{ROLE_ID}}\"\r\n}"
+						},
+						"url": {
+							"raw": "{{SAFE_PROTOCOL}}://{{PLATFORM_URL}}/orc/service/cc8863b4c58b40ccb67d0dd795f5901e/trust",
+							"protocol": "{{SAFE_PROTOCOL}}",
+							"host": [
+								"{{PLATFORM_URL}}"
+							],
+							"path": [
+								"orc",
+								"service",
+								"cc8863b4c58b40ccb67d0dd795f5901e",
+								"trust"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Trust token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"postman.setGlobalVariable(\"TOKEN\",postman.getResponseHeader(\"X-Subject-Token\") );"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "x-auth-token",
+								"value": "{{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"trust\": {\r\n        \"impersonation\": false,\r\n        \"project_id\": \"809e90e8ebf94c7b875fd6120134bd52\",\r\n        \"roles\": [\r\n            {\r\n                \"name\": \"{{TRUSTOR_USER_ID}}#SubServiceAdmin\"\r\n            }\r\n        ],\r\n        \"trustee_user_id\": \"{{TRUSTOR_USER_ID}}\",\r\n        \"trustor_user_id\": \"{{TRUSTOR_USER_ID}}\"\r\n    }\r\n}"
+						},
+						"url": {
+							"raw": "{{PROTOCOL}}://{{ENDPOINT_KEYSTONE}}/v3/OS-TRUST/trusts",
+							"protocol": "{{PROTOCOL}}",
+							"host": [
+								"{{ENDPOINT_KEYSTONE}}"
+							],
+							"path": [
+								"v3",
+								"OS-TRUST",
+								"trusts"
 							]
 						}
 					},
@@ -274,6 +419,38 @@
 					"response": []
 				},
 				{
+					"name": "Get all registrations",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Fiware-Service",
+								"value": "{{SERVICE}}"
+							},
+							{
+								"key": "Fiware-ServicePath",
+								"value": "{{SUBSERVICE}}"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{TOKEN}}"
+							}
+						],
+						"url": {
+							"raw": "{{PROTOCOL}}://{{ENDPOINT_CB}}/v2/registrations",
+							"protocol": "{{PROTOCOL}}",
+							"host": [
+								"{{ENDPOINT_CB}}"
+							],
+							"path": [
+								"v2",
+								"registrations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Create entity",
 					"request": {
 						"method": "POST",
@@ -314,52 +491,6 @@
 					"response": []
 				},
 				{
-					"name": "Create entity (keyValues)",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Fiware-Service",
-								"value": "{{SERVICE}}"
-							},
-							{
-								"key": "Fiware-ServicePath",
-								"value": "{{SUBSERVICE}}"
-							},
-							{
-								"key": "X-Auth-Token",
-								"value": "{{TOKEN}}"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"id\": \"CAM7\",\n    \"type\": \"VehiclesCounter\",\n    \"description\": \"Conteo de vehículos\",\n    \"location\": {\n        \"type\": \"Point\",\n        \"coordinates\": [\n            -3.734511592,\n            40.297203367\n        ]\n    },\n    \"addressLocality\": \"Majadahonda\"\n}"
-						},
-						"url": {
-							"raw": "{{PROTOCOL}}://{{ENDPOINT_CB}}/v2/entities?options=keyValues",
-							"protocol": "{{PROTOCOL}}",
-							"host": [
-								"{{ENDPOINT_CB}}"
-							],
-							"path": [
-								"v2",
-								"entities"
-							],
-							"query": [
-								{
-									"key": "options",
-									"value": "keyValues"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "Get a single entity",
 					"request": {
 						"method": "GET",
@@ -378,7 +509,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{PROTOCOL}}://{{ENDPOINT_CB}}/v2/entities/myEntity",
+							"raw": "{{PROTOCOL}}://{{ENDPOINT_CB}}/v2/entities/CAM1-34533EX?type=TrafficCameraControl",
 							"protocol": "{{PROTOCOL}}",
 							"host": [
 								"{{ENDPOINT_CB}}"
@@ -386,7 +517,13 @@
 							"path": [
 								"v2",
 								"entities",
-								"myEntity"
+								"CAM1-34533EX"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "TrafficCameraControl"
+								}
 							]
 						}
 					},
@@ -519,7 +656,7 @@
 					"response": []
 				},
 				{
-					"name": "Batch creation/update",
+					"name": "Bath creation/update",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -542,7 +679,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"actionType\": \"append\",\n\t\"entities\": [\n\t\t{\n\t\t\t\"id\": \"myEntity1\",\n\t\t\t\"type\": \"myType\",\n\t\t\t\"description\": {\n\t\t\t\t\"value\": \"My happy entity\",\n\t\t\t\t\"type\": \"Text\"\n\t\t\t},\n\t\t\t\"online\": {\n\t\t\t\t\"value\": true,\n\t\t\t\t\"type\": \"Boolean\"\n\t\t\t},\n\t\t\t\"temperature\": {\n\t\t\t\t\"value\": 42.3,\n\t\t\t\t\"type\": \"Number\"\n\t\t\t}\n\t\t},\n\t\t{\n\t\t\t\"id\": \"myEntity2\",\n\t\t\t\"type\": \"myType\",\n\t\t\t\"description\": {\n\t\t\t\t\"value\": \"My second happy entity\",\n\t\t\t\t\"type\": \"Text\"\n\t\t\t},\n\t\t\t\"online\": {\n\t\t\t\t\"value\": false,\n\t\t\t\t\"type\": \"Boolean\"\n\t\t\t},\n\t\t\t\"temperature\": {\n\t\t\t\t\"value\": -12,\n\t\t\t\t\"type\": \"Number\"\n\t\t\t}\n\t\t}\n\t]\n}"
+							"raw": "{\n\t\"actionType\": \"APPEND\",\n\t\"entities\": [\n\t\t{\n\t\t\t\"id\": \"myEntity1\",\n\t\t\t\"type\": \"myType\",\n\t\t\t\"description\": {\n\t\t\t\t\"value\": \"My happy entity\",\n\t\t\t\t\"type\": \"Text\"\n\t\t\t},\n\t\t\t\"online\": {\n\t\t\t\t\"value\": true,\n\t\t\t\t\"type\": \"Boolean\"\n\t\t\t},\n\t\t\t\"temperature\": {\n\t\t\t\t\"value\": 42.3,\n\t\t\t\t\"type\": \"Number\"\n\t\t\t}\n\t\t},\n\t\t{\n\t\t\t\"id\": \"myEntity2\",\n\t\t\t\"type\": \"myType\",\n\t\t\t\"description\": {\n\t\t\t\t\"value\": \"My second happy entity\",\n\t\t\t\t\"type\": \"Text\"\n\t\t\t},\n\t\t\t\"online\": {\n\t\t\t\t\"value\": false,\n\t\t\t\t\"type\": \"Boolean\"\n\t\t\t},\n\t\t\t\"temperature\": {\n\t\t\t\t\"value\": -12,\n\t\t\t\t\"type\": \"Number\"\n\t\t\t}\n\t\t}\n\t]\n}"
 						},
 						"url": {
 							"raw": "{{PROTOCOL}}://{{ENDPOINT_CB}}/v2/op/update",
@@ -849,7 +986,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"description\": \"A subscription to get info about myEntity\",\r\n  \"subject\": {\r\n    \"entities\": [\r\n      {\r\n        \"id\": \"myEntity\",\r\n        \"type\": \"myType\"\r\n      }\r\n    ],\r\n    \"condition\": {\r\n      \"attrs\": [ ]\r\n    }\r\n  },\r\n  \"notification\": {\r\n    \"http\": {\r\n      \"url\": \"http://putsreq.com/aGSZ2hnoTXRaO4JHZNY1\"\r\n    },\r\n    \"attrs\": [\r\n      \"temperature\"\r\n    ]\r\n  }\r\n}"
+							"raw": "{\r\n  \"description\": \"A subscription to get info about myEntity\",\r\n  \"subject\": {\r\n    \"entities\": [\r\n      {\r\n        \"id\": \"myEntity\",\r\n        \"type\": \"myType\"\r\n      }\r\n    ],\r\n    \"condition\": {\r\n      \"attrs\": [ ]\r\n    }\r\n  },\r\n  \"notification\": {\r\n    \"http\": {\r\n      \"url\": \"{{PROTOCOL}}://putsreq.com/aGSZ2hnoTXRaO4JHZNY1\"\r\n    },\r\n    \"attrs\": [\r\n      \"temperature\"\r\n    ]\r\n  }\r\n}"
 						},
 						"url": {
 							"raw": "{{PROTOCOL}}://{{ENDPOINT_CB}}/v2/subscriptions",
@@ -889,47 +1026,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"description\": \"A subscription to get info about myEntity\",\r\n  \"subject\": {\r\n    \"entities\": [\r\n      {\r\n        \"id\": \"myEntity\",\r\n        \"type\": \"myType\"\r\n      }\r\n    ],\r\n    \"condition\": {\r\n      \"attrs\": [ ]\r\n    }\r\n  },\r\n  \"notification\": {\r\n    \"httpCustom\": {\r\n      \"url\": \"http://putsreq.com/aGSZ2hnoTXRaO4JHZNY1\",\r\n      \"headers\": {\r\n      \t\"Content-Type\": \"application/xml\",\r\n      \t\"X-EntityType\": \"${type}\"\r\n      },\r\n      \"qs\": {\r\n      \t\"entityId\": \"${id}\"\r\n      },\r\n      \"payload\": \"%3Ctemperature%3E${temperature}%3C/temperature%3E\"\r\n    },\r\n    \"attrs\": [\r\n      \"temperature\"\r\n    ]\r\n  }\r\n}"
-						},
-						"url": {
-							"raw": "{{PROTOCOL}}://{{ENDPOINT_CB}}/v2/subscriptions",
-							"protocol": "{{PROTOCOL}}",
-							"host": [
-								"{{ENDPOINT_CB}}"
-							],
-							"path": [
-								"v2",
-								"subscriptions"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Create subscription (custom notification only header)",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Fiware-Service",
-								"value": "{{SERVICE}}"
-							},
-							{
-								"key": "Fiware-ServicePath",
-								"value": "{{SUBSERVICE}}"
-							},
-							{
-								"key": "X-Auth-Token",
-								"value": "{{TOKEN}}"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"description\": \"Notificacion para vaciados\",\n  \"subject\": {\n    \"entities\": [\n      {\n        \"id\": \".*\",\n        \"type\": \"WasteContainer\"\n      }\n    ],\n    \"condition\": {\n      \"attrs\": [\n        \"TimeInstant\"\n      ]\n    }\n  },\n  \"notification\": {\n    \"httpCustom\": {\n      \"url\": \"http://putsreq.com/aGSZ2hnoTXRaO4JHZNY1\",\n        \"headers\": {\n          \"fiware-servicepath\": \"/emptyings\"  \n      }\n    },\n    \"attrs\": [\n      \"dateModified\", \"dateCalculatedEmptyings\", \"emptyingValue\", \"location\", \"storedWasteKind\", \"badEfficiency\", \"goodEfficiency\"\n    ]\n  }\n}"
+							"raw": "{\r\n  \"description\": \"A subscription to get info about myEntity\",\r\n  \"subject\": {\r\n    \"entities\": [\r\n      {\r\n        \"id\": \"myEntity\",\r\n        \"type\": \"myType\"\r\n      }\r\n    ],\r\n    \"condition\": {\r\n      \"attrs\": [ ]\r\n    }\r\n  },\r\n  \"notification\": {\r\n    \"httpCustom\": {\r\n      \"url\": \"{{PROTOCOL}}://putsreq.com/aGSZ2hnoTXRaO4JHZNY1\",\r\n      \"headers\": {\r\n      \t\"Content-Type\": \"application/xml\",\r\n      \t\"X-EntityType\": \"${type}\"\r\n      },\r\n      \"qs\": {\r\n      \t\"entityId\": \"${id}\"\r\n      },\r\n      \"payload\": \"%3Ctemperature%3E${temperature}%3C/temperature%3E\"\r\n    },\r\n    \"attrs\": [\r\n      \"temperature\"\r\n    ]\r\n  }\r\n}"
 						},
 						"url": {
 							"raw": "{{PROTOCOL}}://{{ENDPOINT_CB}}/v2/subscriptions",
@@ -1057,7 +1154,7 @@
 					"response": []
 				},
 				{
-					"name": "Create registration",
+					"name": "Create subscription (custom notification only header)",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -1080,7 +1177,47 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"dataProvided\": {\n    \"entities\": [\n      {\n        \"id\": \"Street4\",\n        \"type\": \"Street\"\n      }\n    ],\n    \"attrs\": [\n      \"temperature\"\n    ]\n  },\n  \"provider\": {\n    \"http\": {\n      \"url\": \"http://sensor48.mycity.com/v2\"\n    }\n  }\n}"
+							"raw": "{\n  \"description\": \"Notificacion para vaciados\",\n  \"subject\": {\n    \"entities\": [\n      {\n        \"id\": \".*\",\n        \"type\": \"WasteContainer\"\n      }\n    ],\n    \"condition\": {\n      \"attrs\": [\n        \"TimeInstant\"\n      ]\n    }\n  },\n  \"notification\": {\n    \"httpCustom\": {\n      \"url\": \"{{PROTOCOL}}://iot-cygnus:5057/notify\",\n        \"headers\": {\n          \"fiware-servicepath\": \"/emptyings\"  \n      }\n    },\n    \"attrs\": [\n      \"dateModified\", \"dateCalculatedEmptyings\", \"emptyingValue\", \"location\", \"storedWasteKind\", \"badEfficiency\", \"goodEfficiency\"\n    ]\n  }\n}"
+						},
+						"url": {
+							"raw": "{{PROTOCOL}}://{{ENDPOINT_CB}}/v2/subscriptions",
+							"protocol": "{{PROTOCOL}}",
+							"host": [
+								"{{ENDPOINT_CB}}"
+							],
+							"path": [
+								"v2",
+								"subscriptions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create registro",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Fiware-Service",
+								"value": "{{SERVICE}}"
+							},
+							{
+								"key": "Fiware-ServicePath",
+								"value": "{{SUBSERVICE}}"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{TOKEN}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"dataProvided\": {\n    \"entities\": [\n      {\n        \"id\": \"Street4\",\n        \"type\": \"Street\"\n      }\n    ],\n    \"attrs\": [\n      \"temperature\"\n    ]\n  },\n  \"provider\": {\n    \"http\": {\n      \"url\": \"{{PROTOCOL}}://sensor48.mycity.com/v2\"\n    }\n  }\n}"
 						},
 						"url": {
 							"raw": "{{PROTOCOL}}://{{ENDPOINT_CB}}/v2/registrations",
@@ -1095,6 +1232,141 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Create entity (keyValues)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Fiware-Service",
+								"value": "{{SERVICE}}"
+							},
+							{
+								"key": "Fiware-ServicePath",
+								"value": "{{SUBSERVICE}}"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{TOKEN}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"CAM7-34DGSDMM\",\n    \"type\": \"VehiclesCounter\",\n    \"description\": \"Conteo de vehículos\",\n    \"location\": {\n        \"type\": \"Point\",\n        \"coordinates\": [\n            -3.734511592,\n            40.297203367\n        ]\n    },\n    \"addressLocality\": \"Majadahonda\",\n    \"addressCountry\": \"ES\",\n    \"streetAddress\": \"Camino del Pocito Km 3\",\n    \"postalCode\": 28901,\n    \"streetNumber\": 3,\n    \"roadPointID\": \"Spain-RoadPoint-M406-45-A\",\n    \"sourceOriginator\": \"PolimerMadrid1Alcobendas\",\n    \"trackID\": \"Suma de todos los carriles sentido Alcoboendas\",\n    \"sourceOriginEventID\": \"21\",\n    \"TimeInstant\": \"2020-06-06T13:06:06\",\n    \"dailyMotorbikeNumber\": 44,\n    \"dailyCarNumber\": 44,\n    \"dailyLorryNumber\": 23,\n    \"dailyBicycleNumber\": 0,\n    \"averageDailyCarSpeed\": 112,\n    \"averageDailyMotorbikeSpeed\": 92,\n    \"averageDailyLorrySpeed\": 87,\n    \"averageDailyBicycleSpeed\": 18,\n    \"averageHourlyCarSpeed\": 99,\n    \"averageHourlyMotorbikeSpeed\": 83,\n    \"averageHourlyLorrySpeed\": 87,\n    \"averageHourlyBicycleSpeed\": 0,\n    \"maxDailyCarSpeed\": 142,\n    \"maxDailyMotorbikeSpeed\": 171,\n    \"maxDailyLorrySpeed\": 95,\n    \"maxDailyBicycleSpeed\": 14,\n    \"maxHourlyCarSpeed\": 113,\n    \"maxHourlyMotorbikeSpeed\": 119,\n    \"maxHourlyLorrySpeed\": 91,\n    \"maxHourlyBicycleSpeed\": 0,\n    \"averageHourlyHeadwayTime\": 0.8,\n    \"dailyHeadwayTime\": 0.9\n}"
+						},
+						"url": {
+							"raw": "{{PROTOCOL}}://{{ENDPOINT_CB}}/v2/entities?options=keyValues",
+							"protocol": "{{PROTOCOL}}",
+							"host": [
+								"{{ENDPOINT_CB}}"
+							],
+							"path": [
+								"v2",
+								"entities"
+							],
+							"query": [
+								{
+									"key": "options",
+									"value": "keyValues"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create entity (upsert)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Fiware-Service",
+								"value": "{{SERVICE}}"
+							},
+							{
+								"key": "Fiware-ServicePath",
+								"value": "{{SUBSERVICE}}"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{TOKEN}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"CAM7-34DGSDMM\",\n    \"type\": \"VehiclesCounter\",\n    \"description\": \"Conteo de vehículos\",\n    \"location\": {\n        \"type\": \"Point\",\n        \"coordinates\": [\n            -3.734511592,\n            40.297203367\n        ]\n    },\n    \"addressLocality\": \"Majadahonda\",\n    \"addressCountry\": \"FR\",\n    \"streetAddress\": \"Camino del Pocito Km 3\",\n    \"postalCode\": 28901,\n    \"streetNumber\": 3,\n    \"roadPointID\": \"Spain-RoadPoint-M406-45-A\",\n    \"sourceOriginator\": \"PolimerMadrid1Alcobendas\",\n    \"trackID\": \"Suma de todos los carriles sentido Alcoboendas\",\n    \"sourceOriginEventID\": \"21\",\n    \"TimeInstant\": \"2020-06-06T13:06:06\",\n    \"dailyMotorbikeNumber\": 44,\n    \"dailyCarNumber\": 44,\n    \"dailyLorryNumber\": 23,\n    \"dailyBicycleNumber\": 0,\n    \"averageDailyCarSpeed\": 112,\n    \"averageDailyMotorbikeSpeed\": 92,\n    \"averageDailyLorrySpeed\": 87,\n    \"averageDailyBicycleSpeed\": 18,\n    \"averageHourlyCarSpeed\": 99,\n    \"averageHourlyMotorbikeSpeed\": 83,\n    \"averageHourlyLorrySpeed\": 87,\n    \"averageHourlyBicycleSpeed\": 0,\n    \"maxDailyCarSpeed\": 142,\n    \"maxDailyMotorbikeSpeed\": 171,\n    \"maxDailyLorrySpeed\": 95,\n    \"maxDailyBicycleSpeed\": 14,\n    \"maxHourlyCarSpeed\": 113,\n    \"maxHourlyMotorbikeSpeed\": 119,\n    \"maxHourlyLorrySpeed\": 91,\n    \"maxHourlyBicycleSpeed\": 0,\n    \"averageHourlyHeadwayTime\": 0.8,\n    \"dailyHeadwayTime\": 0.9\n}"
+						},
+						"url": {
+							"raw": "{{PROTOCOL}}://{{ENDPOINT_CB}}/v2/entities?options=upsert",
+							"protocol": "{{PROTOCOL}}",
+							"host": [
+								"{{ENDPOINT_CB}}"
+							],
+							"path": [
+								"v2",
+								"entities"
+							],
+							"query": [
+								{
+									"key": "options",
+									"value": "upsert"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create entity OURENSE",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Fiware-Service",
+								"value": "dip_ourense"
+							},
+							{
+								"key": "Fiware-ServicePath",
+								"value": "/test"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{TOKEN}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"CAM4_bis\",\n    \"type\": \"Webcam\",\n    \"TimeInstant\": {\n        \"type\": \"DateTime\",\n        \"value\": \"2023-03-22T15:09:25.000Z\"\n    },\n    \"addressCommunity\": {\n        \"type\": \"Text\",\n        \"value\": \"Castilla y León\"\n    },\n    \"addressCountry\": {\n        \"type\": \"Text\",\n        \"value\": \"España\"\n    },\n    \"addressLocality\": {\n        \"type\": \"Text\",\n        \"value\": \"Geria\"\n    },\n    \"addressRegion\": {\n        \"type\": \"Text\",\n        \"value\": \"Valladolid\"\n    },\n    \"backlightCompensation\": {\n        \"type\": \"Text\",\n        \"value\": \"OFF\"\n    },\n    \"brightness\": {\n        \"type\": \"Number\",\n        \"value\": \"128\"\n    },\n    \"colorSaturation\": {\n        \"type\": \"Number\",\n        \"value\": \"94\"\n    },\n    \"community\": {\n        \"type\": \"Text\",\n        \"value\": \"JCYL\"\n    },\n    \"contrast\": {\n        \"type\": \"Number\",\n        \"value\": \"46\"\n    },\n    \"country\": {\n        \"type\": \"Text\",\n        \"value\": \"España\"\n    },\n    \"description\": {\n        \"type\": \"TextUnrestricted\",\n        \"value\": \"Cámara con visión infrarroja\"\n    },\n    \"district\": {\n        \"type\": \"Text\",\n        \"value\": \"centro\"\n    },\n    \"endpoint\": {\n        \"type\": \"Text\",\n        \"value\": \"{{PROTOCOL}}://81.60.232.237:8080/onvif\"\n    },\n    \"exposure\": {\n        \"type\": \"Text\",\n        \"value\": \"AUTO\"\n    },\n    \"exposureTime\": {\n        \"type\": \"Number\",\n        \"value\": \"2\"\n    },\n    \"gain\": {\n        \"type\": \"Number\",\n        \"value\": \"50\"\n    },\n    \"instantImageURL\": {\n        \"type\": \"TextUnrestricted\",\n        \"value\": \"rtsp://10.47.209.241:554/mcastmain\"\n    },\n    \"level\": {\n        \"type\": \"Number\",\n        \"value\": \"0\"\n    },\n    \"location\": {\n        \"type\": \"geo:json\",\n        \"value\": {\n            \"coordinates\": [\n                -3.2151,\n                40.2855\n            ],\n            \"type\": \"Point\"\n        }\n    },\n    \"municipality\": {\n        \"type\": \"Text\",\n        \"value\": \"geria\"\n    },\n    \"postalCode\": {\n        \"type\": \"Text\",\n        \"value\": \"47131\"\n    },\n    \"province\": {\n        \"type\": \"Text\",\n        \"value\": \"valladolid\"\n    },\n    \"refPointOfInterest\": {\n        \"type\": \"Text\",\n        \"value\": \"BUILDING-001\"\n    },\n    \"refPointOfInterestPath\": {\n        \"type\": \"Text\",\n        \"value\": \"/edificios\"\n    },\n    \"refPointOfInterestType\": {\n        \"type\": \"Text\",\n        \"value\": \"Building\"\n    },\n    \"region\": {\n        \"type\": \"Text\",\n        \"value\": \"valladolid\"\n    },\n    \"sharpness\": {\n        \"type\": \"Number\",\n        \"value\": \"128\"\n    },\n    \"status\": {\n        \"type\": \"Text\",\n        \"value\": \"OK\"\n    },\n    \"streamingURL\": {\n        \"type\": \"TextUnrestricted\",\n        \"value\": \"rtsp://10.47.209.241:554/mcastmain\"\n    },\n    \"streetAddress\": {\n        \"type\": \"Text\",\n        \"value\": \"Calle Cenicero 1\"\n    },\n    \"whiteBalance\": {\n        \"type\": \"Text\",\n        \"value\": \"AUTO\"\n    },\n    \"wideDynamicRange\": {\n        \"type\": \"Text\",\n        \"value\": \"OFF\"\n    },\n    \"zip\": {\n        \"type\": \"Text\",\n        \"value\": \"47131\"\n    },\n    \"zone\": {\n        \"type\": \"Text\",\n        \"value\": \"geria\"\n    }\n}"
+						},
+						"url": {
+							"raw": "{{SAFE_PROTOCOL}}://cb.turismourense.com:10027/v2/entities",
+							"protocol": "{{SAFE_PROTOCOL}}",
+							"host": [
+								"cb",
+								"turismourense",
+								"com"
+							],
+							"port": "10027",
+							"path": [
+								"v2",
+								"entities"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -1102,7 +1374,7 @@
 			"name": "IOTA",
 			"item": [
 				{
-					"name": "Create group (JSON)",
+					"name": "Create service (JSON)",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -1125,24 +1397,24 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"groups\": [\r\n        {\r\n            \"apikey\": \"{{JSON_APIKEY}}\",\r\n            \"entity_type\": \"device\",\r\n            \"protocol\": [\r\n                \"IoTA-JSON\"\r\n            ]\r\n        }\r\n    ]\r\n}"
+							"raw": "{\r\n    \"services\": [\r\n        {\r\n            \"apikey\": \"{{JSON_APIKEY}}\",\r\n            \"entity_type\": \"Sprinkler\",\r\n            \"protocol\": [\r\n                \"IoTA-JSON\"\r\n            ]\r\n        }\r\n    ]\r\n}"
 						},
 						"url": {
-							"raw": "{{PROTOCOL}}://{{ENDPOINT_IOTAM}}/iot/groups",
+							"raw": "{{PROTOCOL}}://{{ENDPOINT_IOTAM}}/iot/services",
 							"protocol": "{{PROTOCOL}}",
 							"host": [
 								"{{ENDPOINT_IOTAM}}"
 							],
 							"path": [
 								"iot",
-								"groups"
+								"services"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Create group (JSON) attributes",
+					"name": "Create service (JSON) attributes",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -1165,24 +1437,24 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"groups\": [\r\n        {\r\n            \"apikey\": \"{{JSON_APIKEY}}\",\r\n            \"entity_type\": \"device\",\r\n            \"attributes\": [\r\n                {\r\n                    \"object_id\": \"t\",\r\n                    \"name\": \"temperature\",\r\n                    \"type\": \"Number\"\r\n                },\r\n                {\r\n                    \"object_id\": \"h\",\r\n                    \"name\": \"humidity\",\r\n                    \"type\": \"Number\"\r\n                }\r\n            ],\r\n            \"protocol\": [\r\n                \"IoTA-JSON\"\r\n            ]\r\n        }\r\n    ]\r\n}"
+							"raw": "{\r\n    \"services\": [\r\n        {\r\n            \"apikey\": \"{{JSON_APIKEY}}\",\r\n            \"entity_type\": \"Car\",\r\n            \"attributes\": [\r\n                {\r\n                    \"object_id\": \"t\",\r\n                    \"name\": \"temperature\",\r\n                    \"type\": \"Number\"\r\n                },\r\n                {\r\n                    \"object_id\": \"h\",\r\n                    \"name\": \"humidity\",\r\n                    \"type\": \"Number\"\r\n                }\r\n            ],\r\n            \"protocol\": [\r\n                \"IoTA-JSON\"\r\n            ]\r\n        }\r\n    ]\r\n}"
 						},
 						"url": {
-							"raw": "{{PROTOCOL}}://{{ENDPOINT_IOTAM}}/iot/groups",
+							"raw": "{{PROTOCOL}}://{{ENDPOINT_IOTAM}}/iot/services",
 							"protocol": "{{PROTOCOL}}",
 							"host": [
 								"{{ENDPOINT_IOTAM}}"
 							],
 							"path": [
 								"iot",
-								"groups"
+								"services"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Create group (JSON) stattic attributes",
+					"name": "Create service (JSON) stattic attributes",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -1205,24 +1477,24 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"groups\": [\r\n        {\r\n            \"apikey\": \"{{JSON_APIKEY}}\",\r\n            \"entity_type\": \"device\",\r\n            \"static_attributes\": [\r\n                {\r\n                    \"name\": \"manufacturer\",\r\n                    \"type\": \"Text\",\r\n                    \"value\": \"TEF\"\r\n                }\r\n            ],\r\n            \"protocol\": [\r\n                \"IoTA-JSON\"\r\n            ]\r\n        }\r\n    ]\r\n}"
+							"raw": "{\r\n    \"services\": [\r\n        {\r\n            \"apikey\": \"{{JSON_APIKEY}}\",\r\n            \"entity_type\": \"Car\",\r\n            \"static_attributes\": [\r\n                {\r\n                    \"name\": \"brand\",\r\n                    \"type\": \"Text\",\r\n                    \"value\": \"TEF\"\r\n                }\r\n            ],\r\n            \"protocol\": [\r\n                \"IoTA-JSON\"\r\n            ]\r\n        }\r\n    ]\r\n}"
 						},
 						"url": {
-							"raw": "{{PROTOCOL}}://{{ENDPOINT_IOTAM}}/iot/groups",
+							"raw": "{{PROTOCOL}}://{{ENDPOINT_IOTAM}}/iot/services",
 							"protocol": "{{PROTOCOL}}",
 							"host": [
 								"{{ENDPOINT_IOTAM}}"
 							],
 							"path": [
 								"iot",
-								"groups"
+								"services"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Create group (JSON) explicit attrs",
+					"name": "Create service (JSON) explicit attrs bool",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -1245,24 +1517,24 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"groups\": [\r\n        {\r\n            \"apikey\": \"{{JSON_APIKEY}}\",\r\n            \"entity_type\": \"device\",\r\n            \"explicitAttrs\": true,\r\n            \"attributes\": [\r\n                {\r\n                    \"object_id\": \"t\",\r\n                    \"name\": \"temperature\",\r\n                    \"type\": \"Number\"\r\n                },\r\n                {\r\n                    \"object_id\": \"h\",\r\n                    \"name\": \"humidity\",\r\n                    \"type\": \"Number\"\r\n                }\r\n            ],\r\n            \"protocol\": [\r\n                \"IoTA-JSON\"\r\n            ]\r\n        }\r\n    ]\r\n}"
+							"raw": "{\r\n    \"services\": [\r\n        {\r\n            \"apikey\": \"{{JSON_APIKEY}}\",\r\n            \"entity_type\": \"Car\",\r\n            \"explicitAttrs\": true,\r\n            \"attributes\": [\r\n                {\r\n                    \"object_id\": \"t\",\r\n                    \"name\": \"temperature\",\r\n                    \"type\": \"Number\"\r\n                },\r\n                {\r\n                    \"object_id\": \"h\",\r\n                    \"name\": \"humidity\",\r\n                    \"type\": \"Number\"\r\n                }\r\n            ],\r\n            \"protocol\": [\r\n                \"IoTA-JSON\"\r\n            ]\r\n        }\r\n    ]\r\n}"
 						},
 						"url": {
-							"raw": "{{PROTOCOL}}://{{ENDPOINT_IOTAM}}/iot/groups",
+							"raw": "{{PROTOCOL}}://{{ENDPOINT_IOTAM}}/iot/services",
 							"protocol": "{{PROTOCOL}}",
 							"host": [
 								"{{ENDPOINT_IOTAM}}"
 							],
 							"path": [
 								"iot",
-								"groups"
+								"services"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Create group (JSON) timestamp",
+					"name": "Create service (JSON) explicit attrs array",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -1285,24 +1557,24 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"groups\": [\r\n        {\r\n            \"apikey\": \"{{JSON_APIKEY}}\",\r\n            \"entity_type\": \"device\",\r\n            \"timestamp\": true,\r\n            \"protocol\": [\r\n                \"IoTA-JSON\"\r\n            ]\r\n        }\r\n    ]\r\n}"
+							"raw": "{\r\n    \"services\": [\r\n        {\r\n            \"apikey\": \"{{JSON_APIKEY}}\",\r\n            \"entity_type\": \"Car\",\r\n            \"explicitAttrs\": \"['temperature','humidity']\",\r\n            \"attributes\": [\r\n                {\r\n                    \"object_id\": \"t\",\r\n                    \"name\": \"temperature\",\r\n                    \"type\": \"Number\"\r\n                },\r\n                {\r\n                    \"object_id\": \"h\",\r\n                    \"name\": \"humidity\",\r\n                    \"type\": \"Number\"\r\n                },\r\n                {\r\n                    \"object_id\": \"s\",\r\n                    \"name\": \"status\",\r\n                    \"type\": \"Text\"\r\n                }\r\n            ],\r\n            \"protocol\": [\r\n                \"IoTA-JSON\"\r\n            ]\r\n        }\r\n    ]\r\n}"
 						},
 						"url": {
-							"raw": "{{PROTOCOL}}://{{ENDPOINT_IOTAM}}/iot/groups",
+							"raw": "{{PROTOCOL}}://{{ENDPOINT_IOTAM}}/iot/services",
 							"protocol": "{{PROTOCOL}}",
 							"host": [
 								"{{ENDPOINT_IOTAM}}"
 							],
 							"path": [
 								"iot",
-								"groups"
+								"services"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Create group (JSON) expression",
+					"name": "Create service (JSON) timestamp",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -1325,24 +1597,24 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"groups\": [\n        {\n            \"apikey\": \"{{JSON_APIKEY}}\",\n            \"entity_type\": \"device\",\n            \"attributes\": [\n                {\n                    \"object_id\": \"t\",\n                    \"name\": \"temperature\",\n                    \"type\": \"float\",\n                    \"entity_name\": \"WaterMeter02\",\n                    \"entity_type\": \"WaterMeter\",\n                    \"expression\": \"${@temperature * 100}\"\n                },\n                {\n                    \"object_id\": \"h\",\n                    \"name\": \"humidity\",\n                    \"type\": \"float\",\n                    \"entity_name\": \"WaterMeter02\",\n                    \"entity_type\": \"WaterMeter\"\n                }\n            ],\n            \"protocol\": [\n                \"IoTA-JSON\"\n            ]\n        }\n    ]\n}"
+							"raw": "{\r\n    \"services\": [\r\n        {\r\n            \"apikey\": \"{{JSON_APIKEY}}\",\r\n            \"entity_type\": \"Car\",\r\n            \"timestamp\": false,\r\n            \"protocol\": [\r\n                \"IoTA-JSON\"\r\n            ]\r\n        }\r\n    ]\r\n}"
 						},
 						"url": {
-							"raw": "{{PROTOCOL}}://{{ENDPOINT_IOTAM}}/iot/groups",
+							"raw": "{{PROTOCOL}}://{{ENDPOINT_IOTAM}}/iot/services",
 							"protocol": "{{PROTOCOL}}",
 							"host": [
 								"{{ENDPOINT_IOTAM}}"
 							],
 							"path": [
 								"iot",
-								"groups"
+								"services"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Create group (JSON) JEXL expression",
+					"name": "Create service (JSON) multientity",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -1365,24 +1637,24 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"groups\": [\n        {\n            \"apikey\": \"{{JSON_APIKEY}}\",\n            \"entity_type\": \"device\",\n            \"attributes\": [\n                {\n                    \"object_id\": \"t\",\n                    \"name\": \"temperature\",\n                    \"type\": \"Number\",\n                    \"expression\": \"@t == 6? true : false\"\n                }\n            ],\n            \"protocol\": [\n                \"IoTA-JSON\"\n            ]\n        }\n    ]\n}"
+							"raw": "{\n    \"services\": [\n        {\n            \"apikey\": \"{{JSON_APIKEY}}\",\n            \"entity_type\": \"Car\",\n            \"expressionLanguage\": \"jexl\",\n            \"attributes\": [\n                {\n                    \"object_id\": \"h\",\n                    \"name\": \"humidity\",\n                    \"type\": \"Number\",\n                    \"entity_name\": \"car1\",\n                    \"entity_type\": \"Car\"\n                },\n                {\n                    \"object_id\": \"t\",\n                    \"name\": \"temperature\",\n                    \"type\": \"Number\",\n                    \"entity_name\": \"room1\",\n                    \"entity_type\": \"Room\"\n                }                                \n            ],\n            \"protocol\": [\n                \"IoTA-JSON\"\n            ]\n        }\n    ]\n}"
 						},
 						"url": {
-							"raw": "{{PROTOCOL}}://{{ENDPOINT_IOTAM}}/iot/groups",
+							"raw": "{{PROTOCOL}}://{{ENDPOINT_IOTAM}}/iot/services",
 							"protocol": "{{PROTOCOL}}",
 							"host": [
 								"{{ENDPOINT_IOTAM}}"
 							],
 							"path": [
 								"iot",
-								"groups"
+								"services"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Create group (JSON) commands",
+					"name": "Create service (JSON) JEXL expression",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -1405,24 +1677,24 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"groups\": [\r\n    {\r\n      \"apikey\": \"{{JSON_APIKEY}}\",\r\n      \"entity_type\": \"device\",\r\n      \"protocol\": \"IoTA-JSON\",\r\n      \"commands\": [\r\n      \t{ \"object_id\": \"r\", \"name\": \"reset\", \"type\": \"string\" }\r\n      ]       \r\n    }\r\n  ]\r\n}"
+							"raw": "{\n    \"services\": [\n        {\n            \"apikey\": \"{{JSON_APIKEY}}\",\n            \"entity_type\": \"Car\",\n            \"expressionLanguage\": \"jexl\",\n            \"attributes\": [\n                {\n                    \"object_id\": \"t\",\n                    \"name\": \"temperature\",\n                    \"type\": \"Number\",\n                    \"expression\": \"(temperature-32)*5/9\"\n                },\n                {\n                    \"object_id\": \"h\",\n                    \"name\": \"humidity\",\n                    \"type\": \"Number\"\n                }                \n            ],\n            \"protocol\": [\n                \"IoTA-JSON\"\n            ]\n        }\n    ]\n}"
 						},
 						"url": {
-							"raw": "{{PROTOCOL}}://{{ENDPOINT_IOTAM}}/iot/groups",
+							"raw": "{{PROTOCOL}}://{{ENDPOINT_IOTAM}}/iot/services",
 							"protocol": "{{PROTOCOL}}",
 							"host": [
 								"{{ENDPOINT_IOTAM}}"
 							],
 							"path": [
 								"iot",
-								"groups"
+								"services"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Create group (UL)",
+					"name": "Create service (JSON) JEXL expression 2",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -1445,24 +1717,24 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"groups\": [\r\n        {\r\n            \"apikey\": \"{{UL_APIKEY}}\",\r\n            \"entity_type\": \"device\",\r\n            \"protocol\": [\r\n                \"IoTA-UL\"\r\n            ]\r\n        }\r\n    ]\r\n}"
+							"raw": "{\n    \"services\": [\n        {\n            \"apikey\": \"{{JSON_APIKEY}}\",\n            \"entity_type\": \"Car\",\n            \"expressionLanguage\": \"jexl\",\n            \"attributes\": [\n                {\n                    \"object_id\": \"lat\",\n                    \"name\": \"latitude\",\n                    \"type\": \"Number\"\n                },\n                {\n                    \"object_id\": \"lon\",\n                    \"name\": \"longitude\",\n                    \"type\": \"Number\"\n                },\n                {\n                    \"object_id\": \"l\",\n                    \"name\": \"location\",\n                    \"type\": \"geo:json\",\n                    \"expression\": \"{type: 'Point', coordinates: [lat,lon]}\"\n                }                \n            ],\n            \"protocol\": [\n                \"IoTA-JSON\"\n            ]\n        }\n    ]\n}"
 						},
 						"url": {
-							"raw": "{{PROTOCOL}}://{{ENDPOINT_IOTAM}}/iot/groups",
+							"raw": "{{PROTOCOL}}://{{ENDPOINT_IOTAM}}/iot/services",
 							"protocol": "{{PROTOCOL}}",
 							"host": [
 								"{{ENDPOINT_IOTAM}}"
 							],
 							"path": [
 								"iot",
-								"groups"
+								"services"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Create group (UL) attributes",
+					"name": "Create service (JSON) JEXL skipValue",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -1485,24 +1757,24 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"groups\": [\r\n    {\r\n      \"apikey\": \"{{UL_APIKEY}}\",\r\n      \"entity_type\": \"device\",\r\n      \"attributes\": [\r\n        { \"object_id\": \"t\", \"name\": \"temperature\", \"type\": \"float\" },\r\n        { \"object_id\": \"h\", \"name\": \"humidity\", \"type\": \"float\" }\r\n      ],\r\n      \"protocol\": [ \"IoTA-UL\" ]\r\n    }\r\n  ]\r\n}"
+							"raw": "{\n    \"services\": [\n        {\n            \"apikey\": \"{{JSON_APIKEY}}\",\n            \"entity_type\": \"Car\",\n            \"expressionLanguage\": \"jexl\",\n            \"attributes\": [\n                {\n                    \"object_id\": \"t\",\n                    \"name\": \"temperature\",\n                    \"type\": \"Number\",\n                    \"expression\": \"t < 0 ? 0: t\",\n                    \"skipValue\": 9999\n                },\n                {\n                    \"object_id\": \"h\",\n                    \"name\": \"humidity\",\n                    \"type\": \"Number\",\n                    \"expression\": \"h < 0 ? 0: h\"\n                }                \n            ],\n            \"protocol\": [\n                \"IoTA-JSON\"\n            ]\n        }\n    ]\n}"
 						},
 						"url": {
-							"raw": "{{PROTOCOL}}://{{ENDPOINT_IOTAM}}/iot/groups",
+							"raw": "{{PROTOCOL}}://{{ENDPOINT_IOTAM}}/iot/services",
 							"protocol": "{{PROTOCOL}}",
 							"host": [
 								"{{ENDPOINT_IOTAM}}"
 							],
 							"path": [
 								"iot",
-								"groups"
+								"services"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Create group (UL) static attributes",
+					"name": "Create service (JSON) JEXL expression MOBA",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -1525,24 +1797,24 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"groups\": [\r\n    {\r\n      \"apikey\": \"{{UL_APIKEY}}\",\r\n      \"entity_type\": \"device\",\r\n      \"static_attributes\": [\r\n        { \"name\": \"deviceFamily\", \"type\": \"integer\", \"value\": \"02598347\" }\r\n      ],\r\n      \"protocol\": [ \"IoTA-UL\" ]\r\n    }\r\n  ]\r\n}"
+							"raw": "{\n    \"services\": [\n        {\n            \"apikey\": \"h0ydqw8z6chup0y2qcr2f4nmf\",\n            \"entity_type\": \"Car\",\n            \"expressionLanguage\": \"jexl\",\n            \"attributes\": [\n                {\n                    \"object_id\": \"data\",\n                    \"name\": \"data\",\n                    \"type\": \"Text\"\n                },\n                {\n                    \"object_id\": \"fake1\",\n                    \"name\": \"IMEI\",\n                    \"type\": \"Text\",\n                    \"expression\": \"(\\\"0x\\\"+data[2]+data[3]+data[4]+data[5]+data[6]+data[7]+data[8]+data[9]+data[10]+data[11]+data[12]+data[13]+data[14]+data[15]+data[16]+data[17])|parseint\",\n                    \"entity_name\": \"(\\\"0x\\\"+data[2]+data[3]+data[4]+data[5]+data[6]+data[7]+data[8]+data[9]+data[10]+data[11]+data[12]+data[13]+data[14]+data[15]+data[16]+data[17])|parseint\",\n                    \"entity_type\": \"WasteContainer\"\n                },\n                {\n                    \"object_id\": \"fake2\",\n                    \"name\": \"RSSI\",\n                    \"type\": \"Number\",\n                    \"expression\": \"((\\\"0x\\\"+data[18])|parseint)>=2^3?((\\\"0x\\\"+data[18]+data[19])|parseint)-2^8:((\\\"0x\\\"+data[18]+data[19])|parseint)\",\n                    \"entity_name\": \"(\\\"0x\\\"+data[2]+data[3]+data[4]+data[5]+data[6]+data[7]+data[8]+data[9]+data[10]+data[11]+data[12]+data[13]+data[14]+data[15]+data[16]+data[17])|parseint\",\n                    \"entity_type\": \"WasteContainer\"\n                },\n                {\n                    \"object_id\": \"fake3\",\n                    \"name\": \"battery\",\n                    \"type\": \"Number\",\n                    \"expression\": \"(\\\"0x\\\"+data[44]+data[45])|parseint\",\n                    \"entity_name\": \"(\\\"0x\\\"+data[2]+data[3]+data[4]+data[5]+data[6]+data[7]+data[8]+data[9]+data[10]+data[11]+data[12]+data[13]+data[14]+data[15]+data[16]+data[17])|parseint\",\n                    \"entity_type\": \"WasteContainer\"\n                },\n                {\n                    \"object_id\": \"fak4\",\n                    \"name\": \"distance\",\n                    \"type\": \"Number\",\n                    \"expression\": \"((\\\"0x\\\"+data[46])|parseint)>=2^3?((\\\"0x\\\"+data[46]+data[47]+data[48]+data[49])|parseint)-2^16:(\\\"0x\\\"+data[46]+data[47]+data[48]+data[49])|parseint\",\n                    \"entity_name\": \"(\\\"0x\\\"+data[2]+data[3]+data[4]+data[5]+data[6]+data[7]+data[8]+data[9]+data[10]+data[11]+data[12]+data[13]+data[14]+data[15]+data[16]+data[17])|parseint\",\n                    \"entity_type\": \"WasteContainer\"\n                },\n                {\n                    \"object_id\": \"fake5\",\n                    \"name\": \"temperature\",\n                    \"type\": \"Number\",\n                    \"expression\": \"((\\\"0x\\\"+data[50])|parseint)>=2^3?((\\\"0x\\\"+data[50]+data[51])|parseint)-2^8:(\\\"0x\\\"+data[50]+data[51])|parseint\",\n                    \"entity_name\": \"(\\\"0x\\\"+data[2]+data[3]+data[4]+data[5]+data[6]+data[7]+data[8]+data[9]+data[10]+data[11]+data[12]+data[13]+data[14]+data[15]+data[16]+data[17])|parseint\",\n                    \"entity_type\": \"WasteContainer\"\n                },\n                {\n                    \"object_id\": \"fake6\",\n                    \"name\": \"accelerometerX\",\n                    \"type\": \"Number\",\n                    \"expression\": \"((\\\"0x\\\"+data[52])|parseint)>=2^3?((\\\"0x\\\"+data[52]+data[53])|parseint)-2^8:(\\\"0x\\\"+data[52]+data[53])|parseint\",\n                    \"entity_name\": \"(\\\"0x\\\"+data[2]+data[3]+data[4]+data[5]+data[6]+data[7]+data[8]+data[9]+data[10]+data[11]+data[12]+data[13]+data[14]+data[15]+data[16]+data[17])|parseint\",\n                    \"entity_type\": \"WasteContainer\"\n                },\n                {\n                    \"object_id\": \"fake7\",\n                    \"name\": \"accelerometerY\",\n                    \"type\": \"Number\",\n                    \"expression\": \"((\\\"0x\\\"+data[54])|parseint)>=2^3?((\\\"0x\\\"+data[54]+data[55])|parseint)-2^8:(\\\"0x\\\"+data[54]+data[55])|parseint\",\n                    \"entity_name\": \"(\\\"0x\\\"+data[2]+data[3]+data[4]+data[5]+data[6]+data[7]+data[8]+data[9]+data[10]+data[11]+data[12]+data[13]+data[14]+data[15]+data[16]+data[17])|parseint\",\n                    \"entity_type\": \"WasteContainer\"\n                },\n                {\n                    \"object_id\": \"fake8\",\n                    \"name\": \"accelerometerZ\",\n                    \"type\": \"Number\",\n                    \"expression\": \"((\\\"0x\\\"+data[56])|parseint)>=2^3?((\\\"0x\\\"+data[56]+data[57])|parseint)-2^8:(\\\"0x\\\"+data[56]+data[57])|parseint\",\n                    \"entity_name\": \"(\\\"0x\\\"+data[2]+data[3]+data[4]+data[5]+data[6]+data[7]+data[8]+data[9]+data[10]+data[11]+data[12]+data[13]+data[14]+data[15]+data[16]+data[17])|parseint\",\n                    \"entity_type\": \"WasteContainer\"\n                },\n                {\n                    \"object_id\": \"fake9\",\n                    \"name\": \"TimeInstant\",\n                    \"type\": \"Number\",\n                    \"expression\": \"(((\\\"0x\\\"+data[58]+data[59]+data[60]+data[61]+data[62]+data[63]+data[64]+data[65])|parseint)*1000)|toisodate\",\n                    \"entity_name\": \"(\\\"0x\\\"+data[2]+data[3]+data[4]+data[5]+data[6]+data[7]+data[8]+data[9]+data[10]+data[11]+data[12]+data[13]+data[14]+data[15]+data[16]+data[17])|parseint\",\n                    \"entity_type\": \"WasteContainer\"\n                }                \n            ],\n            \"protocol\": [\n                \"IoTA-JSON\"\n            ]\n        }\n    ]\n}"
 						},
 						"url": {
-							"raw": "{{PROTOCOL}}://{{ENDPOINT_IOTAM}}/iot/groups",
+							"raw": "{{PROTOCOL}}://{{ENDPOINT_IOTAM}}/iot/services",
 							"protocol": "{{PROTOCOL}}",
 							"host": [
 								"{{ENDPOINT_IOTAM}}"
 							],
 							"path": [
 								"iot",
-								"groups"
+								"services"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Create group (UL) expression",
+					"name": "Create service (JSON) explicit attrs jexl",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -1565,24 +1837,350 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"groups\": [\n        {\n            \"apikey\": \"{{UL_APIKEY}}\",\n            \"entity_type\": \"parking\",\n            \"attributes\": [\n                {\n                    \"expression\": \"${(@plazasOcupadas / @plazasTotal) * 100}\",\n                    \"type\": \"Number\",\n                    \"name\": \"plazasPorcentaje\"\n                }\n            ],\n            \"protocol\": [\n                \"IoTA-UL\"\n            ]\n        }\n    ]\n}"
+							"raw": "{\r\n    \"services\": [\r\n        {\r\n            \"apikey\": \"{{JSON_APIKEY}}\",\r\n            \"entity_type\": \"Car\",\r\n            \"expressionLanguage\": \"jexl\",\r\n            \"explicitAttrs\": \"(t&&h)?['temperature','humidity']:t?['temperature']:h?['humidity']:[]\",\r\n            \"attributes\": [\r\n                {\r\n                    \"object_id\": \"t\",\r\n                    \"name\": \"temperature\",\r\n                    \"type\": \"Number\",\r\n                    \"expression\": \"t*100\"\r\n                },\r\n                {\r\n                    \"object_id\": \"h\",\r\n                    \"name\": \"humidity\",\r\n                    \"type\": \"Number\"\r\n                }\r\n            ],\r\n            \"protocol\": [\r\n                \"IoTA-JSON\"\r\n            ]\r\n        }\r\n    ]\r\n}"
 						},
 						"url": {
-							"raw": "{{PROTOCOL}}://{{ENDPOINT_IOTAM}}/iot/groups",
+							"raw": "{{PROTOCOL}}://{{ENDPOINT_IOTAM}}/iot/services",
 							"protocol": "{{PROTOCOL}}",
 							"host": [
 								"{{ENDPOINT_IOTAM}}"
 							],
 							"path": [
 								"iot",
-								"groups"
+								"services"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Delete group (JSON)",
+					"name": "Create service (JSON) multientity jexl",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Fiware-Service",
+								"value": "{{SERVICE}}"
+							},
+							{
+								"key": "Fiware-ServicePath",
+								"value": "{{SUBSERVICE}}"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{TOKEN}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"services\": [\n        {\n            \"apikey\": \"{{JSON_APIKEY}}\",\n            \"entity_type\": \"Car\",\n            \"expressionLanguage\": \"jexl\",\n            \"attributes\": [\n                {\n                    \"object_id\": \"h\",\n                    \"name\": \"humidity\",\n                    \"type\": \"Number\",\n                    \"entity_name\": \"'Car-'+(id|replacestr(' ','_'))\",\n                    \"entity_type\": \"Car\"\n                },\n                {\n                    \"object_id\": \"t\",\n                    \"name\": \"temperature\",\n                    \"type\": \"Number\",\n                    \"entity_name\": \"'Room-'+(id|replacestr(' ','_'))\",\n                    \"entity_type\": \"Room\"\n                }                                \n            ],\n            \"protocol\": [\n                \"IoTA-JSON\"\n            ]\n        }\n    ]\n}"
+						},
+						"url": {
+							"raw": "{{PROTOCOL}}://{{ENDPOINT_IOTAM}}/iot/services",
+							"protocol": "{{PROTOCOL}}",
+							"host": [
+								"{{ENDPOINT_IOTAM}}"
+							],
+							"path": [
+								"iot",
+								"services"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create service (JSON) attributes entityNameExp",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Fiware-Service",
+								"value": "{{SERVICE}}"
+							},
+							{
+								"key": "Fiware-ServicePath",
+								"value": "{{SUBSERVICE}}"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{TOKEN}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"services\": [\r\n        {\r\n            \"apikey\": \"{{JSON_APIKEY}}\",\r\n            \"entity_type\": \"Car\",\r\n            \"entityNameExp\": \"id+'_SUFIX'\",\r\n            \"expressionLanguage\": \"jexl\",\r\n            \"attributes\": [\r\n                {\r\n                    \"object_id\": \"t\",\r\n                    \"name\": \"temperature\",\r\n                    \"type\": \"Number\"\r\n                },\r\n                {\r\n                    \"object_id\": \"h\",\r\n                    \"name\": \"humidity\",\r\n                    \"type\": \"Number\"\r\n                }\r\n            ],\r\n            \"protocol\": [\r\n                \"IoTA-JSON\"\r\n            ]\r\n        }\r\n    ]\r\n}"
+						},
+						"url": {
+							"raw": "{{PROTOCOL}}://{{ENDPOINT_IOTAM}}/iot/services",
+							"protocol": "{{PROTOCOL}}",
+							"host": [
+								"{{ENDPOINT_IOTAM}}"
+							],
+							"path": [
+								"iot",
+								"services"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create service (JSON) commands",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Fiware-Service",
+								"value": "{{SERVICE}}"
+							},
+							{
+								"key": "Fiware-ServicePath",
+								"value": "{{SUBSERVICE}}"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{TOKEN}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"services\": [\r\n        {\r\n            \"apikey\": \"{{JSON_APIKEY}}\",\r\n            \"entity_type\": \"Drawbridge\",\r\n            \"transport\": \"HTTP\",\r\n            \"attributes\": [\r\n                {\r\n                    \"object_id\": \"ds\",\r\n                    \"name\": \"drawbridgeStatus\",\r\n                    \"type\": \"Text\"\r\n                },\r\n                {\r\n                    \"object_id\": \"p\",\r\n                    \"name\": \"proximity\",\r\n                    \"type\": \"Boolean\"\r\n                }\r\n            ],\r\n            \"protocol\": [\r\n                \"IoTA-JSON\"\r\n            ],\r\n            \"commands\": [\r\n                {\r\n                    \"name\": \"drawbridgeCmd\",\r\n                    \"type\": \"command\"\r\n                }\r\n            ]\r\n        }\r\n    ]\r\n}"
+						},
+						"url": {
+							"raw": "{{PROTOCOL}}://{{ENDPOINT_IOTAM}}/iot/services",
+							"protocol": "{{PROTOCOL}}",
+							"host": [
+								"{{ENDPOINT_IOTAM}}"
+							],
+							"path": [
+								"iot",
+								"services"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create service (UL)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Fiware-Service",
+								"value": "{{SERVICE}}"
+							},
+							{
+								"key": "Fiware-ServicePath",
+								"value": "{{SUBSERVICE}}"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{TOKEN}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"services\": [\r\n        {\r\n            \"apikey\": \"{{UL_APIKEY}}\",\r\n            \"entity_type\": \"Car\",\r\n            \"protocol\": [\r\n                \"IoTA-UL\"\r\n            ]\r\n        }\r\n    ]\r\n}"
+						},
+						"url": {
+							"raw": "{{PROTOCOL}}://{{ENDPOINT_IOTAM}}/iot/services",
+							"protocol": "{{PROTOCOL}}",
+							"host": [
+								"{{ENDPOINT_IOTAM}}"
+							],
+							"path": [
+								"iot",
+								"services"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create service (UL) attributes",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Fiware-Service",
+								"value": "{{SERVICE}}"
+							},
+							{
+								"key": "Fiware-ServicePath",
+								"value": "{{SUBSERVICE}}"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{TOKEN}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"services\": [\r\n    {\r\n      \"apikey\": \"{{UL_APIKEY}}\",\r\n      \"entity_type\": \"Car\",\r\n      \"attributes\": [\r\n        { \"object_id\": \"t\", \"name\": \"temperature\", \"type\": \"float\" },\r\n        { \"object_id\": \"h\", \"name\": \"humidity\", \"type\": \"float\" }\r\n      ],\r\n      \"protocol\": [ \"IoTA-UL\" ]\r\n    }\r\n  ]\r\n}"
+						},
+						"url": {
+							"raw": "{{PROTOCOL}}://{{ENDPOINT_IOTAM}}/iot/services",
+							"protocol": "{{PROTOCOL}}",
+							"host": [
+								"{{ENDPOINT_IOTAM}}"
+							],
+							"path": [
+								"iot",
+								"services"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create service (UL) static attributes",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Fiware-Service",
+								"value": "{{SERVICE}}"
+							},
+							{
+								"key": "Fiware-ServicePath",
+								"value": "{{SUBSERVICE}}"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{TOKEN}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"services\": [\r\n    {\r\n      \"apikey\": \"{{UL_APIKEY}}\",\r\n      \"entity_type\": \"Car\",\r\n      \"static_attributes\": [\r\n        { \"name\": \"deviceFamily\", \"type\": \"integer\", \"value\": \"02598347\" }\r\n      ],\r\n      \"protocol\": [ \"IoTA-UL\" ]\r\n    }\r\n  ]\r\n}"
+						},
+						"url": {
+							"raw": "{{PROTOCOL}}://{{ENDPOINT_IOTAM}}/iot/services",
+							"protocol": "{{PROTOCOL}}",
+							"host": [
+								"{{ENDPOINT_IOTAM}}"
+							],
+							"path": [
+								"iot",
+								"services"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create service (UL) expression",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Fiware-Service",
+								"value": "{{SERVICE}}"
+							},
+							{
+								"key": "Fiware-ServicePath",
+								"value": "{{SUBSERVICE}}"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{TOKEN}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"services\": [\n        {\n            \"apikey\": \"{{UL_APIKEY}}\",\n            \"entity_type\": \"parking\",\n            \"attributes\": [\n                {\n                    \"expression\": \"${(@plazasOcupadas / @plazasTotal) * 100}\",\n                    \"type\": \"Number\",\n                    \"name\": \"plazasPorcentaje\"\n                }\n            ],\n            \"protocol\": [\n                \"IoTA-UL\"\n            ]\n        }\n    ]\n}"
+						},
+						"url": {
+							"raw": "{{PROTOCOL}}://{{ENDPOINT_IOTAM}}/iot/services",
+							"protocol": "{{PROTOCOL}}",
+							"host": [
+								"{{ENDPOINT_IOTAM}}"
+							],
+							"path": [
+								"iot",
+								"services"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update service (JSON)",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Fiware-Service",
+								"value": "{{SERVICE}}"
+							},
+							{
+								"key": "Fiware-ServicePath",
+								"value": "{{SUBSERVICE}}"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{TOKEN}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"services\": [\r\n        {\r\n            \"apikey\": \"{{JSON_APIKEY}}\",\r\n            \"timestamp\": true,\r\n            \"explicitAttrs\": false,\r\n            \"expressionLanguage\": \"jexl\",\r\n            \"entity_type\": \"Sprinkler\",\r\n            \"transport\": \"HTTP\",\r\n            \"protocol\": [\r\n                \"IoTA-JSON\"\r\n            ],\r\n            \"commands\": [\r\n                { \"name\": \"waterCmd\", \"type\": \"command\" }\r\n            ],\r\n            \"description\": \"Descripción del grupo\"\r\n        }\r\n    ]\r\n}"
+						},
+						"url": {
+							"raw": "{{PROTOCOL}}://{{ENDPOINT_IOTAM}}/iot/services?apikey=argan14ojwkfq6y0xbwv59r0du",
+							"protocol": "{{PROTOCOL}}",
+							"host": [
+								"{{ENDPOINT_IOTAM}}"
+							],
+							"path": [
+								"iot",
+								"services"
+							],
+							"query": [
+								{
+									"key": "apikey",
+									"value": "argan14ojwkfq6y0xbwv59r0du"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete service (JSON)",
 					"request": {
 						"method": "DELETE",
 						"header": [
@@ -1608,14 +2206,14 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{PROTOCOL}}://{{ENDPOINT_IOTAM}}/iot/groups?protocol=IoTA-JSON&apikey={{JSON_APIKEY}}",
+							"raw": "{{PROTOCOL}}://{{ENDPOINT_IOTAM}}/iot/services?protocol=IoTA-JSON&apikey={{JSON_APIKEY}}",
 							"protocol": "{{PROTOCOL}}",
 							"host": [
 								"{{ENDPOINT_IOTAM}}"
 							],
 							"path": [
 								"iot",
-								"groups"
+								"services"
 							],
 							"query": [
 								{
@@ -1632,7 +2230,7 @@
 					"response": []
 				},
 				{
-					"name": "Delete group (UL)",
+					"name": "Delete service (UL)",
 					"request": {
 						"method": "DELETE",
 						"header": [
@@ -1658,14 +2256,14 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{PROTOCOL}}://{{ENDPOINT_IOTAM}}/iot/groups?protocol=IoTA-UL&apikey={{UL_APIKEY}}",
+							"raw": "{{PROTOCOL}}://{{ENDPOINT_IOTAM}}/iot/services?protocol=IoTA-UL&apikey={{UL_APIKEY}}",
 							"protocol": "{{PROTOCOL}}",
 							"host": [
 								"{{ENDPOINT_IOTAM}}"
 							],
 							"path": [
 								"iot",
-								"groups"
+								"services"
 							],
 							"query": [
 								{
@@ -1682,7 +2280,7 @@
 					"response": []
 				},
 				{
-					"name": "Get all groups",
+					"name": "Get all services",
 					"request": {
 						"method": "GET",
 						"header": [
@@ -1700,14 +2298,14 @@
 							}
 						],
 						"url": {
-							"raw": "{{PROTOCOL}}://{{ENDPOINT_IOTAM}}/iot/groups",
+							"raw": "{{PROTOCOL}}://{{ENDPOINT_IOTAM}}/iot/services",
 							"protocol": "{{PROTOCOL}}",
 							"host": [
 								"{{ENDPOINT_IOTAM}}"
 							],
 							"path": [
 								"iot",
-								"groups"
+								"services"
 							]
 						}
 					},
@@ -2149,7 +2747,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"devices\": [\r\n    {\r\n      \"device_id\": \"dev1json\", \r\n      \"entity_name\": \"entity1json\", \r\n      \"entity_type\": \"devicejson\",\r\n      \"commands\": [\r\n      \t{ \"object_id\": \"r\", \"name\": \"reset\", \"type\": \"string\" }\r\n      ],\r\n      \"endpoint\": \"http://foo.bar:999\",\r\n      \"protocol\": \"IoTA-JSON\"\r\n    }\r\n  ]\r\n}"
+							"raw": "{\r\n  \"devices\": [\r\n    {\r\n      \"device_id\": \"dev1json\", \r\n      \"entity_name\": \"entity1json\", \r\n      \"entity_type\": \"devicejson\",\r\n      \"commands\": [\r\n      \t{ \"object_id\": \"r\", \"name\": \"reset\", \"type\": \"string\" }\r\n      ],\r\n      \"endpoint\": \"{{PROTOCOL}}://foo.bar:999\",\r\n      \"protocol\": \"IoTA-JSON\"\r\n    }\r\n  ]\r\n}"
 						},
 						"url": {
 							"raw": "{{PROTOCOL}}://{{ENDPOINT_IOTAM}}/iot/devices",
@@ -2269,7 +2867,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"devices\": [\r\n        {\r\n            \"device_id\": \"dev1ul\",\r\n            \"entity_name\": \"entity1ul\",\r\n            \"entity_type\": \"deviceul\",\r\n            \"attributes\": [\r\n                {\r\n                    \"object_id\": \"w\",\r\n                    \"name\": \"power\",\r\n                    \"type\": \"float\"\r\n                },\r\n                {\r\n                    \"object_id\": \"e\",\r\n                    \"name\": \"electricPotential\",\r\n                    \"type\": \"float\"\r\n                }\r\n            ],\r\n            \"static_attributes\": [\r\n                {\r\n                    \"name\": \"serialNumber\",\r\n                    \"type\": \"Integer\",\r\n                    \"value\": \"2136721\"\r\n                }\r\n            ],\r\n            \"lazy\": [\r\n                {\r\n                    \"object_id\": \"p\",\r\n                    \"name\": \"pressure\",\r\n                    \"type\": \"percentage\"\r\n                }\r\n            ],\r\n            \"commands\": [\r\n                {\r\n                    \"object_id\": \"r\",\r\n                    \"name\": \"reset\",\r\n                    \"type\": \"string\"\r\n                }\r\n            ],\r\n            \"endpoint\": \"http://foo.bar:999\",\r\n            \"protocol\": \"IoTA-UL\"\r\n        }\r\n    ]\r\n}"
+							"raw": "{\r\n    \"devices\": [\r\n        {\r\n            \"device_id\": \"dev1ul\",\r\n            \"entity_name\": \"entity1ul\",\r\n            \"entity_type\": \"deviceul\",\r\n            \"attributes\": [\r\n                {\r\n                    \"object_id\": \"w\",\r\n                    \"name\": \"power\",\r\n                    \"type\": \"float\"\r\n                },\r\n                {\r\n                    \"object_id\": \"e\",\r\n                    \"name\": \"electricPotential\",\r\n                    \"type\": \"float\"\r\n                }\r\n            ],\r\n            \"static_attributes\": [\r\n                {\r\n                    \"name\": \"serialNumber\",\r\n                    \"type\": \"Integer\",\r\n                    \"value\": \"2136721\"\r\n                }\r\n            ],\r\n            \"lazy\": [\r\n                {\r\n                    \"object_id\": \"p\",\r\n                    \"name\": \"pressure\",\r\n                    \"type\": \"percentage\"\r\n                }\r\n            ],\r\n            \"commands\": [\r\n                {\r\n                    \"object_id\": \"r\",\r\n                    \"name\": \"reset\",\r\n                    \"type\": \"string\"\r\n                }\r\n            ],\r\n            \"endpoint\": \"{{PROTOCOL}}://foo.bar:999\",\r\n            \"protocol\": \"IoTA-UL\"\r\n        }\r\n    ]\r\n}"
 						},
 						"url": {
 							"raw": "{{PROTOCOL}}://{{ENDPOINT_IOTAM}}/iot/devices",
@@ -2697,11 +3295,11 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"t\": 16,\r\n  \"h\": 34\r\n}"
+							"raw": "{\n    \"h\": 50,\n    \"t\": 60\n}"
 						},
 						"url": {
-							"raw": "http://{{ENDPOINT_IOTA_JSON_HTTP}}/iot/json?i=farola1&k={{JSON_APIKEY}}",
-							"protocol": "http",
+							"raw": "{{PROTOCOL}}://{{ENDPOINT_IOTA_JSON_HTTP}}/iot/json?i=measure_4&k=f4heuv5k2z8u4w12yss6fma0j",
+							"protocol": "{{PROTOCOL}}",
 							"host": [
 								"{{ENDPOINT_IOTA_JSON_HTTP}}"
 							],
@@ -2712,11 +3310,11 @@
 							"query": [
 								{
 									"key": "i",
-									"value": "farola1"
+									"value": "measure_4"
 								},
 								{
 									"key": "k",
-									"value": "{{JSON_APIKEY}}"
+									"value": "f4heuv5k2z8u4w12yss6fma0j"
 								}
 							]
 						}
@@ -2729,8 +3327,8 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://{{ENDPOINT_IOTA_UL_HTTP}}/iot/d?i=dev1ul&k={{UL_APIKEY}}&d=w|42|e|24",
-							"protocol": "http",
+							"raw": "{{PROTOCOL}}://{{ENDPOINT_IOTA_UL_HTTP}}/iot/d?i=dev1ul&k={{UL_APIKEY}}&d=w|42|e|24",
+							"protocol": "{{PROTOCOL}}",
 							"host": [
 								"{{ENDPOINT_IOTA_UL_HTTP}}"
 							],
@@ -2766,8 +3364,8 @@
 							"raw": "2018-01-01T00:00:00|t|2|r|3#2018-01-02T00:00:00|t|1|r|4\n"
 						},
 						"url": {
-							"raw": "http://{{ENDPOINT_IOTA_UL_HTTP}}/iot/d?i=cart1&k={{UL_APIKEY}}",
-							"protocol": "http",
+							"raw": "{{PROTOCOL}}://{{ENDPOINT_IOTA_UL_HTTP}}/iot/d?i=cart1&k={{UL_APIKEY}}",
+							"protocol": "{{PROTOCOL}}",
 							"host": [
 								"{{ENDPOINT_IOTA_UL_HTTP}}"
 							],
@@ -2817,10 +3415,10 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"value\": \"1\",\n  \"type\": \"command\"\n}\n"
+							"raw": "{\n  \"value\": \"off\",\n  \"type\": \"command\"\n}\n"
 						},
 						"url": {
-							"raw": "{{PROTOCOL}}://{{ENDPOINT_CB}}/v2/entities/test777/attrs/reset?type=thing",
+							"raw": "{{PROTOCOL}}://{{ENDPOINT_CB}}/v2/entities/Sprinkler:device_04/attrs/waterCmd?type=Sprinkler",
 							"protocol": "{{PROTOCOL}}",
 							"host": [
 								"{{ENDPOINT_CB}}"
@@ -2828,14 +3426,14 @@
 							"path": [
 								"v2",
 								"entities",
-								"test777",
+								"Sprinkler:device_04",
 								"attrs",
-								"reset"
+								"waterCmd"
 							],
 							"query": [
 								{
 									"key": "type",
-									"value": "thing"
+									"value": "Sprinkler"
 								}
 							]
 						}
@@ -2873,7 +3471,7 @@
 							"raw": "{\n  \"value\": { \"param1\": \"val1\", \"param2\": \"val2\" },\n  \"type\": \"command\"\n}\n"
 						},
 						"url": {
-							"raw": "{{PROTOCOL}}://{{ENDPOINT_CB}}/v2/entities/vigo102/attrs/encender?type=Streetlight",
+							"raw": "{{PROTOCOL}}://{{ENDPOINT_CB}}/v2/entities/test26/attrs/ping?type=thing",
 							"protocol": "{{PROTOCOL}}",
 							"host": [
 								"{{ENDPOINT_CB}}"
@@ -2881,14 +3479,14 @@
 							"path": [
 								"v2",
 								"entities",
-								"vigo102",
+								"test26",
 								"attrs",
-								"encender"
+								"ping"
 							],
 							"query": [
 								{
 									"key": "type",
-									"value": "Streetlight"
+									"value": "thing"
 								}
 							]
 						}
@@ -2906,8 +3504,8 @@
 							}
 						],
 						"url": {
-							"raw": "http://{{ENDPOINT_IOTA_JSON_HTTP}}/iot/json?k={{JSON_APIKEY}}&i=test777&getCmd=1",
-							"protocol": "http",
+							"raw": "{{PROTOCOL}}://{{ENDPOINT_IOTA_JSON_HTTP}}/iot/json?k={{JSON_APIKEY}}&i=db01&getCmd=1",
+							"protocol": "{{PROTOCOL}}",
 							"host": [
 								"{{ENDPOINT_IOTA_JSON_HTTP}}"
 							],
@@ -2922,7 +3520,7 @@
 								},
 								{
 									"key": "i",
-									"value": "test777"
+									"value": "db01"
 								},
 								{
 									"key": "getCmd",
@@ -2951,8 +3549,8 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://{{ENDPOINT_IOTA_UL_HTTP}}/iot/d?k=zxcva3wuhrlune2drj937abcd&i=test77&getCmd=1",
-							"protocol": "http",
+							"raw": "{{PROTOCOL}}://{{ENDPOINT_IOTA_UL_HTTP}}/iot/d?k=zxcva3wuhrlune2drj937abcd&i=test77&getCmd=1",
+							"protocol": "{{PROTOCOL}}",
 							"host": [
 								"{{ENDPOINT_IOTA_UL_HTTP}}"
 							],
@@ -2996,11 +3594,11 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{ \"reset\": \"Comando reset ejecutado OK\"}"
+							"raw": "{ \"bridgeCmd\": \"Comando bridge ejecutado OK\"}"
 						},
 						"url": {
-							"raw": "http://{{ENDPOINT_IOTA_JSON_HTTP}}/iot/json/commands?k={{JSON_APIKEY}}&i=test777",
-							"protocol": "http",
+							"raw": "{{PROTOCOL}}://{{ENDPOINT_IOTA_JSON_HTTP}}/iot/json/commands?k={{JSON_APIKEY}}&i=db01",
+							"protocol": "{{PROTOCOL}}",
 							"host": [
 								"{{ENDPOINT_IOTA_JSON_HTTP}}"
 							],
@@ -3016,7 +3614,7 @@
 								},
 								{
 									"key": "i",
-									"value": "test777"
+									"value": "db01"
 								}
 							]
 						}
@@ -3038,8 +3636,8 @@
 							"raw": "test77@ping|ping OK"
 						},
 						"url": {
-							"raw": "http://{{ENDPOINT_IOTA_UL_HTTP}}/iot/d?k=zxcva3wuhrlune2drj937abcd&i=test77",
-							"protocol": "http",
+							"raw": "{{PROTOCOL}}://{{ENDPOINT_IOTA_UL_HTTP}}/iot/d?k=zxcva3wuhrlune2drj937abcd&i=test77",
+							"protocol": "{{PROTOCOL}}",
 							"host": [
 								"{{ENDPOINT_IOTA_UL_HTTP}}"
 							],
@@ -3085,7 +3683,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"devices\": [{\n        \"device_id\": \"test26\",\n        \"protocol\": \"IoTA-UL\",\n        \"entity_name\": \"test26\",\n        \"entity_type\": \"thing\",\n        \"transport\":\"HTTP\",\n        \"endpoint\": \"http://10.0.0.24:6500\",\n        \"commands\": [{\n            \"name\": \"ping\",\n            \"type\": \"command\"\n        }]\n    }]\n}"
+							"raw": "{\n    \"devices\": [\n        {\n            \"device_id\": \"test24\",\n            \"protocol\": \"IoTA-UL\",\n            \"entity_name\": \"test24\",\n            \"entity_type\": \"thing\",\n            \"apikey\": \"{{UL_APIKEY}}\",            \n            \"transport\": \"HTTP\",\n            \"endpoint\": \"{{SAFE_PROTOCOL}}://eomxwctpvs3kl73.m.pipedream.net\",\n            \"commands\": [\n                {\n                    \"name\": \"ping\",\n                    \"type\": \"command\"\n                }\n            ]\n        }\n    ]\n}"
 						},
 						"url": {
 							"raw": "{{PROTOCOL}}://{{ENDPOINT_IOTAM}}/iot/devices",
@@ -3125,11 +3723,11 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"devices\": [\n        {\n            \"device_id\": \"test126\",\n            \"protocol\": \"IoTA-JSON\",\n            \"entity_name\": \"test126\",\n            \"entity_type\": \"thing\",\n            \"transport\": \"HTTP\",\n            \"endpoint\": \"http://10.0.0.24:6500\",\n            \"commands\": [\n                {\n                    \"name\": \"ping\",\n                    \"type\": \"command\"\n                }\n            ]\n        }\n    ]\n}"
+							"raw": "{\n    \"devices\": [\n        {\n            \"device_id\": \"test126\",\n            \"protocol\": \"IoTA-JSON\",\n            \"entity_name\": \"test126\",\n            \"entity_type\": \"thing\",\n            \"apikey\": \"{{JSON_APIKEY}}\",            \n            \"transport\": \"HTTP\",\n            \"endpoint\": \"{{SAFE_PROTOCOL}}://eomxwctpvs3kl73.m.pipedream.net\",\n            \"commands\": [\n                {\n                    \"name\": \"ping\",\n                    \"type\": \"command\"\n                }\n            ]\n        }\n    ]\n}"
 						},
 						"url": {
-							"raw": "https://{{ENDPOINT_IOTAM}}/iot/devices",
-							"protocol": "https",
+							"raw": "{{PROTOCOL}}://{{ENDPOINT_IOTAM}}/iot/devices",
+							"protocol": "{{PROTOCOL}}",
 							"host": [
 								"{{ENDPOINT_IOTAM}}"
 							],
@@ -3245,7 +3843,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"devices\": [{\n        \"device_id\": \"test77\",\n        \"protocol\": \"IoTA-UL\",\n        \"entity_name\": \"test77\",\n        \"entity_type\": \"thing\",\n        \"transport\":\"MQTT\",\n        \"commands\": [{\n            \"name\": \"ping\",\n            \"type\": \"command\"\n        }]\n    }]\n}"
+							"raw": "{\n    \"devices\": [\n        {\n            \"device_id\": \"test77\",\n            \"protocol\": \"IoTA-UL\",\n            \"entity_name\": \"test77\",\n            \"entity_type\": \"thing\",\n            \"transport\": \"MQTT\",\n            \"apikey\": \"{{UL_APIKEY}}\",\n            \"commands\": [\n                {\n                    \"name\": \"ping\",\n                    \"type\": \"command\"\n                }\n            ]\n        }\n    ]\n}"
 						},
 						"url": {
 							"raw": "{{PROTOCOL}}://{{ENDPOINT_IOTAM}}/iot/devices",
@@ -3285,7 +3883,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"devices\": [{\n        \"device_id\": \"test101\",\n        \"protocol\": \"IoTA-JSON\",\n        \"entity_name\": \"test101\",\n        \"entity_type\": \"thing\",\n        \"transport\":\"MQTT\",\n        \"commands\": [{\n            \"name\": \"auto\",\n            \"type\": \"command\"\n        }]\n    }]\n}"
+							"raw": "{\n    \"devices\": [\n        {\n            \"device_id\": \"test101\",\n            \"protocol\": \"IoTA-JSON\",\n            \"entity_name\": \"test101\",\n            \"entity_type\": \"thing\",\n            \"transport\": \"MQTT\",\n            \"apikey\": \"{{JSON_APIKEY}}\",\n            \"commands\": [\n                {\n                    \"name\": \"auto\",\n                    \"type\": \"command\"\n                }\n            ]\n        }\n    ]\n}"
 						},
 						"url": {
 							"raw": "{{PROTOCOL}}://{{ENDPOINT_IOTAM}}/iot/devices",
@@ -3325,11 +3923,11 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"devices\": [{\n        \"device_id\": \"testlw\",\n        \"protocol\": \"IoTA-LWM2M\",\n        \"entity_name\": \"testlw\",\n        \"entity_type\": \"thing\",\n        \"transport\":\"HTTP\",\n        \"endpoint\": \"http://10.0.0.24:6500\",\n        \"commands\": [{\n            \"name\": \"ping\",\n            \"type\": \"command\"\n        }]\n    }]\n}"
+							"raw": "{\n    \"devices\": [{\n        \"device_id\": \"testlw\",\n        \"protocol\": \"IoTA-LWM2M\",\n        \"entity_name\": \"testlw\",\n        \"entity_type\": \"thing\",\n        \"transport\":\"HTTP\",\n        \"endpoint\": \"{{PROTOCOL}}://10.0.0.24:6500\",\n        \"commands\": [{\n            \"name\": \"ping\",\n            \"type\": \"command\"\n        }]\n    }]\n}"
 						},
 						"url": {
-							"raw": "https://{{ENDPOINT_IOTAM}}/iot/devices",
-							"protocol": "https",
+							"raw": "{{SAFE_PROTOCOL}}://{{ENDPOINT_IOTAM}}/iot/devices",
+							"protocol": "{{SAFE_PROTOCOL}}",
 							"host": [
 								"{{ENDPOINT_IOTAM}}"
 							],
@@ -3382,7 +3980,7 @@
 					"response": []
 				},
 				{
-					"name": "Modification device",
+					"name": "Modificacion device",
 					"request": {
 						"method": "PUT",
 						"header": [
@@ -3427,6 +4025,158 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Send measure (UL) POST Castellon",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "2023-04-26T09:18:06.524Z|vol|22093"
+						},
+						"url": {
+							"raw": "{{PROTOCOL}}://{{ENDPOINT_IOTA_UL_HTTP}}/iot/d?i=WaterMeterBASGWT0004&k=99dp0mlz9ir9vby0zw5lxmce8",
+							"protocol": "{{PROTOCOL}}",
+							"host": [
+								"{{ENDPOINT_IOTA_UL_HTTP}}"
+							],
+							"path": [
+								"iot",
+								"d"
+							],
+							"query": [
+								{
+									"key": "i",
+									"value": "WaterMeterBASGWT0004"
+								},
+								{
+									"key": "k",
+									"value": "99dp0mlz9ir9vby0zw5lxmce8"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "STH",
+			"item": [
+				{
+					"name": "Get attribute history",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Fiware-Service",
+								"value": "{{SERVICE}}"
+							},
+							{
+								"key": "Fiware-ServicePath",
+								"value": "{{SUBSERVICE}}"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{TOKEN}}"
+							}
+						],
+						"url": {
+							"raw": "{{PROTOCOL}}://{{ENDPOINT_STH}}/STH/v1/contextEntities/type/myType/id/myEntity/attributes/temperature?hLimit=3&hOffset=0&dateFrom=2017-10-16T00:00:00.000Z&dateTo=2017-10-26T23:59:59.999Z\n",
+							"protocol": "{{PROTOCOL}}",
+							"host": [
+								"{{ENDPOINT_STH}}"
+							],
+							"path": [
+								"STH",
+								"v1",
+								"contextEntities",
+								"type",
+								"myType",
+								"id",
+								"myEntity",
+								"attributes",
+								"temperature"
+							],
+							"query": [
+								{
+									"key": "hLimit",
+									"value": "3"
+								},
+								{
+									"key": "hOffset",
+									"value": "0"
+								},
+								{
+									"key": "dateFrom",
+									"value": "2017-10-16T00:00:00.000Z"
+								},
+								{
+									"key": "dateTo",
+									"value": "2017-10-26T23:59:59.999Z\n"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get attribute aggregation",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Fiware-Service",
+								"value": "{{SERVICE}}"
+							},
+							{
+								"key": "Fiware-ServicePath",
+								"value": "{{SUBSERVICE}}"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{TOKEN}}"
+							}
+						],
+						"url": {
+							"raw": "{{PROTOCOL}}://{{ENDPOINT_STH}}/STH/v1/contextEntities/type/myType/id/myEntity/attributes/temperature?aggrMethod=sum&aggrPeriod=hour&dateFrom=2017-10-16T00:00:00.000Z&dateTo=2017-10-26T23:59:59.999Z\n",
+							"protocol": "{{PROTOCOL}}",
+							"host": [
+								"{{ENDPOINT_STH}}"
+							],
+							"path": [
+								"STH",
+								"v1",
+								"contextEntities",
+								"type",
+								"myType",
+								"id",
+								"myEntity",
+								"attributes",
+								"temperature"
+							],
+							"query": [
+								{
+									"key": "aggrMethod",
+									"value": "sum"
+								},
+								{
+									"key": "aggrPeriod",
+									"value": "hour"
+								},
+								{
+									"key": "dateFrom",
+									"value": "2017-10-16T00:00:00.000Z"
+								},
+								{
+									"key": "dateTo",
+									"value": "2017-10-26T23:59:59.999Z\n"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -3457,7 +4207,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"enviaemail\",\r\n    \"text\": \"select *, temperature?, mantenedor?, getNextSunset(java.util.Calendar.getInstance(),37.9, -1.1).format(\\\"yyyy-MM-dd'T'HH:mm:ss.SSSX\\\") as sunset from iotEvent where cast(cast(temperature?, String),float) >= 20 \",\r\n\t\"action\": {\r\n        \"type\": \"email\",\r\n        \"template\": \"La temperatura de la entidad ${id} es ${temperature}. El ocaso será a las ${sunset}\",\r\n        \"parameters\": {\r\n            \"to\": \"${mantenedor}\",\r\n            \"from\": \"soporte@urbo2.es\",\r\n            \"subject\": \"Temperatura de la entidad ${id}\"\r\n        }\r\n    }\r\n}"
+							"raw": "{\r\n    \"name\": \"enviaemail\",\r\n    \"description\": \"Envio de email con temperatura alta\",\r\n    \"text\": \"select *, temperature? as temperature, mantenedor?, getNextSunset(java.util.Calendar.getInstance(),37.9, -1.1).format(\\\"yyyy-MM-dd'T'HH:mm:ss.SSSX\\\") as sunset from iotEvent where cast(temperature?, float) >= 20 \",\r\n\t\"action\": {\r\n        \"type\": \"email\",\r\n        \"template\": \"La temperatura de la entidad ${id} es ${temperature}. El ocaso será a las ${sunset}\",\r\n        \"parameters\": {\r\n            \"to\": \"manuel.carracedosanchez@telefonica.com\",\r\n            \"from\": \"soporte@urbo2.es\",\r\n            \"subject\": \"Temperatura de la entidad ${id}\"\r\n        }\r\n    }\r\n}"
 						},
 						"url": {
 							"raw": "{{PROTOCOL}}://{{ENDPOINT_CEP}}/rules",
@@ -3496,7 +4246,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"entityupdate\",\r\n    \"text\": \"select *, humidity? from iotEvent where type?='devicejson' AND cast(cast(humidity?, String), float)<20\",\r\n\t\"action\": {\r\n        \"type\": \"update\",\r\n        \"parameters\": {\r\n            \"id\": \"TestEntity2\",\r\n            \"type\": \"TestEntity\",\r\n            \"attributes\": [\r\n            \t{\r\n            \t\t\"name\": \"msg\",\r\n            \t\t\"value\": \"Humedad en ${id} es ${humidity}\"\r\n            \t}\r\n            ]\r\n        }\r\n    }\r\n}"
+							"raw": "{\r\n    \"name\": \"entityupdate\",\r\n    \"description\": \"Actualización de entidad Test cuando entidad Car tienen humedad baja\",\r\n    \"text\": \"select *, humidity? from iotEvent where type?='Car' AND cast(cast(humidity?, String), float)<20\",\r\n\t\"action\": {\r\n        \"type\": \"update\",\r\n        \"parameters\": {\r\n            \"id\": \"TestEntity2\",\r\n            \"type\": \"TestEntity\",\r\n            \"attributes\": [\r\n            \t{\r\n            \t\t\"name\": \"msg\",\r\n            \t\t\"value\": \"Humedad en ${id} es ${humidity}\"\r\n            \t}\r\n            ]\r\n        }\r\n    }\r\n}"
 						},
 						"url": {
 							"raw": "{{PROTOCOL}}://{{ENDPOINT_CEP}}/rules",
@@ -3542,7 +4292,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"postaction3\",\n    \"text\": \"select *, temperature?  from iotEvent where cast(cast(temperature?, String),float) >= 20\",\n    \"action\": [\n        {\n            \"type\": \"post\",\n            \"template\": \"La temperatura es ${temperature} grados.\",\n            \"parameters\": {\n                \"url\": \"https://enauzlunp3tcc.x.pipedream.net/${id}\",\n                \"method\": \"PUT\",\n                \"headers\": {\n                    \"Content-type\": \"application/json\",\n                    \"fiware-service\": \"${service}\",\n                    \"fiware-servicepath\": \"${subservice}\"\n                },\n                \"qs\": {\"type\": \"${type}\"}\n            }\n        }\n    ]\n}"
+							"raw": "{\n    \"name\": \"postaction3\",\n    \"description\": \"Envio de petición HTTP a URL externa\",\n    \"text\": \"select *, temperature?  from iotEvent where cast(cast(temperature?, String),float) >= 20\",\n    \"action\": [\n        {\n            \"type\": \"post\",\n            \"template\": \"La temperatura es ${temperature} grados.\",\n            \"parameters\": {\n                \"url\": \"{{SAFE_PROTOCOL}}://enfqyzmmmmcc.x.pipedream.net/${id}\",\n                \"method\": \"PUT\",\n                \"headers\": {\n                    \"Content-type\": \"application/json\",\n                    \"fiware-service\": \"${service}\",\n                    \"fiware-servicepath\": \"${subservice}\"\n                },\n                \"qs\": {\"type\": \"${type}\"}\n            }\n        }\n    ]\n}"
 						},
 						"url": {
 							"raw": "{{PROTOCOL}}://{{ENDPOINT_CEP}}/rules",
@@ -3582,7 +4332,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"accionmultiple\",\n    \"text\": \"select *, temperature?, mantenedor? from iotEvent where cast(cast(temperature?, String),float) >= 20\",\n    \"action\": [\n        {\n        \"type\": \"update\",\n        \"parameters\": {\n            \"id\": \"TestEntity3\",\n            \"type\": \"TestEntity\",\n            \"attributes\": [\n            \t{\n            \t\t\"name\": \"msg\",\n            \t\t\"value\": \"La temperature de ${id} es ${temperature}\"\n            \t}\n            ]\n        }\n    },\n        {\n        \"type\": \"email\",\n        \"template\": \"La temperatura de la entidad ${id} es ${temperature}\",\n        \"parameters\": {\n            \"to\": \"${mantenedor}\",\n            \"from\": \"soporte@urbo2.es\",\n            \"subject\": \"[ACCION MULTIPLE] Temperatura de la entidad ${id}\"\n        }\n    },\n        {\n            \"type\": \"sms\",\n            \"template\": \"Accion multiple. La temperatura de ${id} es ${temperature}\",\n            \"parameters\": {\n                \"to\": \"+34679245010\"\n            }\n        }\n    ]\n}"
+							"raw": "{\n    \"name\": \"accionmultiple\",\n    \"description\": \"Envio de email, actualización de entidad y SMS\",\n    \"text\": \"select *, temperature?, mantenedor? from iotEvent where cast(cast(temperature?, String),float) >= 15\",\n    \"action\": [\n        {\n        \"type\": \"update\",\n        \"parameters\": {\n            \"id\": \"TestEntity3\",\n            \"type\": \"TestEntity\",\n            \"attributes\": [\n            \t{\n            \t\t\"name\": \"msg\",\n            \t\t\"value\": \"La temperature de ${id} es ${temperature}\"\n            \t}\n            ]\n        }\n    },\n        {\n        \"type\": \"email\",\n        \"template\": \"La temperatura de la entidad ${id} es ${temperature}\",\n        \"parameters\": {\n            \"to\": \"${mantenedor}\",\n            \"from\": \"soporte@urbo2.es\",\n            \"subject\": \"[ACCION MULTIPLE] Temperatura de la entidad ${id}\"\n        }\n    },\n        {\n            \"type\": \"sms\",\n            \"template\": \"Accion multiple. La temperatura de ${id} es ${temperature}\",\n            \"parameters\": {\n                \"to\": \"+34679245010\"\n            }\n        }\n    ]\n}"
 						},
 						"url": {
 							"raw": "{{PROTOCOL}}://{{ENDPOINT_CEP}}/rules",
@@ -3622,7 +4372,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"cambia_modo_cuadro\",\r\n    \"description\": \"Cambia el modo de las luminarias de un cuadro\",\r\n    \"text\": \"select \\\"cambia_modo_cuadro\\\" as ruleName, *, setWorkingMode? as mode, current_timestamp().format(\\\"yyyy-MM-dd'T'HH:mm:ss.SSSX\\\") as timeinstant from iotEvent where type = 'StreetlightControlCabinet' and setWorkingMode? is not null\",\r\n    \"action\": [\r\n        {\r\n            \"type\": \"update\",\r\n            \"parameters\": {\r\n                \"actionType\": \"UPDATE\",\r\n                \"filter\": {\r\n                    \"type\": \"Streetlight\",\r\n                    \"q\": \"refStreetlightControlCabinet:${id};status:ok\"\r\n                },\r\n                \"version\": 2,\r\n                \"attributes\": [\r\n                    {\r\n                        \"name\": \"setWorkingMode\",\r\n                        \"type\": \"Command\",\r\n                        \"value\": \"${mode}\"\r\n                    }\r\n                ]\r\n            }\r\n        },\r\n        {\r\n            \"type\": \"update\",\r\n            \"parameters\": {\r\n                \"actionType\": \"APPEND\",\r\n                \"filter\": {\r\n                    \"type\": \"Streetlight\",\r\n                    \"q\": \"refStreetlightControlCabinet:${id};status:ok\"\r\n                },\r\n                \"version\": 2,\r\n                \"attributes\": [\r\n                    {\r\n                        \"name\": \"workingMode\",\r\n                        \"type\": \"Text\",\r\n                        \"value\": \"${mode}\"\r\n                    },\r\n                    {\r\n                        \"name\": \"dateLastCommanded\",\r\n                        \"type\": \"DateTime\",\r\n                        \"value\": \"${timeinstant}\"\r\n                    },\r\n                    {\r\n                        \"name\": \"lastCommanderMessage\",\r\n                        \"type\": \"Text\",\r\n                        \"value\": \"Cambio de modo del cuadro ${id} a ${mode}\"\r\n                    },\r\n                    {\r\n                        \"name\": \"lastCommander\",\r\n                        \"type\": \"Text\",\r\n                        \"value\": \"${ruleName}\"\r\n                    },\r\n                    {\r\n                        \"name\": \"commandTimeinstant\",\r\n                        \"value\": \"${timeinstant}\",\r\n                        \"type\": \"DateTime\"\r\n                    }\r\n                ]\r\n            }\r\n        }\r\n    ],\r\n    \"subservice\": \"/alumbrado\",\r\n    \"service\": \"alcobendas\"\r\n}"
+							"raw": "{\r\n    \"name\": \"update_mutiple_entities\",\r\n    \"description\": \"Alcualiza varias entidades\",\r\n    \"text\": \"select *, cast(cast(cmdIlluminanceLevel?,String),float) as level, case when cast(cast(cmdIlluminanceLevel?,String),float) > 0 then 'on' else 'off' end as power, current_timestamp().format(\\\"yyyy-MM-dd'T'HH:mm:ss.SSSX\\\") as timeinstant from iotEvent where type = 'StreetlightZone' and cmdIlluminanceLevel? is not null \",\r\n    \"action\": [\r\n        {\r\n            \"type\": \"update\",\r\n            \"parameters\": {\r\n                \"actionType\": \"UPDATE\",\r\n                \"filter\": {\r\n                    \"type\": \"Streetlight\",\r\n                    \"q\": \"refStreetlightZone:${id};status:ok\"\r\n                },\r\n                \"version\": 2,\r\n                \"attributes\": [\r\n                    {\r\n                        \"name\": \"setIlluminanceLevel\",\r\n                        \"type\": \"Command\",\r\n                        \"value\": \"${level}\"\r\n                    },\r\n                    {\r\n                        \"name\": \"illuminanceLevel\",\r\n                        \"type\": \"Number\",\r\n                        \"value\": \"${level}\"\r\n                    },\r\n                    {\r\n                        \"name\": \"powerState\",\r\n                        \"type\": \"Text\",\r\n                        \"value\": \"${power}\"\r\n                    },\r\n                    {\r\n                        \"name\": \"dateLastCommanded\",\r\n                        \"type\": \"DateTime\",\r\n                        \"value\": \"${timeinstant}\"\r\n                    },\r\n                    {\r\n                        \"name\": \"lastCommander\",\r\n                        \"type\": \"Text\",\r\n                        \"value\": \"${ruleName}\"\r\n                    },\r\n                    {\r\n                        \"name\": \"lastCommanderMessage\",\r\n                        \"type\": \"Text\",\r\n                        \"value\": \"Cambia a ${level} el nivel de iluminación de las luminarias de la zona ${id}\"\r\n                    },\r\n                    {\r\n                        \"name\": \"commandTimeinstant\",\r\n                        \"value\": \"${timeinstant}\",\r\n                        \"type\": \"DateTime\"\r\n                    }\r\n                ]\r\n            }\r\n        }\r\n    ]\r\n}"
 						},
 						"url": {
 							"raw": "{{PROTOCOL}}://{{ENDPOINT_CEP}}/rules",
@@ -3638,7 +4388,7 @@
 					"response": []
 				},
 				{
-					"name": "Create rule (ausencia ESPER)",
+					"name": "Create simple rule (entity update multiple entities 2)",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -3661,7 +4411,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "       {\r\n            \"name\": \"ausencia_coche\",\r\n            \"text\": \"SELECT *, a.id as identificador, a.type as tipo,  current_timestamp().format(\\\"yyyy-MM-dd'T'HH:mm:ssX\\\") as timeinstant FROM PATTERN [ EVERY a=iotEvent(a.subservice = '/pruebas') -> (timer:interval(10 sec) AND NOT b=iotEvent (a.id is b.id))]\",\r\n            \"action\": {\r\n                \"type\": \"update\",\r\n                \"parameters\": {\r\n                    \"id\": \"${identificador}\",\r\n                    \"type\":\"${tipo}\",\r\n                    \"attributes\": [\r\n                        {\r\n                            \"name\": \"TimeInstant\",\r\n                            \"type\": \"DateTime\",\r\n                            \"value\": \"${timeinstant}\"\r\n                        }\r\n                    ]\r\n                }\r\n            }\r\n        }"
+							"raw": "{\r\n    \"name\": \"update_mutiple_entities\",\r\n    \"description\": \"Alcualiza varias entidades con accion de filtro\",\r\n    \"text\": \"select *, cast(cast(temperature?,String),float) as temperature, current_timestamp().format(\\\"yyyy-MM-dd'T'HH:mm:ss.SSSX\\\") as timeinstant from iotEvent where type = 'Car'\",\r\n    \"action\": [\r\n        {\r\n            \"type\": \"update\",\r\n            \"parameters\": {\r\n                \"actionType\": \"APPEND\",\r\n                \"filter\": {\r\n                    \"type\": \"device\",\r\n                    \"q\": \"status:OK\"\r\n                },\r\n                \"version\": 2,\r\n                \"attributes\": [\r\n                    {\r\n                        \"name\": \"StatusTime\",\r\n                        \"value\": \"${timeinstant}\",\r\n                        \"type\": \"DateTime\"\r\n                    }\r\n                ]\r\n            }\r\n        }\r\n    ]\r\n}"
 						},
 						"url": {
 							"raw": "{{PROTOCOL}}://{{ENDPOINT_CEP}}/rules",
@@ -3700,7 +4450,46 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"ausencia_medida\",\r\n    \"action\": [\r\n        {\r\n            \"type\": \"update\",\r\n            \"parameters\": {\r\n                \"name\": \"status\",\r\n                \"value\": \"off\",\r\n                \"actionType\": \"APPEND\"\r\n            }\r\n        },\r\n        {\r\n            \"type\": \"email\",\r\n            \"template\": \"La entidad ${id} ha dejado de enviar datos\",\r\n            \"parameters\": {\r\n                \"to\": \"anovo@gmail.com\",\r\n                \"from\": \"soporte@urbo2.es\",\r\n                \"subject\": \"[ALARMA] Incomunicación\"\r\n            }\r\n        }\r\n    ],\r\n    \"nosignal\": {\r\n        \"checkInterval\": \"30\",\r\n        \"attribute\": \"temperature\",\r\n        \"reportInterval\": \"14400\",\r\n        \"idRegexp\": \".*\",\r\n        \"type\": \"WheatherObserved\"\r\n    }\r\n}"
+							"raw": "{\r\n    \"name\": \"ausencia_medida\",\r\n    \"description\": \"Envia alarma de incomimunicación\",\r\n    \"action\": [\r\n        {\r\n            \"type\": \"email\",\r\n            \"template\": \"La entidad ${id} ha dejado de enviar datos. Su ultimo valor fue ${temperature}\",\r\n            \"parameters\": {\r\n                \"to\": \"manuel.carracedosanchez@telefonica.com\",\r\n                \"from\": \"soporte@urbo2.es\",\r\n                \"subject\": \"[ALARMA] Incomunicación\"\r\n            }\r\n        }\r\n    ],\r\n    \"nosignal\": {\r\n        \"checkInterval\": \"1\",\r\n        \"attribute\": \"temperature\",\r\n        \"reportInterval\": \"60\",\r\n        \"idRegexp\": \".*\",\r\n        \"type\": \"Car\"\r\n    }\r\n}"
+						},
+						"url": {
+							"raw": "{{PROTOCOL}}://{{ENDPOINT_CEP}}/rules",
+							"protocol": "{{PROTOCOL}}",
+							"host": [
+								"{{ENDPOINT_CEP}}"
+							],
+							"path": [
+								"rules"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create rule (ausencia ESPER)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Fiware-Service",
+								"value": "{{SERVICE}}"
+							},
+							{
+								"key": "Fiware-ServicePath",
+								"value": "{{SUBSERVICE}}"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{TOKEN}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "       {\r\n            \"name\": \"ausencia\",\r\n            \"text\": \"SELECT *, a.id as identificador, a.type as tipo,  current_timestamp().format(\\\"yyyy-MM-dd'T'HH:mm:ssX\\\") as timeinstant FROM PATTERN [ EVERY a=iotEvent(a.subservice = '/lanzarote') -> (timer:interval(10 sec) AND NOT b=iotEvent (a.id is b.id))]\",\r\n            \"action\": {\r\n                \"type\": \"update\",\r\n                \"parameters\": {\r\n                    \"id\": \"${identificador}\",\r\n                    \"type\":\"${tipo}\",\r\n                    \"attributes\": [\r\n                        {\r\n                            \"name\": \"TimeInstant\",\r\n                            \"type\": \"DateTime\",\r\n                            \"value\": \"${timeinstant}\"\r\n                        },\r\n                        {\r\n                            \"name\": \"ausencia\",\r\n                            \"type\": \"Text\",\r\n                            \"value\": true\r\n                        }\r\n                    ]\r\n                }\r\n            }\r\n        }"
 						},
 						"url": {
 							"raw": "{{PROTOCOL}}://{{ENDPOINT_CEP}}/rules",
@@ -3739,7 +4528,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "        {\r\n            \"name\": \"alarm_luminosity\",\r\n            \"description\": \"Crea una alarma si la luminosidad baja de 20\",\r\n            \"text\": \"select \\\"alarm_luminosity\\\" as ruleName, *, municipality?, luminosity?, location__lat? as lati, location__lon? as longi, current_timestamp().format(\\\"yyyy-MM-dd'T'HH:mm:ss.SSSX\\\") as timeinstant from iotEvent where type='Streetlight' and not exists(error_alarma_lampara?) and cast(powerState?, String) = \\\"on\\\" and cast(cast(luminosity?, String), float) <= 20\",\r\n            \"action\": [\r\n                {\r\n                    \"type\": \"update\",\r\n                    \"parameters\": {\r\n                        \"id\": \"malfunction:${id}\",\r\n                        \"type\": \"Alert\",\r\n                        \"version\": 2,\r\n                        \"subservice\": \"/alarmas\",\r\n                        \"attributes\": [\r\n                            {\r\n                                \"name\": \"description\",\r\n                                \"type\": \"Text\",\r\n                                \"value\": \"Lampara fundida. Medida: ${luminosity}\"\r\n                            },\r\n                            {\r\n                                \"name\": \"location\",\r\n                                \"type\": \"geo:json\",\r\n                                \"value\": \"{\\\"type\\\": \\\"Point\\\",\\\"coordinates\\\": [${longi},${lati}]}\"\r\n                            },\r\n                            {\r\n                                \"name\": \"sourceType\",\r\n                                \"type\": \"Text\",\r\n                                \"value\": \"${type}\"\r\n                            },\r\n                            {\r\n                                \"name\": \"severity\",\r\n                                \"type\": \"Text\",\r\n                                \"value\": \"Medium\"\r\n                            },\r\n                            {\r\n                                \"name\": \"category\",\r\n                                \"type\": \"Text\",\r\n                                \"value\": \"malfunction\"\r\n                            },\r\n                            {\r\n                                \"name\": \"source\",\r\n                                \"type\": \"Text\",\r\n                                \"value\": \"${id}\"\r\n                            },\r\n                            {\r\n                                \"name\": \"alertSource\",\r\n                                \"type\": \"Text\",\r\n                                \"value\": \"${subservice}\"\r\n                            },\r\n                            {\r\n                                \"name\": \"dateIssued\",\r\n                                \"type\": \"DateTime\",\r\n                                \"value\": \"${timeinstant}\"\r\n                            },\r\n                            {\r\n                                \"name\": \"TimeInstant\",\r\n                                \"type\": \"DateTime\",\r\n                                \"value\": \"${timeinstant}\"\r\n                            },\r\n                            {\r\n                                \"name\": \"status\",\r\n                                \"type\": \"Text\",\r\n                                \"value\": \"active\"\r\n                            },\r\n                            {\r\n                                \"name\": \"municipality\",\r\n                                \"type\": \"Text\",\r\n                                \"value\": \"${municipality}\"\r\n                            }\r\n                        ],\r\n                        \"actionType\": \"append\"\r\n                    }\r\n                },\r\n                {\r\n                    \"type\": \"update\",\r\n                    \"parameters\": {\r\n                        \"id\": \"${id}\",\r\n                        \"type\": \"Streetlight\",\r\n                        \"version\": 2,\r\n                        \"attributes\": [\r\n                            {\r\n                                \"name\": \"Error-alarma_lampara\",\r\n                                \"type\": \"Text\",\r\n                                \"value\": \"true\"\r\n                            },\r\n                            {\r\n                                \"name\": \"error_alarma_lampara\",\r\n                                \"type\": \"Text\",\r\n                                \"value\": \"true\"\r\n                            }\r\n                        ],\r\n                        \"actionType\": \"append\"\r\n                    }\r\n                }\r\n            ]\r\n        }"
+							"raw": "{\r\n    \"name\": \"sendAssets\",\r\n    \"description\": \"Crear activo en subservicio activos\",\r\n    \"text\": \"expression CASTNA {(val)=> case when val is null or cast(val,string) = '' then 'NA' else cast(val,string) end }   expression  ZIPVALUE alias for { CASTNA(zip?) } expression  ZONEVALUE alias for { CASTNA(zone?) } expression  DISTRICTVALUE alias for { CASTNA(district?) } expression  MUNICIPALITYVALUE alias for { CASTNA(municipality?) } expression  PROVINCEVALUE alias for { CASTNA(province?) } expression  REGIONVALUE alias for { CASTNA(region?) } expression  COMMUNITYVALUE alias for { CASTNA(community?) } expression  COUNTRYVALUE alias for { CASTNA(country?) }  expression OPERATIONALSTATUS alias for {case when alterationType? is 'entityDelete' then 'failed' else 'active' end } expression CYCLESTATUS alias for {case when alterationType? is 'entityDelete' then 'decommissioning' else 'deployment' end } expression ACTIONTYPE alias for {case when alterationType? is 'entityDelete' then 'DELETE' when alterationType? is 'entityCreate' then 'APPEND' else 'UPDATE' end } select *, id? as identificador, type? as tipo, subservice? as subservicio, ACTIONTYPE as action, alterationType? as alterationType, TimeInstant? as timeinstant, location? as location, OPERATIONALSTATUS as operationalstatus, CYCLESTATUS as lifecycle, name? as name, description? as description, ZIPVALUE as zipValue, ZONEVALUE as zoneValue, DISTRICTVALUE as districtValue,  MUNICIPALITYVALUE as municipalityValue, PROVINCEVALUE as provinceValue, REGIONVALUE as regionValue, COMMUNITYVALUE as communityValue, COUNTRYVALUE as countryValue, streetAddress? as streetAddress, postalCode? as postalCode, addressLocality? as addressLocality, addressRegion? as addressRegion, addressCommunity? as addressCommunity, addressCountry? as addressCountry from iotEvent(type? = 'ElectroValve')\",\r\n    \"action\": [\r\n        {\r\n            \"type\": \"update\",\r\n            \"parameters\": {\r\n                \"actionType\": \"APPEND\",\r\n                \"trust\": \"1afb91a7c2be490d85ea4252b57534dd\",\r\n                \"subservice\": \"/activos\",\r\n                \"id\": \"asset_${identificador}\",\r\n                \"type\": \"Asset\",\r\n                \"attributes\": [\r\n                    {\r\n                        \"name\": \"alterationType\",\r\n                        \"type\": \"Text\",\r\n                        \"value\": \"${alterationType}\"\r\n                    },\r\n                    {\r\n                        \"name\": \"action\",\r\n                        \"type\": \"Text\",\r\n                        \"value\": \"${action}\"\r\n                    },\r\n                    {\r\n                        \"name\": \"operationalStatus\",\r\n                        \"type\": \"Text\",\r\n                        \"value\": \"${operationalstatus}\"\r\n                    },\r\n                    {\r\n                        \"name\": \"lifeCycle\",\r\n                        \"type\": \"Text\",\r\n                        \"value\": \"${lifecycle}\"\r\n                    },\r\n                    {\r\n                        \"name\": \"TimeInstant\",\r\n                        \"type\": \"DateTime\",\r\n                        \"value\": \"${timeinstant}\"\r\n                    },\r\n                    {\r\n                        \"name\": \"location\",\r\n                        \"type\": \"geo:json\",\r\n                        \"value\": \"${location}\"\r\n                    },\r\n                    {\r\n                        \"name\": \"assetSource\",\r\n                        \"type\": \"Text\",\r\n                        \"value\": \"${subservicio}\"\r\n                    },\r\n                    {\r\n                        \"name\": \"source\",\r\n                        \"type\": \"Text\",\r\n                        \"value\": \"${identificador}\"\r\n                    },\r\n                    {\r\n                        \"name\": \"sourceType\",\r\n                        \"type\": \"Text\",\r\n                        \"value\": \"${tipo}\"\r\n                    },\r\n                    {\r\n                        \"name\": \"name\",\r\n                        \"type\": \"Text\",\r\n                        \"value\": \"asset_${identificador}\"\r\n                    },\r\n                    {\r\n                        \"name\": \"assetName\",\r\n                        \"type\": \"Text\",\r\n                        \"value\": \"name\"\r\n                    },\r\n                    {\r\n                        \"name\": \"description\",\r\n                        \"type\": \"Text\",\r\n                        \"value\": \"${description}\"\r\n                    },\r\n                    {\r\n                        \"name\": \"zip\",\r\n                        \"type\": \"Text\",\r\n                        \"value\": \"${zipValue}\"\r\n                    },\r\n                    {\r\n                        \"name\": \"zone\",\r\n                        \"type\": \"Text\",\r\n                        \"value\": \"${zoneValue}\"\r\n                    },\r\n                    {\r\n                        \"name\": \"district\",\r\n                        \"type\": \"Text\",\r\n                        \"value\": \"${districtValue}\"\r\n                    },\r\n                    {\r\n                        \"name\": \"municipality\",\r\n                        \"type\": \"Text\",\r\n                        \"value\": \"${municipalityValue}\"\r\n                    },\r\n                    {\r\n                        \"name\": \"province\",\r\n                        \"type\": \"Text\",\r\n                        \"value\": \"${provinceValue}\"\r\n                    },\r\n                    {\r\n                        \"name\": \"region\",\r\n                        \"type\": \"Text\",\r\n                        \"value\": \"${regionValue}\"\r\n                    },\r\n                    {\r\n                        \"name\": \"community\",\r\n                        \"type\": \"Text\",\r\n                        \"value\": \"${communityValue}\"\r\n                    },\r\n                    {\r\n                        \"name\": \"country\",\r\n                        \"type\": \"Text\",\r\n                        \"value\": \"${countryValue}\"\r\n                    },\r\n                    {\r\n                        \"name\": \"streetAddress\",\r\n                        \"type\": \"Text\",\r\n                        \"value\": \"${streetAddress}\"\r\n                    },\r\n                    {\r\n                        \"name\": \"postalCode\",\r\n                        \"type\": \"Text\",\r\n                        \"value\": \"${postalCode}\"\r\n                    },\r\n                    {\r\n                        \"name\": \"addressLocality\",\r\n                        \"type\": \"Text\",\r\n                        \"value\": \"${addressLocality}\"\r\n                    },\r\n                    {\r\n                        \"name\": \"addressRegion\",\r\n                        \"type\": \"Text\",\r\n                        \"value\": \"${addressRegion}\"\r\n                    },\r\n                    {\r\n                        \"name\": \"addressCommunity\",\r\n                        \"type\": \"Text\",\r\n                        \"value\": \"${addressCommunity}\"\r\n                    },\r\n                    {\r\n                        \"name\": \"addressCountry\",\r\n                        \"type\": \"Text\",\r\n                        \"value\": \"${addressCountry}\"\r\n                    }\r\n                ]\r\n            }\r\n        }\r\n    ]\r\n}"
 						},
 						"url": {
 							"raw": "{{PROTOCOL}}://{{ENDPOINT_CEP}}/rules",
@@ -3779,7 +4568,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"streetlight_column_alarm_with_mail\",\n    \"text\": \"select ev.illuminanceLevel? as ilumLevel, ev.id? as id, ev.status? as laststatus, ev.powerState? as powerState, ev.areaServed? as areaServed, ev.dateLastLampChange__iso? as lastchange, ev.address__streetAddress? as streetAddress, ev.address__addressLocality? as addressLocality, ev.address__addressCountry? as addressCountry, ev.address__postalCode? as postalCode, \\\"streetlight_column_alarm_with_mail\\\" as ruleName from pattern [every ev=iotEvent(type='Streetlight' and ev.status? = 'columnIssue')]\",\n    \"action\": [\n        {\n            \"action\": {\n                \"type\": \"post\",\n                \"template\": \"{\\\"type\\\":\\\"command\\\",\\\"value\\\":1}\",\n                \"parameters\": {\n                    \"url\": \"http://10.0.0.2:1026/v2/entities/${electrovalveId}/attrs/activate?type=electrovalve\",\n                    \"method\": \"PUT\",\n                    \"headers\": {\n                        \"Content-type\": \"application/json\",\n                        \"fiware-service\": \"${service}\",\n                        \"fiware-servicepath\": \"${subservice}\"\n                    }\n                }\n            }\n        }\n    ]\n}"
+							"raw": "{\n    \"name\": \"streetlight_column_alarm_with_mail\",\n    \"text\": \"select ev.illuminanceLevel? as ilumLevel, ev.id? as id, ev.status? as laststatus, ev.powerState? as powerState, ev.areaServed? as areaServed, ev.dateLastLampChange__iso? as lastchange, ev.address__streetAddress? as streetAddress, ev.address__addressLocality? as addressLocality, ev.address__addressCountry? as addressCountry, ev.address__postalCode? as postalCode, \\\"streetlight_column_alarm_with_mail\\\" as ruleName from pattern [every ev=iotEvent(type='Streetlight' and ev.status? = 'columnIssue')]\",\n    \"action\": [\n        {\n            \"action\": {\n                \"type\": \"post\",\n                \"template\": \"{\\\"type\\\":\\\"command\\\",\\\"value\\\":1}\",\n                \"parameters\": {\n                    \"url\": \"{{PROTOCOL}}://10.0.0.2:1026/v2/entities/${electrovalveId}/attrs/activate?type=electrovalve\",\n                    \"method\": \"PUT\",\n                    \"headers\": {\n                        \"Content-type\": \"application/json\",\n                        \"fiware-service\": \"${service}\",\n                        \"fiware-servicepath\": \"${subservice}\"\n                    }\n                }\n            }\n        }\n    ]\n}"
 						},
 						"url": {
 							"raw": "{{PROTOCOL}}://{{ENDPOINT_CEP}}/rules",
@@ -3946,16 +4735,16 @@
 							},
 							{
 								"key": "x-auth-token",
-								"value": "d5f8f78511fd43a4822b7ceee0d1af88"
+								"value": "{{TOKEN}}"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"action\":{\n      \"type\":\"post\",\n      \"template\":\"{\\\"type\\\":\\\"command\\\",\\\"value\\\":1}\",\n      \"parameters\":{\n         \"url\": \"http://10.0.0.2:1026/v2/entities/${electrovalveId}/attrs/activate?type=electrovalve\",\n         \"method\": \"PUT\",\n         \"headers\": {\n            \"Content-type\": \"application/json\",\n            \"fiware-service\": \"${service}\",\n            \"fiware-servicepath\": \"${subservice}\"\n         }\n      }\n   },\n  \"text\": \"select *,\\\"electrovalve_on\\\" as ruleName from pattern [every ev=iotEvent((cast(cast(`humidity`?,String),float))<25 and type=\\\"humiditySensor\\\")]\",\n  \"name\": \"electrovalve_on\"\n}"
+							"raw": "{\n  \"action\":{\n      \"type\":\"post\",\n      \"template\":\"{\\\"type\\\":\\\"command\\\",\\\"value\\\":1}\",\n      \"parameters\":{\n         \"url\": \"{{PROTOCOL}}://10.0.0.2:1026/v2/entities/${electrovalveId}/attrs/activate?type=electrovalve\",\n         \"method\": \"PUT\",\n         \"headers\": {\n            \"Content-type\": \"application/json\",\n            \"fiware-service\": \"${service}\",\n            \"fiware-servicepath\": \"${subservice}\"\n         }\n      }\n   },\n  \"text\": \"select *,\\\"electrovalve_on\\\" as ruleName from pattern [every ev=iotEvent((cast(cast(`humidity`?,String),float))<25 and type=\\\"humiditySensor\\\")]\",\n  \"name\": \"electrovalve_on\"\n}"
 						},
 						"url": {
-							"raw": "https://{{ENDPOINT_CEP}}/rules",
-							"protocol": "https",
+							"raw": "{{SAFE_PROTOCOL}}://{{ENDPOINT_CEP}}/rules",
+							"protocol": "{{SAFE_PROTOCOL}}",
 							"host": [
 								"{{ENDPOINT_CEP}}"
 							],
@@ -4422,8 +5211,8 @@
 							"raw": "{\n       \"name\": \"city012\"\n}"
 						},
 						"url": {
-							"raw": "https://{{ENDPOINT_CKAN}}/api/3/action/organization_show?id=alcobendas&include_datasets=true",
-							"protocol": "https",
+							"raw": "{{SAFE_PROTOCOL}}://{{ENDPOINT_CKAN}}/api/3/action/organization_show?id=alcobendas&include_datasets=true",
+							"protocol": "{{SAFE_PROTOCOL}}",
 							"host": [
 								"{{ENDPOINT_CKAN}}"
 							],
@@ -4466,8 +5255,8 @@
 							"raw": "{\n       \"name\": \"city012\"\n}"
 						},
 						"url": {
-							"raw": "https://{{ENDPOINT_CKAN}}/api/3/action/organization_create",
-							"protocol": "https",
+							"raw": "{{SAFE_PROTOCOL}}://{{ENDPOINT_CKAN}}/api/3/action/organization_create",
+							"protocol": "{{SAFE_PROTOCOL}}",
 							"host": [
 								"{{ENDPOINT_CKAN}}"
 							],
@@ -4500,8 +5289,8 @@
 							"raw": "{\n        \"name\": \"city011_electricidad\",\n        \"owner_org\": \"city011\"\n}"
 						},
 						"url": {
-							"raw": "https://{{ENDPOINT_CKAN}}/api/3/action/package_create",
-							"protocol": "https",
+							"raw": "{{SAFE_PROTOCOL}}://{{ENDPOINT_CKAN}}/api/3/action/package_create",
+							"protocol": "{{SAFE_PROTOCOL}}",
 							"host": [
 								"{{ENDPOINT_CKAN}}"
 							],
@@ -4526,8 +5315,8 @@
 							}
 						],
 						"url": {
-							"raw": "https://{{ENDPOINT_CKAN}}/api/3/action/package_show?id=city012_electricidad",
-							"protocol": "https",
+							"raw": "{{SAFE_PROTOCOL}}://{{ENDPOINT_CKAN}}/api/3/action/package_show?id=city012_electricidad",
+							"protocol": "{{SAFE_PROTOCOL}}",
 							"host": [
 								"{{ENDPOINT_CKAN}}"
 							],
@@ -4570,8 +5359,8 @@
 							"raw": "{\n   \"name\": \"room008_room\",\n   \"url\": \"http://foo.bar/newresourcecol\",\n   \"package_id\": \"29bbbd3c-bedc-4dd0-8f6d-5563257f500f\"\n}\n"
 						},
 						"url": {
-							"raw": "https://{{ENDPOINT_CKAN}}/api/3/action/resource_create",
-							"protocol": "https",
+							"raw": "{{SAFE_PROTOCOL}}://{{ENDPOINT_CKAN}}/api/3/action/resource_create",
+							"protocol": "{{SAFE_PROTOCOL}}",
 							"host": [
 								"{{ENDPOINT_CKAN}}"
 							],
@@ -4600,8 +5389,8 @@
 							"raw": "{\"id\":\"c4e70608-1ce7-4f00-8f5c-76174c0f1274\"}\n"
 						},
 						"url": {
-							"raw": "https://{{ENDPOINT_CKAN}}/api/3/action/resource_show",
-							"protocol": "https",
+							"raw": "{{SAFE_PROTOCOL}}://{{ENDPOINT_CKAN}}/api/3/action/resource_show",
+							"protocol": "{{SAFE_PROTOCOL}}",
 							"host": [
 								"{{ENDPOINT_CKAN}}"
 							],
@@ -4638,8 +5427,8 @@
 							"raw": "{\n    \"resource_id\": \"7a3d459d-39ba-43c8-ab6c-7d77caed988a\",\n    \"fields\": [\n        {\n            \"id\": \"recvTime\",\n            \"type\": \"timestamp\"\n        },\n        {\n            \"id\": \"fiwareServicePath\",\n            \"type\": \"json\"\n        },\n        {\n            \"id\": \"entityType\",\n            \"type\": \"json\"\n        },\n        {\n            \"id\": \"entityId\",\n            \"type\": \"json\"\n        },\n        {\n            \"id\": \"address\",\n            \"type\": \"json\"\n        },\n        {\n            \"id\": \"controllingMethod\",\n            \"type\": \"json\"\n        },\n        {\n            \"id\": \"dateLastSwitchingOff\",\n            \"type\": \"json\"\n        },\n        {\n            \"id\": \"dateLastSwitchingOff_md\",\n            \"type\": \"json\"\n        },\n        {\n            \"id\": \"dateLastSwitchingOn\",\n            \"type\": \"json\"\n        },\n        {\n            \"id\": \"dateLastSwitchingOn_md\",\n            \"type\": \"json\"\n        },\n        {\n            \"id\": \"description\",\n            \"type\": \"json\"\n        },\n        {\n            \"id\": \"illuminanceLevel\",\n            \"type\": \"json\"\n        },\n        {\n            \"id\": \"illuminanceLevel_md\",\n            \"type\": \"json\"\n        },\n        {\n            \"id\": \"location\",\n            \"type\": \"json\"\n        },\n        {\n            \"id\": \"location_md\",\n            \"type\": \"json\"\n        },\n        {\n            \"id\": \"luminosity\",\n            \"type\": \"json\"\n        },\n        {\n            \"id\": \"luminosity_md\",\n            \"type\": \"json\"\n        },\n        {\n            \"id\": \"manufacturerName\",\n            \"type\": \"json\"\n        },\n        {\n            \"id\": \"powerState\",\n            \"type\": \"json\"\n        },\n        {\n            \"id\": \"powerState_md\",\n            \"type\": \"json\"\n        },\n        {\n            \"id\": \"refStreetlightControlCabinet\",\n            \"type\": \"json\"\n        },\n        {\n            \"id\": \"refStreetlightGroup\",\n            \"type\": \"json\"\n        },\n        {\n            \"id\": \"serialNumber\",\n            \"type\": \"json\"\n        },\n        {\n            \"id\": \"status\",\n            \"type\": \"json\"\n        },\n        {\n            \"id\": \"status_md\",\n            \"type\": \"json\"\n        },\n        {\n            \"id\": \"workingMode\",\n            \"type\": \"json\"\n        },\n        {\n            \"id\": \"TimeInstant\",\n            \"type\": \"json\"\n        },\n        {\n            \"id\": \"TimeInstant_md\",\n            \"type\": \"json\"\n        },\n        {\n            \"id\": \"dateLastProgramming\",\n            \"type\": \"json\"\n        },\n        {\n            \"id\": \"dateLastProgramming_md\",\n            \"type\": \"json\"\n        }\n    ],\n    \"force\": \"true\"\n}"
 						},
 						"url": {
-							"raw": "https://{{ENDPOINT_CKAN}}/api/3/action/datastore_create",
-							"protocol": "https",
+							"raw": "{{SAFE_PROTOCOL}}://{{ENDPOINT_CKAN}}/api/3/action/datastore_create",
+							"protocol": "{{SAFE_PROTOCOL}}",
 							"host": [
 								"{{ENDPOINT_CKAN}}"
 							],
@@ -4676,8 +5465,8 @@
 							"raw": "{\n   \"id\": \"0c6ae629-1d53-4483-83d7-57a538809f50\"\n}"
 						},
 						"url": {
-							"raw": "https://{{ENDPOINT_CKAN}}/api/3/action/datastore_info",
-							"protocol": "https",
+							"raw": "{{SAFE_PROTOCOL}}://{{ENDPOINT_CKAN}}/api/3/action/datastore_info",
+							"protocol": "{{SAFE_PROTOCOL}}",
 							"host": [
 								"{{ENDPOINT_CKAN}}"
 							],
@@ -4714,8 +5503,8 @@
 							"raw": "{\n   \"resource_id\": \"16067f41-ac02-49fd-b6a0-0b49d2217763\",\n   \"force\": \"true\"\n}"
 						},
 						"url": {
-							"raw": "https://{{ENDPOINT_CKAN}}/api/3/action/datastore_delete",
-							"protocol": "https",
+							"raw": "{{SAFE_PROTOCOL}}://{{ENDPOINT_CKAN}}/api/3/action/datastore_delete",
+							"protocol": "{{SAFE_PROTOCOL}}",
 							"host": [
 								"{{ENDPOINT_CKAN}}"
 							],
@@ -4752,8 +5541,8 @@
 							"raw": "{\n  \"resource_id\": \"9fee01f9-7f43-4013-b90f-c437a91a1066\",\n  \"records\": [\n    {\n      \"recvTime\": \"2014-12-05T15:00:02.53\",\n      \"fillLevel\": \"35\",\n      \"temperature\": \"43\"\n    }\n  ],\n  \"method\": \"insert\",\n  \"force\": \"true\"\n}"
 						},
 						"url": {
-							"raw": "https://{{ENDPOINT_CKAN}}/api/3/action/datastore_upsert",
-							"protocol": "https",
+							"raw": "{{SAFE_PROTOCOL}}://{{ENDPOINT_CKAN}}/api/3/action/datastore_upsert",
+							"protocol": "{{SAFE_PROTOCOL}}",
 							"host": [
 								"{{ENDPOINT_CKAN}}"
 							],
@@ -4787,8 +5576,8 @@
 							"raw": "{\"resource_id\":\"f18c2097-e114-4d4f-821e-7d1f1cbb1c46\",\"q\":\"\",\"filters\":{},\"limit\":100,\"offset\":0}"
 						},
 						"url": {
-							"raw": "https://{{ENDPOINT_CKAN}}/api/3/action/datastore_search",
-							"protocol": "https",
+							"raw": "{{SAFE_PROTOCOL}}://{{ENDPOINT_CKAN}}/api/3/action/datastore_search",
+							"protocol": "{{SAFE_PROTOCOL}}",
 							"host": [
 								"{{ENDPOINT_CKAN}}"
 							],
@@ -4821,8 +5610,8 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "https://{{ENDPOINT_CKAN}}/api/3/action/datastore_search_sql?sql='SELECT * from a15898b9-db82-44f1-93df-8fbf81c42c45 ORDER BY _id DESC  LIMIT 1'",
-							"protocol": "https",
+							"raw": "{{SAFE_PROTOCOL}}://{{ENDPOINT_CKAN}}/api/3/action/datastore_search_sql?sql='SELECT * from a15898b9-db82-44f1-93df-8fbf81c42c45 ORDER BY _id DESC  LIMIT 1'",
+							"protocol": "{{SAFE_PROTOCOL}}",
 							"host": [
 								"{{ENDPOINT_CKAN}}"
 							],
@@ -4861,8 +5650,8 @@
 							"raw": "{\n    \"filters\": {\n        \"_id\": [\n            1,\n            2\n        ]\n    },\n    \"force\": \"true\",\n    \"resource_id\": \"a43bfb04-7a8b-4624-a06a-25f4165e5b2a\"\n}"
 						},
 						"url": {
-							"raw": "https://{{ENDPOINT_CKAN}}/api/3/action/datastore_delete",
-							"protocol": "https",
+							"raw": "{{SAFE_PROTOCOL}}://{{ENDPOINT_CKAN}}/api/3/action/datastore_delete",
+							"protocol": "{{SAFE_PROTOCOL}}",
 							"host": [
 								"{{ENDPOINT_CKAN}}"
 							],
