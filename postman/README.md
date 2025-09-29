@@ -2,7 +2,8 @@ You can get Postman here: https://www.getpostman.com/
 
 In order to use the Postman collection included in this directory (https://github.com/telefonicaid/thinkingcity/blob/master/postman/ThinkingCity%20APIs%20Basic%20Ops.postman_collection.json), you need to define the following variables in your environment:
 
-* **PROTOCOL**: protocol used for the APIs (https or http)
+* **PROTOCOL**: protocol used for the APIs (http)
+* **SAFE_PROTOCOL**: protocol used for the APIs (https)
 * **ENDPOINT_CB**: the host:port for context broker requests
 * **ENDPOINT_KEYSTONE**: the host:port for keystone requests
 * **ENDPOINT_IOTAM**: the host:port for iot agent manager. Used for provision requests
@@ -15,5 +16,7 @@ In order to use the Postman collection included in this directory (https://githu
 * **PASSWORD**: password (used by the "Get auth token" operation)
 * **JSON_APIKEY**: API key used for IOTA JSON requests
 * **UL_APIKEY**: API key used for IOTA JSON requests
+* **PLATFORM_URL**: URL (without protocol) of the iot platform.
+* **CYGNUS_ENDPOINT**: the host:port for cygnus requests
 
 In addition, note that a TOKEN global variable is automatically added to your environment once you execute the "Get auth token (service)" request or "Get auth token (subservice)" request using the `x-subject-token` header in the response. This is the token used for the `X-Auth-Token` header in the requests requiring so.
